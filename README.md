@@ -12,15 +12,15 @@ short description of the course's quality, and credit of that course.
  &nbsp;&nbsp;&nbsp;&nbsp; ex.
   &nbsp;&nbsp;&nbsp;&nbsp;Course Name: CPSC 210
 \
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Year: 1 
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Year: 1 
 \
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Term: 2
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Term: 2
 \
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Final Grade: 96
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Final Grade: 96
 \
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Professor: Steve Wolfman
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Professor: Steve Wolfman
 \
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Summary: I would have done better if I have
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Summary: I would have done better if I have
   watched the edX videos and focused on the 
   basic syntax instead of complex ideas.
 - The application will store this data, so users can visit as if it 
