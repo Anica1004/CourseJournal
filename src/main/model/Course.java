@@ -29,9 +29,11 @@ public class Course {
         this.courseSummary = courseSummary;
     }
 
+
+
+
     public void setCourseName(String courseName) {
         this.courseName = courseName;
-
     }
 
     public void setProfessorName(String professorName) {
@@ -56,6 +58,11 @@ public class Course {
 
     public void setCourseSummary(String newSummary) {
         this.courseSummary = newSummary;
+    }
+
+    public int getFinalMark() {
+
+        return finalMark;
     }
 
 
