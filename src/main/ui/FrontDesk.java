@@ -1,20 +1,27 @@
 package ui;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import model.Course;
 import model.Student;
 
 public class FrontDesk {
-    private Student user = new Student();
-    private Scanner keys = new Scanner(System.in);
+    private Student user;
+    private Scanner keys;
 
+    public void startProgram() {
+        user = new Student();
+        keys = new Scanner(System.in);
+        displayOptions();
+
+    }
 
     // EFFECTS: displays the program options,
     // including quitting, adding, removing, or viewing courses
     public void displayOptions() {
         System.out.println("\n-------------------------------------------------------------------");
-        System.out.println("Hello user, \nselect a number from below to find your needs!:");
+        System.out.println("Hello user, \nselect a number from below to fulfill your needs!:");
         System.out.println("\t1. Add Course");
         System.out.println("\t2. Remove Course");
         System.out.println("\t3. View Courses");
@@ -33,6 +40,7 @@ public class FrontDesk {
             addCourse();
         } else if (userInput == 2) {
             System.out.println("You have chosen to remove a course!");
+            removeCourseWelcoming();
         } else if (userInput == 3) {
             System.out.println("You have chosen to view a course!");
         } else if (userInput == 4) {
@@ -44,7 +52,73 @@ public class FrontDesk {
         }
     }
 
+    public void removeCourseWelcoming() {
+        System.out.println("Be sure to input the exact information without any spelling errors or extra space.");
+        String courseName = askCourseName();
+        courseName = keys.nextLine();
+        int year = askYear();
+        findListOfCourse(courseName, year);
 
+
+    }
+
+    public void removeCourse(Course course, ArrayList<Course> courses) {
+        if (course == null) {
+            displayOptions();
+        } else {
+            if (courseConfirmation(course.getCourseName(), course.getProfessorName(),
+                    course.getCredit(), course.getYear(),
+                    course.getFinalMark(), course.getTerm(), course.getCourseSummary())) {
+
+                courses.remove(course);
+                System.out.println("The course " + course.getCourseName() + " was successfully removed!");
+                System.out.println("We will escort you back to the front desk.");
+                displayOptions();
+            } else {
+                System.out.println("Sorry about the inconvenience.");
+                System.out.println("We will will find and reconfirm the course again.");
+                removeCourseWelcoming();
+            }
+
+        }
+    }
+
+
+    // MODIFIES: this
+    // EFFECTS: finds the course within the list of courses
+    public void findListOfCourse(String courseName, int year) {
+        if (year == 1) {
+            removeCourse(findCourse(courseName, user.getFirstYearCourses()), user.getFirstYearCourses());
+
+        } else if (year == 2) {
+            removeCourse(findCourse(courseName, user.getSecondYearCourses()), user.getSecondYearCourses());
+
+        } else if (year == 3) {
+            removeCourse(findCourse(courseName, user.getThirdYearCourses()), user.getThirdYearCourses());
+        } else {
+            removeCourse(findCourse(courseName, user.getFourthYearCourses()), user.getFourthYearCourses());
+
+        }
+    }
+
+
+    // MODIFIES: this
+    // EFFECTS: finds the given course in the list of courses
+    public Course findCourse(String courseName, ArrayList<Course> courses) {
+        for (Course course : courses) {
+            if (courseName.equalsIgnoreCase(course.getCourseName())) {
+                return course;
+            }
+        }
+        System.out.println("We were unable to find the course");
+        System.out.println("Sorry about that. Be sure to check your spelling next time.");
+        System.out.println("We will escort you back to the front desk.");
+        return null;
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds a course to the user's list of courses
     public void addCourse() {
         askCourseName();
         String courseName = keys.nextLine();
@@ -58,10 +132,12 @@ public class FrontDesk {
 
         if (courseConfirmation(courseName,
                 professorName, credit, year,
-                finalMark, term, courseSummary).equalsIgnoreCase("confirm")) {
+                finalMark, term, courseSummary)) {
             Course newCourse = new Course(courseName, professorName, credit, year, finalMark, term, courseSummary);
             sortCourse(newCourse, year);
             System.out.println("We have successfully added your course.");
+            System.out.println("We will escort you back to the front desk.");
+            displayOptions();
 
         } else {
             System.out.println("Sorry for the inconvenience, we will reconfirm the course information");
@@ -70,17 +146,27 @@ public class FrontDesk {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: sorts the course by adding the course to the
+    // list of courses taken in the particular, undergraduate year that the user has specified
+
     public void sortCourse(Course newCourse, int year) {
         if (year == 1) {
-
+            user.addFirstYearCourses(newCourse);
+        } else if (year == 2) {
+            user.addSecondYearCourses(newCourse);
+        } else if (year == 3) {
+            user.addThirdYearCourses(newCourse);
+        } else if (year == 4) {
+            user.addFourthYearCourses(newCourse);
         }
     }
 
 
     // EFFECTS: confirms with user if the course information is correct
     //          returns true if it is; otherwise false
-    public String courseConfirmation(String courseName, String professorName, int credit, int year,
-                                     double finalMark, int term, String courseSummary) {
+    public boolean courseConfirmation(String courseName, String professorName, int credit, int year,
+                                      double finalMark, int term, String courseSummary) {
         System.out.println("Is the following information correct?");
         System.out.println("\tCourse Name: " + courseName);
         System.out.println("\tProfessor Name: " + professorName);
@@ -94,7 +180,12 @@ public class FrontDesk {
 
         String userConfirmation;
         userConfirmation = keys.next();
-        return userConfirmation;
+        if (userConfirmation.equalsIgnoreCase("confirm")) {
+            return true;
+        } else {
+            return false;
+        }
+
 
     }
 
