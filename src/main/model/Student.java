@@ -4,7 +4,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-// This represents the student (user) with student's name, university name,
+// This class represents the student (user) with student's name, university name,
 // list of first, second, third, and fourth year courses, and list of all courses
 // that the student has taken in the university
 

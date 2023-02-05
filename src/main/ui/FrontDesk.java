@@ -349,7 +349,7 @@ public class FrontDesk {
         return creditNum;
     }
 
-    // REQUIRES: user input year must be 1, 2, 3, or 4
+
     // EFFECTS: asks user for year taken the course and returns input
     public int askYear() {
         int year = 0;
@@ -366,7 +366,7 @@ public class FrontDesk {
         return year;
     }
 
-    // REQUIRES: final mark >= 0
+
     // EFFECTS: asks user for the final mark achieved in the course and returns input
     public double askFinalMark() {
         System.out.println("Input your final mark for this course in percentage:");
@@ -375,7 +375,7 @@ public class FrontDesk {
         return userMark;
     }
 
-    // REQUIRES: must be either 1 or 2
+
     // EFFECTS: asks user for term number the course was taken and returns input
     public int askTerm() {
         int term = 0;
