@@ -14,7 +14,7 @@ public class Student {
     private List<Course> fourthYearCourses;
     private List<List<Course>> listOfListOfCourses;
 
-
+    // EFFECTS:
     public Student() {
         firstYearCourses = new ArrayList<>();
         secondYearCourses = new ArrayList<>();
@@ -43,6 +43,19 @@ public class Student {
         return totalGrade / totalCredit;
     }
 
+
+
+    // EFFECTS: finds the given course in the list of courses
+    public Course findCourse(String courseName, List<Course> courses) {
+        for (Course course : courses) {
+            if (courseName.equalsIgnoreCase(course.getCourseName())) {
+                return course;
+            }
+        }
+        return null;
+
+    }
+
     // REQUIRES: at least one element in the list of courses
     // EFFECTS: calculates the total credits taken in the particular year
     public int totalCredit(List<Course> courses) {
@@ -52,6 +65,25 @@ public class Student {
         }
         return credit;
     }
+
+    // MODIFIES: this
+    // EFFECTS: adds the course to the
+    // list of courses taken in the particular, undergraduate year that the user has specified
+
+    public void sortCourse(Course newCourse, int year) {
+        if (year == 1) {
+            addFirstYearCourses(newCourse);
+        } else if (year == 2) {
+            addSecondYearCourses(newCourse);
+        } else if (year == 3) {
+            addThirdYearCourses(newCourse);
+        } else if (year == 4) {
+            addFourthYearCourses(newCourse);
+        }
+    }
+
+
+
 
     public void addFirstYearCourses(Course course) {
         firstYearCourses.add(course);

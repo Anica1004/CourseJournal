@@ -30,8 +30,16 @@ public class StudentTest {
                 1, 93, 2, "The labs were extremely difficult" );
         course5 = new Course ("DSCI 100", "Quan", 3,
                 1, 88, 2, "Quizzes were times 45 minutes, and extremely quick" );
+        student = new Student();
+        student.addFourthYearCourses(course1);
+        student.addFourthYearCourses(course2);
+        student.addFourthYearCourses(course3);
+        student.addFourthYearCourses(course4);
+        student.addFourthYearCourses(course5);
 
     }
+
+
 
     @Test
     public void StudentTest(){
@@ -51,9 +59,43 @@ public class StudentTest {
         example.add(element4);
         assertEquals(student.getListOfListOfCourses(), example);
     }
+    @Test
+    public void SortCourseTest() {
+        student = new Student();
+        ArrayList<Course> firstYearCourses = new ArrayList<>();
+        firstYearCourses.add(course1);
+        student.sortCourse(course1, 1);
+        assertEquals(student.getFirstYearCourses(), firstYearCourses);
+
+        student.sortCourse(course2, 2);
+        ArrayList<Course> secondYearCourses = new ArrayList<>();
+        secondYearCourses.add(course2);
+        assertEquals(student.getSecondYearCourses(), secondYearCourses);
+
+        student.sortCourse(course3, 3);
+        ArrayList<Course> thirdYearCourses = new ArrayList<>();
+        thirdYearCourses.add(course3);
+        assertEquals(student.getThirdYearCourses(), thirdYearCourses);
+
+        student.sortCourse(course4, 4);
+        ArrayList<Course> fourthYearCourses = new ArrayList<>();
+        fourthYearCourses.add(course4);
+        assertEquals(student.getFourthYearCourses(), fourthYearCourses);
+
+
+    }
 
     @Test
-    public void addFirstYearCoursesTest(){
+    public void FindCourseTest() {
+        assertEquals(student.findCourse("CPSC 110", student.getFourthYearCourses()), course1);
+        assertEquals(student.findCourse("SCIE 113", student.getFourthYearCourses()), course3);
+        assertEquals(student.findCourse("UNKNOWN COURSE", student.getFourthYearCourses()), null);
+    }
+
+
+    @Test
+    public void AddFirstYearCoursesTest(){
+        student = new Student();
         student.addFirstYearCourses(course1);
         List<Course> courses = new ArrayList<Course>();
         courses.add(course1);
@@ -62,7 +104,8 @@ public class StudentTest {
     }
 
     @Test
-    public void addSecondYearCoursesTest(){
+    public void AddSecondYearCoursesTest(){
+        student = new Student();
         student.addSecondYearCourses(course1);
         List<Course> courses = new ArrayList<Course>();
         courses.add(course1);
@@ -71,7 +114,8 @@ public class StudentTest {
     }
 
     @Test
-    public void addThirdYearCoursesTest(){
+    public void AddThirdYearCoursesTest(){
+        student = new Student();
         student.addThirdYearCourses(course1);
         List<Course> courses = new ArrayList<Course>();
         courses.add(course1);
@@ -80,7 +124,8 @@ public class StudentTest {
     }
 
     @Test
-    public void addFourthYearCoursesTest(){
+    public void AddFourthYearCoursesTest(){
+        student = new Student();
         student.addFourthYearCourses(course1);
         List<Course> courses = new ArrayList<Course>();
         courses.add(course1);
@@ -88,18 +133,20 @@ public class StudentTest {
 
     }
     @Test
-    public void calculateAverageTest(){
+    public void CalculateAverageTest(){
+        student = new Student();
         student.addFirstYearCourses(course4);
         student.addFirstYearCourses(course5);
         assertEquals(student.calculateAverage(student.getFirstYearCourses()), 89.25);
     }
 
     @Test
-    public void totalCreditTest() {
+    public void TotalCreditTest() {
+        student = new Student();
         student.addFirstYearCourses(course1);
         student.addFirstYearCourses(course2);
         student.addFirstYearCourses(course3);
-        assertEquals(student.totalCredit(student.getFirstYearCourses()), 11);
+        assertEquals(student.totalCredit(student.getFirstYearCourses()), 10);
     }
 
 

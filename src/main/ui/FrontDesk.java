@@ -63,7 +63,7 @@ public class FrontDesk {
 
     // EFFECTS: displays all the courses that the user has taken in a particular year
     public void viewCourse() {
-        System.out.println("Input the undergraduate year (1, 2, 3, or 4) you want to check!: ");
+        optionsViewCourse();
         int year = keys.nextInt();
         if (year == 1) {
             viewCourses(year, user.getFirstYearCourses());
@@ -77,10 +77,25 @@ public class FrontDesk {
         } else if (year == 4) {
             viewCourses(year, user.getFourthYearCourses());
 
+        } else {
+            System.out.println("Please select a number 1, 2, 3, or 4");
+            viewCourse();
         }
 
     }
 
+    // EFFECTS: displays the options of course information based on undergraduate year
+    public void optionsViewCourse() {
+        System.out.println("Choose one of the options below: ");
+        System.out.println("\t1. Course Information of Year 1: ");
+        System.out.println("\t1. Course Information of Year 2: ");
+        System.out.println("\t1. Course Information of Year 3: ");
+        System.out.println("\t1. Course Information of Year 4: ");
+    }
+
+
+
+    // EFFECTS: displays the grade summary of the particular year
     public void gradeSummary() {
 
         int year = 1;
@@ -111,6 +126,7 @@ public class FrontDesk {
 
     }
 
+    // EFFECTS: produces a letter grade based on the percentage
     public String letterGrade(double average) {
         if (average >= 90) {
             return "A+";
@@ -190,6 +206,9 @@ public class FrontDesk {
 
     public void removeCourse(Course course, List<Course> courses) {
         if (course == null) {
+            System.out.println("We were unable to find the course");
+            System.out.println("Sorry about that. Be sure to check your spelling next time.");
+            System.out.println("We will escort you back to the front desk.");
             displayOptions();
         } else {
             if (courseConfirmation(course.getCourseName(), course.getProfessorName(),
@@ -214,34 +233,21 @@ public class FrontDesk {
     // EFFECTS: finds the course within the list of courses
     public void findListOfCourse(String courseName, int year) {
         if (year == 1) {
-            removeCourse(findCourse(courseName, user.getFirstYearCourses()), user.getFirstYearCourses());
+            removeCourse(user.findCourse(courseName, user.getFirstYearCourses()), user.getFirstYearCourses());
 
         } else if (year == 2) {
-            removeCourse(findCourse(courseName, user.getSecondYearCourses()), user.getSecondYearCourses());
+            removeCourse(user.findCourse(courseName, user.getSecondYearCourses()), user.getSecondYearCourses());
 
         } else if (year == 3) {
-            removeCourse(findCourse(courseName, user.getThirdYearCourses()), user.getThirdYearCourses());
+            removeCourse(user.findCourse(courseName, user.getThirdYearCourses()), user.getThirdYearCourses());
         } else {
-            removeCourse(findCourse(courseName, user.getFourthYearCourses()), user.getFourthYearCourses());
+            removeCourse(user.findCourse(courseName, user.getFourthYearCourses()), user.getFourthYearCourses());
 
         }
     }
 
 
-    // MODIFIES: this
-    // EFFECTS: finds the given course in the list of courses
-    public Course findCourse(String courseName, List<Course> courses) {
-        for (Course course : courses) {
-            if (courseName.equalsIgnoreCase(course.getCourseName())) {
-                return course;
-            }
-        }
-        System.out.println("We were unable to find the course");
-        System.out.println("Sorry about that. Be sure to check your spelling next time.");
-        System.out.println("We will escort you back to the front desk.");
-        return null;
 
-    }
 
     // MODIFIES: this
     // EFFECTS: adds a course to the user's list of courses
@@ -260,7 +266,7 @@ public class FrontDesk {
                 professorName, credit, year,
                 finalMark, term, courseSummary)) {
             Course newCourse = new Course(courseName, professorName, credit, year, finalMark, term, courseSummary);
-            sortCourse(newCourse, year);
+            user.sortCourse(newCourse, year);
             System.out.println("We have successfully added your course.");
             System.out.println("We will escort you back to the front desk.");
             displayOptions();
@@ -270,22 +276,6 @@ public class FrontDesk {
             addCourse();
         }
 
-    }
-
-    // MODIFIES: this
-    // EFFECTS: adds the course to the
-    // list of courses taken in the particular, undergraduate year that the user has specified
-
-    public void sortCourse(Course newCourse, int year) {
-        if (year == 1) {
-            user.addFirstYearCourses(newCourse);
-        } else if (year == 2) {
-            user.addSecondYearCourses(newCourse);
-        } else if (year == 3) {
-            user.addThirdYearCourses(newCourse);
-        } else if (year == 4) {
-            user.addFourthYearCourses(newCourse);
-        }
     }
 
 
