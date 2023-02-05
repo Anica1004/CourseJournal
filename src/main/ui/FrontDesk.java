@@ -1,6 +1,7 @@
 package ui;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import model.Course;
@@ -10,6 +11,7 @@ public class FrontDesk {
     private Student user;
     private Scanner keys;
 
+    // EFFECTS: starts the program running
     public void startProgram() {
         user = new Student();
         keys = new Scanner(System.in);
@@ -25,38 +27,11 @@ public class FrontDesk {
         System.out.println("\t1. Add Course");
         System.out.println("\t2. Remove Course");
         System.out.println("\t3. View Courses");
+        System.out.println("\t3. Grade Summary");
         System.out.println("\t4. Quit");
         System.out.println("-------------------------------------------------------------------");
         navigateOptions();
     }
-
-    public void viewCourse() {
-        System.out.println("Input the undergraduate year (1, 2, 3, or 4) you want to check!: ");
-        int year = keys.nextInt();
-        if (year == 1) {
-            displayListOfCourse(user.getFirstYearCourses());
-
-        } else if (year == 2) {
-            displayListOfCourse(user.getSecondYearCourses());
-
-        } else if (year == 3) {
-            displayListOfCourse(user.getThirdYearCourses());
-
-        } else if (year == 4) {
-            displayListOfCourse(user.getFourthYearCourses());
-
-        }
-
-    }
-
-    public void displayListOfCourse(ArrayList<Course> courses){
-        for (Course course: courses) {
-
-        }
-
-
-    }
-
 
     // EFFECTS: Navigates user to the different program options
     //          depending on user's decision
@@ -70,8 +45,13 @@ public class FrontDesk {
             System.out.println("You have chosen to remove a course!");
             removeCourseWelcoming();
         } else if (userInput == 3) {
-            System.out.println("You have chosen to view a course!");
+            System.out.println("You have chosen to view courses!");
+            viewCourse();
         } else if (userInput == 4) {
+            System.out.println("You have chosen to view your grade summary!");
+
+
+        } else if (userInput == 5) {
             System.out.println("You have chosen to quit.");
             System.out.println("Come back again!");
         } else {
@@ -79,6 +59,79 @@ public class FrontDesk {
             displayOptions();
         }
     }
+
+    // EFFECTS: displays all the courses that the user has taken in a particular year
+    public void viewCourse() {
+        System.out.println("Input the undergraduate year (1, 2, 3, or 4) you want to check!: ");
+        int year = keys.nextInt();
+        if (year == 1) {
+            viewCourses(year, user.getFirstYearCourses());
+
+        } else if (year == 2) {
+            viewCourses(year, user.getSecondYearCourses());
+
+        } else if (year == 3) {
+            viewCourses(year, user.getThirdYearCourses());
+
+        } else if (year == 4) {
+            viewCourses(year, user.getFourthYearCourses());
+
+        }
+
+    }
+
+    public void gradeSummary() {
+        int year = 1;
+        for (List<Course> courses : user.getListOfListOfCourses()) {
+
+            System.out.println("Grade Summary of Year : " + year);
+
+            System.out.println("\tAverage: ");
+            year++;
+
+
+        }
+
+    }
+
+    public void viewCourses(int year, ArrayList<Course> courses) {
+        ArrayList<Integer> emptyList = new ArrayList<>();
+        if (emptyList.equals(courses)) {
+            System.out.println("You have not yet added any courses in Year " + year + "!");
+            System.out.println("Hopefully you add courses in the near future!");
+            System.out.println("I will escort you to the front desk.");
+            displayOptions();
+
+        } else {
+            System.out.println("The below are courses you have taken in Year " + year + ":");
+            displayListOfCourse(courses);
+            System.out.println("That must have been a fantastic year!");
+            System.out.println("I will escort you back to the lobby!");
+            displayOptions();
+        }
+    }
+
+    public void displayListOfCourse(ArrayList<Course> courses) {
+        for (Course course : courses) {
+            if (course.getTerm() == 1) {
+                System.out.println("\n\n---------------------------------------------------------------------");
+                courseInformation(course.getCourseName(), course.getProfessorName(), course.getCredit(),
+                        course.getYear(), course.getFinalMark(), course.getTerm(), course.getCourseSummary());
+                System.out.println("---------------------------------------------------------------------");
+            }
+        }
+        for (Course course : courses) {
+            if (course.getTerm() == 2) {
+                System.out.println("\n\n---------------------------------------------------------------------");
+                courseInformation(course.getCourseName(), course.getProfessorName(), course.getCredit(),
+                        course.getYear(), course.getFinalMark(), course.getTerm(), course.getCourseSummary());
+                System.out.println("---------------------------------------------------------------------");
+            }
+        }
+
+
+    }
+
 
     public void removeCourseWelcoming() {
         System.out.println("Be sure to input the exact information without any spelling errors or extra space.");
@@ -175,7 +228,7 @@ public class FrontDesk {
     }
 
     // MODIFIES: this
-    // EFFECTS: sorts the course by adding the course to the
+    // EFFECTS: adds the course to the
     // list of courses taken in the particular, undergraduate year that the user has specified
 
     public void sortCourse(Course newCourse, int year) {
@@ -191,11 +244,9 @@ public class FrontDesk {
     }
 
 
-    // EFFECTS: confirms with user if the course information is correct
-    //          returns true if it is; otherwise false
-    public boolean courseConfirmation(String courseName, String professorName, int credit, int year,
-                                      double finalMark, int term, String courseSummary) {
-        System.out.println("Is the following information correct?");
+    public void courseInformation(String courseName, String professorName, int credit, int year,
+                                  double finalMark, int term, String courseSummary) {
+
         System.out.println("\tCourse Name: " + courseName);
         System.out.println("\tProfessor Name: " + professorName);
         System.out.println("\tCredit : " + credit + " credits");
@@ -203,9 +254,18 @@ public class FrontDesk {
         System.out.println("\tFinal Mark " + finalMark + " %");
         System.out.println("\tTerm: Term " + term);
         System.out.println("\tCourse Description: " + courseSummary);
+
+    }
+
+    // EFFECTS: confirms with user if the course information is correct
+    //          returns true if it is; otherwise false
+    public boolean courseConfirmation(String courseName, String professorName, int credit, int year,
+                                      double finalMark, int term, String courseSummary) {
+        System.out.println("Is the following information correct?");
+        courseInformation(courseName, professorName, credit, year,
+                finalMark, term, courseSummary);
         System.out.println("Input 'confirm' if it is correct");
         System.out.println("Input 'resubmit' if it is incorrect");
-
         String userConfirmation;
         userConfirmation = keys.next();
         if (userConfirmation.equalsIgnoreCase("confirm")) {
@@ -213,7 +273,6 @@ public class FrontDesk {
         } else {
             return false;
         }
-
 
     }
 
