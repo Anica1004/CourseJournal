@@ -21,21 +21,43 @@ public class StudentTest {
     public void constructBefore(){
         student = new Student();
         course1 = new Course("CPSC 110", "Gregor", 4,
-                1, 96, 1, "A good introduction of programming" );
+                1, 96, 1, 10, "A good introduction of programming" );
         course2 = new Course ("CPSC 210", "Steve", 3,
-                1, 100, 2, "Watching EdX videos is very important" );
+                1, 100, 2, 9, "Watching EdX videos is very important" );
         course3 = new Course ("SCIE 113", "Yumi", 3,
-                1, 92, 2, "Essays were hard, but GPA booster" );
+                1, 92, 2, 8, "Essays were hard, but GPA booster" );
         course4 = new Course ("PHYS 119", "Jen", 1,
-                1, 93, 2, "The labs were extremely difficult" );
+                1, 93, 2, 7.5, "The labs were extremely difficult" );
         course5 = new Course ("DSCI 100", "Quan", 3,
-                1, 88, 2, "Quizzes were times 45 minutes, and extremely quick" );
+                1, 88, 2, 4 , "Quizzes were times 45 minutes, and extremely quick" );
         student = new Student();
+
+        student.addFirstYearCourses(course1);
+        student.addFirstYearCourses(course2);
+        student.addFirstYearCourses(course3);
+        student.addFirstYearCourses(course4);
+        student.addFirstYearCourses(course5);
+
+        student.addSecondYearCourses(course1);
+        student.addSecondYearCourses(course2);
+        student.addSecondYearCourses(course3);
+        student.addSecondYearCourses(course4);
+        student.addSecondYearCourses(course5);
+
+        student.addThirdYearCourses(course1);
+        student.addThirdYearCourses(course2);
+        student.addThirdYearCourses(course3);
+        student.addThirdYearCourses(course4);
+        student.addThirdYearCourses(course5);
+
+
         student.addFourthYearCourses(course1);
         student.addFourthYearCourses(course2);
         student.addFourthYearCourses(course3);
         student.addFourthYearCourses(course4);
         student.addFourthYearCourses(course5);
+
+
 
     }
 
@@ -59,30 +81,50 @@ public class StudentTest {
         example.add(element4);
         assertEquals(student.getListOfListOfCourses(), example);
     }
+
+
     @Test
     public void SortCourseTest() {
         student = new Student();
         ArrayList<Course> firstYearCourses = new ArrayList<>();
+        ArrayList<Course> emptyList = new ArrayList<>();
         firstYearCourses.add(course1);
         student.sortCourse(course1, 1);
         assertEquals(student.getFirstYearCourses(), firstYearCourses);
+        assertEquals(student.getSecondYearCourses(), emptyList);
+        assertEquals(student.getThirdYearCourses(), emptyList);
+        assertEquals(student.getFourthYearCourses(), emptyList);
 
         student.sortCourse(course2, 2);
         ArrayList<Course> secondYearCourses = new ArrayList<>();
         secondYearCourses.add(course2);
+        assertEquals(student.getFirstYearCourses(), firstYearCourses);
         assertEquals(student.getSecondYearCourses(), secondYearCourses);
+        assertEquals(student.getThirdYearCourses(), emptyList);
+        assertEquals(student.getFourthYearCourses(), emptyList);
 
         student.sortCourse(course3, 3);
         ArrayList<Course> thirdYearCourses = new ArrayList<>();
         thirdYearCourses.add(course3);
+        assertEquals(student.getFirstYearCourses(), firstYearCourses);
+        assertEquals(student.getSecondYearCourses(), secondYearCourses);
         assertEquals(student.getThirdYearCourses(), thirdYearCourses);
+        assertEquals(student.getFourthYearCourses(), emptyList);
 
         student.sortCourse(course4, 4);
         ArrayList<Course> fourthYearCourses = new ArrayList<>();
         fourthYearCourses.add(course4);
+        assertEquals(student.getFirstYearCourses(), firstYearCourses);
+        assertEquals(student.getSecondYearCourses(), secondYearCourses);
+        assertEquals(student.getThirdYearCourses(), thirdYearCourses);
         assertEquals(student.getFourthYearCourses(), fourthYearCourses);
 
-
+        student = new Student();
+        student.sortCourse(course5, 5);
+        assertEquals(student.getFirstYearCourses(), emptyList);
+        assertEquals(student.getSecondYearCourses(), emptyList);
+        assertEquals(student.getThirdYearCourses(), emptyList);
+        assertEquals(student.getFourthYearCourses(), emptyList);
     }
 
     @Test
@@ -135,8 +177,18 @@ public class StudentTest {
 
     @Test
     public void FindCourseTest() {
+        assertEquals(student.findCourse("PHYS 119", student.getFirstYearCourses()), course4);
+        assertEquals(student.findCourse("SCIE 113", student.getFirstYearCourses()), course3);
+
+        assertEquals(student.findCourse("PHYS 119", student.getSecondYearCourses()), course4);
+        assertEquals(student.findCourse("SCIE 113", student.getSecondYearCourses()), course3);
+
+        assertEquals(student.findCourse("PHYS 119", student.getThirdYearCourses()), course4);
+        assertEquals(student.findCourse("SCIE 113", student.getThirdYearCourses()), course3);
+
         assertEquals(student.findCourse("CPSC 110", student.getFourthYearCourses()), course1);
         assertEquals(student.findCourse("SCIE 113", student.getFourthYearCourses()), course3);
+
         assertEquals(student.findCourse("UNKNOWN COURSE", student.getFourthYearCourses()), null);
         student = new Student();
         assertEquals(student.findCourse("UNKNOWN COURSE", student.getFourthYearCourses()), null);

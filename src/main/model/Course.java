@@ -13,13 +13,15 @@ public class Course {
     private double finalMark;
     private int term;
     private String courseSummary;
+    private double rating;
+
 
 
     // EFFECTS: constructs a course with a course name, professor name, number of credit,
     //          the year taken, final mark, term, and course description
 
     public Course(String courseName, String professorName, int credit, int year, double finalMark,
-                  int term, String courseSummary) {
+                  int term, double rating, String courseSummary) {
         this.courseName = courseName;
         this.professorName = professorName;
         this.credit = credit;
@@ -27,8 +29,9 @@ public class Course {
         this.finalMark = finalMark;
         this.term = term;
         this.courseSummary = courseSummary;
-    }
+        this.rating = rating;
 
+    }
 
 
 
@@ -61,5 +64,8 @@ public class Course {
     }
 
 
+    public double getRating() {
+        return rating;
+    }
 
 }

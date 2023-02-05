@@ -94,7 +94,6 @@ public class FrontDesk {
     }
 
 
-
     // EFFECTS: displays the grade summary of each year (1, 2, 3, and 4)
     public void gradeSummary() {
 
@@ -112,7 +111,7 @@ public class FrontDesk {
                 String average = user.calculateAverage(courses);
                 String letterGrade = user.letterGrade(Double.parseDouble(average));
                 System.out.println("\n======================================================================");
-                System.out.println("Grade Summary of Year : " + year);
+                System.out.println("Grade Summary of Year " + year + ":");
                 System.out.println("\tYear " + year + " Average Percentage: " + average + " %");
                 System.out.println("\tYear " + year + " Average Letter Grade: " + letterGrade);
                 System.out.println("\tYear " + year + " Total Credit: " + user.totalCredit(courses));
@@ -161,7 +160,8 @@ public class FrontDesk {
             if (course.getTerm() == 1) {
                 System.out.println("\n---------------------------------------------------------------------");
                 courseInformation(course.getCourseName(), course.getProfessorName(), course.getCredit(),
-                        course.getYear(), course.getFinalMark(), course.getTerm(), course.getCourseSummary());
+                        course.getYear(), course.getFinalMark(), course.getTerm(), course.getRating(),
+                        course.getCourseSummary());
                 System.out.println("---------------------------------------------------------------------");
             }
         }
@@ -169,7 +169,8 @@ public class FrontDesk {
             if (course.getTerm() == 2) {
                 System.out.println("\n---------------------------------------------------------------------");
                 courseInformation(course.getCourseName(), course.getProfessorName(), course.getCredit(),
-                        course.getYear(), course.getFinalMark(), course.getTerm(), course.getCourseSummary());
+                        course.getYear(), course.getFinalMark(), course.getTerm(),
+                        course.getRating(), course.getCourseSummary());
                 System.out.println("---------------------------------------------------------------------");
             }
         }
@@ -191,13 +192,13 @@ public class FrontDesk {
     public void removeCourse(Course course, List<Course> courses) {
         if (course == null) {
             System.out.println("We were unable to find the course");
-            System.out.println("Sorry about that. Be sure to check your spelling next time.");
-            System.out.println("We will escort you back to the front desk.");
-            displayOptions();
+            System.out.println("Sorry about that. Be sure to check your spelling and correct year next time.");
+            backToLobby();
         } else {
             if (courseConfirmation(course.getCourseName(), course.getProfessorName(),
                     course.getCredit(), course.getYear(),
-                    course.getFinalMark(), course.getTerm(), course.getCourseSummary())) {
+                    course.getFinalMark(), course.getTerm(), course.getRating(),
+                    course.getCourseSummary())) {
 
                 courses.remove(course);
                 System.out.println("The course " + course.getCourseName() + " was successfully removed!");
@@ -230,25 +231,25 @@ public class FrontDesk {
     }
 
 
-
-
     // MODIFIES: this
     // EFFECTS: adds a course to the user's list of courses
     public void addCourse() {
         askCourseName();
         String courseName = keys.nextLine();
         String professorName = askProfessorName();
-        int credit = askCredit();
         int year = askYear();
-        double finalMark = askFinalMark();
         int term = askTerm();
+        double finalMark = askFinalMark();
+        int credit = askCredit();
+        double courseRating = askCourseRating();
         askCourseSummary();
         String courseSummary = keys.nextLine();
 
         if (courseConfirmation(courseName,
                 professorName, credit, year,
-                finalMark, term, courseSummary)) {
-            Course newCourse = new Course(courseName, professorName, credit, year, finalMark, term, courseSummary);
+                finalMark, term, courseRating, courseSummary)) {
+            Course newCourse = new Course(courseName, professorName, credit, year,
+                    finalMark, term, courseRating, courseSummary);
             user.sortCourse(newCourse, year);
             System.out.println("We have successfully added your course.");
             backToLobby();
@@ -262,14 +263,15 @@ public class FrontDesk {
 
 
     public void courseInformation(String courseName, String professorName, int credit, int year,
-                                  double finalMark, int term, String courseSummary) {
+                                  double finalMark, int term, double courseRating, String courseSummary) {
 
         System.out.println("\tCourse Name: " + courseName);
         System.out.println("\tProfessor Name: " + professorName);
-        System.out.println("\tCredit : " + credit + " credits");
         System.out.println("\tYear: Year " + year);
-        System.out.println("\tFinal Mark " + finalMark + " %");
         System.out.println("\tTerm: Term " + term);
+        System.out.println("\tFinal Mark: " + finalMark + " %");
+        System.out.println("\tCredit : " + credit + " credits");
+        System.out.println("\tCourse Rating: " + courseRating + " out of 10");
         System.out.println("\tCourse Description: " + courseSummary);
 
     }
@@ -277,10 +279,10 @@ public class FrontDesk {
     // EFFECTS: confirms with user if the course information is correct
     //          returns true if it is; otherwise false
     public boolean courseConfirmation(String courseName, String professorName, int credit, int year,
-                                      double finalMark, int term, String courseSummary) {
+                                      double finalMark, int term, double courseRating, String courseSummary) {
         System.out.println("Is the following information correct?");
         courseInformation(courseName, professorName, credit, year,
-                finalMark, term, courseSummary);
+                finalMark, term, courseRating, courseSummary);
         System.out.println("Input 'confirm' if it is correct");
         System.out.println("Input 'resubmit' if it is incorrect");
         String userConfirmation;
@@ -301,6 +303,24 @@ public class FrontDesk {
         courseName = keys.nextLine();
         return courseName;
     }
+
+    // EFFECTS: ask user for course rating out of 10
+    public double askCourseRating() {
+        double courseRating = -10;
+        boolean state = true;
+        while (state) {
+            System.out.println("Rate the overall quality of the course out of 10:");
+            courseRating = keys.nextDouble();
+            if (courseRating >= 0 && courseRating <= 10) {
+                state = false;
+            } else {
+                System.out.println("Please input a rating that is in between 1 to 10");
+            }
+        }
+        return courseRating;
+    }
+
+
 
     // EFFECTS: asks user for professor name returns input
     public String askProfessorName() {
