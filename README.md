@@ -6,7 +6,7 @@
 - After the end of a term, the user can input what courses they
 have taken in that particular semester.
 The user will input the course name, undergraduate year they have taken the course, the semester they have taken the course, final grade, the professor, 
-short description of the course's quality, and credit of that course.
+short description of the course's quality, course rating, and credit of that course.
  
 
  &nbsp;&nbsp;&nbsp;&nbsp; ex.
@@ -20,15 +20,18 @@ short description of the course's quality, and credit of that course.
 \
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Professor: Steve Wolfman
 \
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Course Rating: 10/10
+\
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Summary: I would have done better if I have
   watched the edX videos and focused on the 
   basic syntax instead of complex ideas.
 - The application will store this data, so users can visit as if it 
 is a journal. Also, the application will provide a grade summary of the year, 
 calculating the average percentage and also the total credits the user has taken in the particular year. 
-- The data will be categorized by undergraduate year, so the user can easily click on 
-a particular year that they want to see the summary or data of. (ex. click on Year 2 to see the 
-courses and grades they have gotten in second year)
+- The data will be categorized by undergraduate year, so the user can easily choose a
+a particular year, so they can check the course information of that particular year. 
+- (ex. click on Year 2 to see the 
+courses they have taken in second year)
   
 
 
@@ -49,7 +52,7 @@ and experience in a more accurate way.
 to keep my personal goals and thoughts stored and remembered. 
 However, I always found it very tedious and time consuming.
 This application can provide a permanent record of my academic life
-similar to a journal, but is much more specific to academics, organized,
+similar to a journal, but is much more specific to academics, organized, concise,
 and easy to input data. 
 - As a first year student, this application will 
  help me build self-consciousness of my academics, 
@@ -58,11 +61,11 @@ creating good motivation and inspiration to achieve my academic goals.
 at UBC.
 
 ## User Stories
-- As a user, I want to be able to add a arbitrary number of new course to my personal list of courses
+- As a user, I want to be able to add a arbitrary number of new courses to my personal list of courses
 - As a user, I want to be able to remove a course
-- As a user, I want to be able to see a percentage average of my grade in a particular year
-- As a user, I want to click on a particular year to view all the courses, credits achieved, 
-and course information of that particular year. 
+- As a user, I want to be able to see a grade summary of the different years
+- As a user, I want to click on a particular year to view all the courses (with course information) 
+I have taken in that particular year. 
 
 
 

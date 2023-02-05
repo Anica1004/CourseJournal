@@ -2,8 +2,10 @@ package model;
 
 
 // The class represents a "course" having a course name, the professor that taught
-// the course, course credit, the year and term (1 or 2) that the user has taken the course
-// the final mark that the user has gotten, and a short description of the course.
+// the course, course credit, the undergraduate year (1, 2, 3, or 4) and term (1 or 2)
+// that the user has taken the course
+// the final mark that the user has gotten, a short description of the course
+// and the course's overall rating.
 
 public class Course {
     private String courseName;

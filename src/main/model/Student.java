@@ -15,7 +15,8 @@ public class Student {
     private List<Course> fourthYearCourses;
     private List<List<Course>> listOfListOfCourses;
 
-    // EFFECTS:
+
+    // EFFECTS: constructs a student with empty list of courses
     public Student() {
         firstYearCourses = new ArrayList<>();
         secondYearCourses = new ArrayList<>();
@@ -28,7 +29,7 @@ public class Student {
         listOfListOfCourses.add(fourthYearCourses);
     }
 
-
+    // REQUIRES: average must be in between 100 and 0
     // EFFECTS: produces a letter grade based on the percentage
     public String letterGrade(double average) {
         if (average >= 90) {

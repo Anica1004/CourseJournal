@@ -7,6 +7,10 @@ import java.util.Scanner;
 import model.Course;
 import model.Student;
 
+// The frontDesk where users interact with the program, and navigate to find their needs,
+// including adding a course, removing a course, viewing courses taken in a particular year,
+//  and the overall grade summary
+
 public class FrontDesk {
     private Student user;
     private Scanner keys;
@@ -20,7 +24,8 @@ public class FrontDesk {
     }
 
     // EFFECTS: displays the program options,
-    // including quitting, adding, removing, or viewing courses
+    // including adding a course, removing a course, viewing courses,
+    // viewing grade summary, and quitting
     public void displayOptions() {
         System.out.println("\n-------------------------------------------------------------------");
         System.out.println("Hello user, \nselect a number from below to fulfill your needs!:");
@@ -117,21 +122,18 @@ public class FrontDesk {
                 System.out.println("\tYear " + year + " Total Credit: " + user.totalCredit(courses));
                 System.out.println("======================================================================");
             }
-
-
             year++;
-
 
         }
         backToLobby();
 
     }
 
-
+    // EFFECTS: displays the courses taken in the specified year
     public void viewCourses(int year, List<Course> courses) {
         ArrayList<Course> emptyList = new ArrayList<>();
         if (emptyList.equals(courses)) {
-            System.out.println("You have not yet added any courses in Year " + year + ".");
+            System.out.println("\nYou have not yet added any courses in Year " + year + ".");
             System.out.println("Hopefully you add courses in the near future!");
             backToLobby();
 
@@ -143,6 +145,7 @@ public class FrontDesk {
         }
     }
 
+    // EFFECTS: asks user to go back to the lobby; otherwise quit program
     public void backToLobby() {
         System.out.println("Would you like to go back to the front desk?");
         System.out.println("Input 'Y' for yes and 'N' for no");
@@ -155,6 +158,8 @@ public class FrontDesk {
         }
     }
 
+    // EFFECTS: displays all the list of courses taken in the particular year,
+    // ordered from term 1 to term 2
     public void displayListOfCourse(List<Course> courses) {
         for (Course course : courses) {
             if (course.getTerm() == 1) {
@@ -178,7 +183,8 @@ public class FrontDesk {
 
     }
 
-
+    // EFFECTS: welcomes the user to remove a course, and asks for input values, specifying which
+    // course to remove
     public void removeCourseWelcoming() {
         System.out.println("Be sure to input the exact information without any spelling errors or extra space.");
         askCourseName();
@@ -189,6 +195,8 @@ public class FrontDesk {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes the specified course if found and confirmed; otherwise navigate user
     public void removeCourse(Course course, List<Course> courses) {
         if (course == null) {
             System.out.println("We were unable to find the course");
@@ -213,7 +221,7 @@ public class FrontDesk {
     }
 
 
-    // MODIFIES: this
+
     // EFFECTS: finds the course within the list of courses
     public void findListOfCourse(String courseName, int year) {
         if (year == 1) {
@@ -262,6 +270,9 @@ public class FrontDesk {
     }
 
 
+    // EFFECTS: displays a course's information including course name, the professor that taught
+    //// the course, course credit, the undergraduate year (1, 2, 3, or 4) and term (1 or 2)
+    //// that the user has taken the course
     public void courseInformation(String courseName, String professorName, int credit, int year,
                                   double finalMark, int term, double courseRating, String courseSummary) {
 
@@ -304,7 +315,7 @@ public class FrontDesk {
         return courseName;
     }
 
-    // EFFECTS: ask user for course rating out of 10
+    // EFFECTS: ask user for course rating out of 10 and returns input
     public double askCourseRating() {
         double courseRating = -10;
         boolean state = true;
