@@ -87,34 +87,45 @@ public class StudentTest {
 
     @Test
     public void letterGradeTest() {
+        assertEquals(student.letterGrade(100), "A+");
+        assertEquals(student.letterGrade(95), "A+");
         assertEquals(student.letterGrade(91), "A+");
         assertEquals(student.letterGrade(90), "A+");
         assertEquals(student.letterGrade(89), "A");
         assertEquals(student.letterGrade(86), "A");
         assertEquals(student.letterGrade(85), "A");
         assertEquals(student.letterGrade(84), "A-");
+        assertEquals(student.letterGrade(83), "A-");
         assertEquals(student.letterGrade(81), "A-");
         assertEquals(student.letterGrade(80), "A-");
         assertEquals(student.letterGrade(79), "B+");
+        assertEquals(student.letterGrade(78), "B+");
         assertEquals(student.letterGrade(77), "B+");
         assertEquals(student.letterGrade(76), "B+");
         assertEquals(student.letterGrade(75), "B");
+        assertEquals(student.letterGrade(74), "B");
         assertEquals(student.letterGrade(73), "B");
         assertEquals(student.letterGrade(72), "B");
         assertEquals(student.letterGrade(71), "B-");
+        assertEquals(student.letterGrade(70), "B-");
         assertEquals(student.letterGrade(69), "B-");
         assertEquals(student.letterGrade(68), "B-");
         assertEquals(student.letterGrade(67), "C+");
+        assertEquals(student.letterGrade(66), "C+");
         assertEquals(student.letterGrade(65), "C+");
         assertEquals(student.letterGrade(64), "C+");
         assertEquals(student.letterGrade(63), "C");
+        assertEquals(student.letterGrade(62), "C");
         assertEquals(student.letterGrade(61), "C");
         assertEquals(student.letterGrade(60), "C");
         assertEquals(student.letterGrade(59), "C-");
+        assertEquals(student.letterGrade(58), "C-");
+        assertEquals(student.letterGrade(57), "C-");
         assertEquals(student.letterGrade(56), "C-");
         assertEquals(student.letterGrade(55), "C-");
         assertEquals(student.letterGrade(54), "D");
         assertEquals(student.letterGrade(53), "D");
+        assertEquals(student.letterGrade(51), "D");
         assertEquals(student.letterGrade(50), "D");
         assertEquals(student.letterGrade(49), "F");
         assertEquals(student.letterGrade(30), "F");
