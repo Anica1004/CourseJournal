@@ -31,7 +31,7 @@ public class Course {
 
 
 
-
+/*
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
@@ -60,10 +60,35 @@ public class Course {
         this.courseSummary = newSummary;
     }
 
-    public int getFinalMark() {
 
+    public int getFinalMark() {
         return finalMark;
     }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public String getProfessorName() {
+        return professorName;
+    }
+
+    public int getCredit() {
+        return credit;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public int getTerm() {
+        return term;
+    }
+
+    public String getCourseSummary() {
+        return courseSummary;
+    }
+    */
 
 
 }

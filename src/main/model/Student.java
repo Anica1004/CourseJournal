@@ -8,28 +8,46 @@ import java.util.List;
 // that the student has taken in the university
 
 public class Student {
-    private String studentName;
     private ArrayList<Course> firstYearCourses;
     private ArrayList<Course> secondYearCourses;
     private ArrayList<Course> thirdYearCourses;
     private ArrayList<Course> fourthYearCourses;
-    private List<List<Course>> listOfCourses;
+    private List<List<Course>> listOfListOfCourses;
+    private int firstYearAverage;
+    private int secondYearAverage;
+    private int thirdYearAverage;
+    private int fourthYearAverage;
+
 
     public Student() {
-        studentName = "user";
         firstYearCourses = new ArrayList<>();
         secondYearCourses = new ArrayList<>();
         thirdYearCourses = new ArrayList<>();
         fourthYearCourses = new ArrayList<>();
-        listOfCourses = new ArrayList<>();
-        listOfCourses.add(firstYearCourses);
-        listOfCourses.add(secondYearCourses);
-        listOfCourses.add(thirdYearCourses);
-        listOfCourses.add(fourthYearCourses);
+        firstYearAverage = 0;
+        secondYearAverage = 0;
+        thirdYearAverage = 0;
+        fourthYearAverage = 0;
+        listOfListOfCourses = new ArrayList<>();
+        listOfListOfCourses.add(firstYearCourses);
+        listOfListOfCourses.add(secondYearCourses);
+        listOfListOfCourses.add(thirdYearCourses);
+        listOfListOfCourses.add(fourthYearCourses);
     }
 
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
+
+// REQUIRES: there must be at least one element in the list of courses
+    // EFFECTS:  calculates the average percentage grade of the user courses
+    // taken in a particular year
+
+    public int calculateAverage(ArrayList<Course> courses) {
+        int totalGrade = 0;
+        int count = 0;
+        for (Course c : courses) {
+            totalGrade += c.getFinalMark();
+            count++;
+        }
+        return totalGrade / count;
     }
 
     public void addFirstYearCourses(Course course) {
@@ -48,17 +66,43 @@ public class Student {
         fourthYearCourses.add(course);
     }
 
-    public int calculateAverage(ArrayList<Course> courses) {
-        int totalGrade = 0;
-        int count = 0;
-        for (Course c : courses) {
-            totalGrade += c.getFinalMark();
-            count++;
-        }
-
-        return totalGrade / count;
-
+    public ArrayList<Course> getFirstYearCourses() {
+        return firstYearCourses;
     }
+
+    public ArrayList<Course> getSecondYearCourses() {
+        return secondYearCourses;
+    }
+
+    public ArrayList<Course> getThirdYearCourses() {
+        return thirdYearCourses;
+    }
+
+    public ArrayList<Course> getFourthYearCourses() {
+        return fourthYearCourses;
+    }
+
+    public List<List<Course>> getListOfListOfCourses() {
+        return listOfListOfCourses;
+    }
+
+    public int getFirstYearAverage() {
+        return firstYearAverage;
+    }
+
+    public int getSecondYearAverage() {
+        return secondYearAverage;
+    }
+
+    public int getThirdYearAverage() {
+        return thirdYearAverage;
+    }
+
+    public int getFourthYearAverage() {
+        return fourthYearAverage;
+    }
+
+
 
 
 }

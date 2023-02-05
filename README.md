@@ -58,8 +58,7 @@ creating good motivation and inspiration to achieve my academic goals.
 at UBC.
 
 ## User Stories
-- As a user, I want to be able to add a new course to a list of courses 
-- As a user, I want to be able to view the list of courses taken in the particular year
+- As a user, I want to be able to add a new course to a list of courses
 - As a user, I want to be able to edit my course description 
 - As a user, I want to be able to see a percentage average of my grade in a particular year
 - As a user, I want to click on a particular year to view all the courses, credits achieved, 
