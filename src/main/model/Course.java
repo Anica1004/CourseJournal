@@ -15,6 +15,7 @@ public class Course {
     private String courseSummary;
 
 
+
     // EFFECTS: constructs a course with a course name, professor name, number of credit,
     //          the year taken, final mark, term, and course description
 
@@ -28,8 +29,6 @@ public class Course {
         this.term = term;
         this.courseSummary = courseSummary;
     }
-
-
 
 
 

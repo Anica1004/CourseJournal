@@ -88,18 +88,18 @@ public class FrontDesk {
     public void optionsViewCourse() {
         System.out.println("Choose one of the options below: ");
         System.out.println("\t1. Course Information of Year 1: ");
-        System.out.println("\t1. Course Information of Year 2: ");
-        System.out.println("\t1. Course Information of Year 3: ");
-        System.out.println("\t1. Course Information of Year 4: ");
+        System.out.println("\t2. Course Information of Year 2: ");
+        System.out.println("\t3. Course Information of Year 3: ");
+        System.out.println("\t4. Course Information of Year 4: ");
     }
 
 
 
-    // EFFECTS: displays the grade summary of the particular year
+    // EFFECTS: displays the grade summary of each year (1, 2, 3, and 4)
     public void gradeSummary() {
 
         int year = 1;
-        ArrayList<Integer> emptyList = new ArrayList<>();
+        List<Course> emptyList = new ArrayList<>();
         for (List<Course> courses : user.getListOfListOfCourses()) {
             if (emptyList.equals(courses)) {
                 System.out.println("\n======================================================================");
@@ -109,11 +109,12 @@ public class FrontDesk {
                 System.out.println("======================================================================");
 
             } else {
-                double average = user.calculateAverage(courses);
+                String average = user.calculateAverage(courses);
+                String letterGrade = user.letterGrade(Double.parseDouble(average));
                 System.out.println("\n======================================================================");
                 System.out.println("Grade Summary of Year : " + year);
                 System.out.println("\tYear " + year + " Average Percentage: " + average + " %");
-                System.out.println("\tYear " + year + " Average Letter Grade: " + letterGrade(average));
+                System.out.println("\tYear " + year + " Average Letter Grade: " + letterGrade);
                 System.out.println("\tYear " + year + " Total Credit: " + user.totalCredit(courses));
                 System.out.println("======================================================================");
             }
@@ -123,59 +124,42 @@ public class FrontDesk {
 
 
         }
+        backToLobby();
 
     }
-
-    // EFFECTS: produces a letter grade based on the percentage
-    public String letterGrade(double average) {
-        if (average >= 90) {
-            return "A+";
-        } else if (average >= 85) {
-            return "A";
-        } else if (average >= 80) {
-            return "A-";
-        } else if (average >= 76) {
-            return "B+";
-        } else if (average >= 72) {
-            return "B";
-        } else if (average >= 68) {
-            return "B-";
-        } else if (average >= 64) {
-            return "C+";
-        } else if (average >= 60) {
-            return "C";
-        } else if (average >= 55) {
-            return "C-";
-        } else if (average >= 50) {
-            return "D";
-        } else {
-            return "F";
-        }
-    }
-
 
 
     public void viewCourses(int year, List<Course> courses) {
-        ArrayList<Integer> emptyList = new ArrayList<>();
+        ArrayList<Course> emptyList = new ArrayList<>();
         if (emptyList.equals(courses)) {
-            System.out.println("You have not yet added any courses in Year " + year + "!");
+            System.out.println("You have not yet added any courses in Year " + year + ".");
             System.out.println("Hopefully you add courses in the near future!");
-            System.out.println("I will escort you to the front desk.");
-            displayOptions();
+            backToLobby();
 
         } else {
-            System.out.println("The below are courses you have taken in Year " + year + ":");
+            System.out.println("\nThe below are courses you have taken in Year " + year + ":");
             displayListOfCourse(courses);
             System.out.println("That must have been a fantastic year!");
-            System.out.println("I will escort you back to the lobby!");
+            backToLobby();
+        }
+    }
+
+    public void backToLobby() {
+        System.out.println("Would you like to go back to the front desk?");
+        System.out.println("Input 'Y' for yes and 'N' for no");
+        String userInput = keys.next();
+        if (userInput.equalsIgnoreCase("Y")) {
+            System.out.println("I will escort you to the front desk!");
             displayOptions();
+        } else {
+            System.out.println("See you again!");
         }
     }
 
     public void displayListOfCourse(List<Course> courses) {
         for (Course course : courses) {
             if (course.getTerm() == 1) {
-                System.out.println("\n\n---------------------------------------------------------------------");
+                System.out.println("\n---------------------------------------------------------------------");
                 courseInformation(course.getCourseName(), course.getProfessorName(), course.getCredit(),
                         course.getYear(), course.getFinalMark(), course.getTerm(), course.getCourseSummary());
                 System.out.println("---------------------------------------------------------------------");
@@ -183,7 +167,7 @@ public class FrontDesk {
         }
         for (Course course : courses) {
             if (course.getTerm() == 2) {
-                System.out.println("\n\n---------------------------------------------------------------------");
+                System.out.println("\n---------------------------------------------------------------------");
                 courseInformation(course.getCourseName(), course.getProfessorName(), course.getCredit(),
                         course.getYear(), course.getFinalMark(), course.getTerm(), course.getCourseSummary());
                 System.out.println("---------------------------------------------------------------------");
@@ -196,8 +180,8 @@ public class FrontDesk {
 
     public void removeCourseWelcoming() {
         System.out.println("Be sure to input the exact information without any spelling errors or extra space.");
-        String courseName = askCourseName();
-        courseName = keys.nextLine();
+        askCourseName();
+        String courseName = keys.nextLine();
         int year = askYear();
         findListOfCourse(courseName, year);
 
@@ -217,8 +201,7 @@ public class FrontDesk {
 
                 courses.remove(course);
                 System.out.println("The course " + course.getCourseName() + " was successfully removed!");
-                System.out.println("We will escort you back to the front desk.");
-                displayOptions();
+                backToLobby();
             } else {
                 System.out.println("Sorry about the inconvenience.");
                 System.out.println("We will will find and reconfirm the course again.");
@@ -268,8 +251,7 @@ public class FrontDesk {
             Course newCourse = new Course(courseName, professorName, credit, year, finalMark, term, courseSummary);
             user.sortCourse(newCourse, year);
             System.out.println("We have successfully added your course.");
-            System.out.println("We will escort you back to the front desk.");
-            displayOptions();
+            backToLobby();
 
         } else {
             System.out.println("Sorry for the inconvenience, we will reconfirm the course information");

@@ -1,8 +1,9 @@
 package model;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.text.DecimalFormat;
+
 // This represents the student (user) with student's name, university name,
 // list of first, second, third, and fourth year courses, and list of all courses
 // that the student has taken in the university
@@ -28,11 +29,40 @@ public class Student {
     }
 
 
+    // EFFECTS: produces a letter grade based on the percentage
+    public String letterGrade(double average) {
+        if (average >= 90) {
+            return "A+";
+        } else if (average >= 85) {
+            return "A";
+        } else if (average >= 80) {
+            return "A-";
+        } else if (average >= 76) {
+            return "B+";
+        } else if (average >= 72) {
+            return "B";
+        } else if (average >= 68) {
+            return "B-";
+        } else if (average >= 64) {
+            return "C+";
+        } else if (average >= 60) {
+            return "C";
+        } else if (average >= 55) {
+            return "C-";
+        } else if (average >= 50) {
+            return "D";
+        } else {
+            return "F";
+        }
+    }
+
+
     // REQUIRES: there must be at least one element in the list of courses
     // EFFECTS:  calculates the average percentage grade of the user courses
     // taken in a particular year
 
-    public double calculateAverage(List<Course> courses) {
+    public String calculateAverage(List<Course> courses) {
+        DecimalFormat fm1 = new DecimalFormat("0.#");
         double totalGrade = 0;
         double totalCredit = totalCredit(courses);
         for (Course c : courses) {
@@ -40,7 +70,8 @@ public class Student {
             int credit = c.getCredit();
             totalGrade += finalMark * credit;
         }
-        return totalGrade / totalCredit;
+        double average = totalGrade / totalCredit;
+        return fm1.format(average);
     }
 
 
