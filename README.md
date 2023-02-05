@@ -59,7 +59,7 @@ at UBC.
 
 ## User Stories
 - As a user, I want to be able to add a new course to a list of courses
-- As a user, I want to be able to edit my course description 
+- As a user, I want to be able to remove a course
 - As a user, I want to be able to see a percentage average of my grade in a particular year
 - As a user, I want to click on a particular year to view all the courses, credits achieved, 
 and grade summary of that particular year. 

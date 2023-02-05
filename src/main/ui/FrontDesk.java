@@ -30,6 +30,34 @@ public class FrontDesk {
         navigateOptions();
     }
 
+    public void viewCourse() {
+        System.out.println("Input the undergraduate year (1, 2, 3, or 4) you want to check!: ");
+        int year = keys.nextInt();
+        if (year == 1) {
+            displayListOfCourse(user.getFirstYearCourses());
+
+        } else if (year == 2) {
+            displayListOfCourse(user.getSecondYearCourses());
+
+        } else if (year == 3) {
+            displayListOfCourse(user.getThirdYearCourses());
+
+        } else if (year == 4) {
+            displayListOfCourse(user.getFourthYearCourses());
+
+        }
+
+    }
+
+    public void displayListOfCourse(ArrayList<Course> courses){
+        for (Course course: courses) {
+
+        }
+
+
+    }
+
+
     // EFFECTS: Navigates user to the different program options
     //          depending on user's decision
     public void navigateOptions() {
@@ -252,6 +280,7 @@ public class FrontDesk {
                 state = false;
             } else {
                 System.out.println("Please input a value that is either 1 or 2");
+
             }
         }
         return term;

@@ -30,37 +30,6 @@ public class Course {
     }
 
 
-
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
-    public void setProfessorName(String professorName) {
-        this.professorName = professorName;
-    }
-
-    public void setCredit(int credit) {
-        this.credit = credit;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public void setFinalMark(int finalMark) {
-        this.finalMark = finalMark;
-    }
-
-    public void setTerm(int term) {
-        this.term = term;
-    }
-
-    public void setCourseSummary(String newSummary) {
-        this.courseSummary = newSummary;
-    }
-
-
     public double getFinalMark() {
         return finalMark;
     }
