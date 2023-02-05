@@ -40,7 +40,7 @@ public class Student {
     // EFFECTS:  calculates the average percentage grade of the user courses
     // taken in a particular year
 
-    public int calculateAverage(ArrayList<Course> courses) {
+    public double calculateAverage(ArrayList<Course> courses) {
         int totalGrade = 0;
         int count = 0;
         for (Course c : courses) {

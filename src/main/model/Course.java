@@ -10,7 +10,7 @@ public class Course {
     private String professorName;
     private int credit;
     private int year;
-    private int finalMark;
+    private double finalMark;
     private int term;
     private String courseSummary;
 
@@ -18,7 +18,7 @@ public class Course {
     // EFFECTS: constructs a course with a course name, professor name, number of credit,
     //          the year taken, final mark, term, and course description
 
-    public Course(String courseName, String professorName, int credit, int year, int finalMark,
+    public Course(String courseName, String professorName, int credit, int year, double finalMark,
                   int term, String courseSummary) {
         this.courseName = courseName;
         this.professorName = professorName;
@@ -31,7 +31,7 @@ public class Course {
 
 
 
-/*
+
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
@@ -59,9 +59,9 @@ public class Course {
     public void setCourseSummary(String newSummary) {
         this.courseSummary = newSummary;
     }
-*/
 
-    public int getFinalMark() {
+
+    public double getFinalMark() {
         return finalMark;
     }
 
