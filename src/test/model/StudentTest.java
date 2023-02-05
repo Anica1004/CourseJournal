@@ -138,6 +138,8 @@ public class StudentTest {
         assertEquals(student.findCourse("CPSC 110", student.getFourthYearCourses()), course1);
         assertEquals(student.findCourse("SCIE 113", student.getFourthYearCourses()), course3);
         assertEquals(student.findCourse("UNKNOWN COURSE", student.getFourthYearCourses()), null);
+        student = new Student();
+        assertEquals(student.findCourse("UNKNOWN COURSE", student.getFourthYearCourses()), null);
     }
 
 
