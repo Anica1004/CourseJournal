@@ -59,7 +59,7 @@ public class Course {
     public void setCourseSummary(String newSummary) {
         this.courseSummary = newSummary;
     }
-
+*/
 
     public int getFinalMark() {
         return finalMark;
@@ -88,7 +88,7 @@ public class Course {
     public String getCourseSummary() {
         return courseSummary;
     }
-    */
+
 
 
 }
