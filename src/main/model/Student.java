@@ -60,7 +60,7 @@ public class Student {
 
     // REQUIRES: there must be at least one element in the list of courses
     // EFFECTS:  calculates the average percentage grade of the user courses
-    // taken in a particular year
+    // taken in a particular year (weighted based on credits)
 
     public String calculateAverage(List<Course> courses) {
         DecimalFormat fm1 = new DecimalFormat("0.#");
@@ -77,7 +77,7 @@ public class Student {
 
 
 
-    // EFFECTS: finds the given course in the list of courses
+    // EFFECTS: finds a course with the given name in the list of courses and returns it
     public Course findCourse(String courseName, List<Course> courses) {
         for (Course course : courses) {
             if (courseName.equalsIgnoreCase(course.getCourseName())) {

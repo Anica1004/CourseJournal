@@ -3,7 +3,7 @@ package model;
 
 // The class represents a "course" having a course name, the professor that taught
 // the course, course credit, the undergraduate year (1, 2, 3, or 4) and term (1 or 2)
-// that the user has taken the course
+// that the user has taken the course,
 // the final mark that the user has gotten, a short description of the course
 // and the course's overall rating.
 
