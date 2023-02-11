@@ -9,7 +9,7 @@ import model.Student;
 
 // The frontDesk where users interact with the program, and navigate to find their needs,
 // including adding a course, removing a course, viewing courses taken in a particular year,
-//  and the overall grade summary
+//  and the overall grade summary.
 
 public class FrontDesk {
     private Student user;
@@ -39,7 +39,9 @@ public class FrontDesk {
     }
 
     // EFFECTS: Navigates user to the different program options
-    //          depending on user's decision
+    //          depending on user's decision, which may add, remove, view courses, or
+    //          view grade summary
+    // MODIFIES: this
     public void navigateOptions() {
 
         int userInput = keys.nextInt();
@@ -220,9 +222,9 @@ public class FrontDesk {
         }
     }
 
-
-
-    // EFFECTS: finds the course within the list of courses
+    // REQUIRES: year must be 1, 2, 3, or 4
+    // MODIFIES: this
+    // EFFECTS: finds the course within the list of courses, navigating to remove it
     public void findListOfCourse(String courseName, int year) {
         if (year == 1) {
             removeCourse(user.findCourse(courseName, user.getFirstYearCourses()), user.getFirstYearCourses());
@@ -269,7 +271,8 @@ public class FrontDesk {
 
     }
 
-
+    // REQUIRES: year must be 1, 2, 3, or 4,  credit > 0, final mark > 0, term must be 1 or 2,
+    //            snd 0<= course rating <= 10
     // EFFECTS: displays a course's information including course name, the professor that taught
     //// the course, course credit, the undergraduate year (1, 2, 3, or 4) and term (1 or 2)
     //// that the user has taken the course
@@ -286,7 +289,8 @@ public class FrontDesk {
         System.out.println("\tCourse Description: " + courseSummary);
 
     }
-
+    // REQUIRES: year must be 1, 2, 3, or 4,  credit > 0, final mark > 0, term must be 1 or 2,
+    //           and  0<= course rating <= 10
     // EFFECTS: confirms with user if the course information is correct
     //          returns true if it is; otherwise false
     public boolean courseConfirmation(String courseName, String professorName, int credit, int year,
