@@ -289,6 +289,7 @@ public class FrontDesk {
         System.out.println("\tCourse Description: " + courseSummary);
 
     }
+
     // REQUIRES: year must be 1, 2, 3, or 4,  credit > 0, final mark > 0, term must be 1 or 2,
     //           and  0<= course rating <= 10
     // EFFECTS: confirms with user if the course information is correct
