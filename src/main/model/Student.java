@@ -161,10 +161,12 @@ public class Student implements Changer {
 
 
     // The method toJson, firstYearCoursesToJson, secondYearCoursesToJson, thirdYearCoursesToJson, and
-    // fourthYearCoursesToJson was originated based on the source below:
+    // fourthYearCoursesToJson was created based on the source below:
     // Carter, Paul (2021) JsonSerializationDemo
     //https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 
+
+    // EFFECTS: returns course and its information as a JSON object
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -177,56 +179,43 @@ public class Student implements Changer {
 
 
 
-
     // EFFECTS: returns the list of first year courses that the student has taken
     // as a JSON array
     private JSONArray firstYearCoursesToJson() {
-
         JSONArray firstYear = new JSONArray();
-
         for (Course c : firstYearCourses) {
             firstYear.put(c.toJson());
         }
-
         return firstYear;
     }
 
     // EFFECTS: returns the list of second year courses that the student has taken
     // as a JSON array
     private JSONArray secondYearCoursesToJson() {
-
         JSONArray secondYear = new JSONArray();
-
         for (Course c : secondYearCourses) {
             secondYear.put(c.toJson());
         }
-
         return secondYear;
     }
 
     // EFFECTS: returns the list of third year courses that the student has taken
     // as a JSON array
     private JSONArray thirdYearCoursesToJson() {
-
         JSONArray thirdYear = new JSONArray();
-
         for (Course c : thirdYearCourses) {
             thirdYear.put(c.toJson());
         }
-
         return thirdYear;
     }
 
     // EFFECTS: returns the list of fourth year courses that the student has taken
     // as a JSON array
     private JSONArray fourthYearCoursesToJson() {
-
         JSONArray fourthYear = new JSONArray();
-
         for (Course c : fourthYearCourses) {
             fourthYear.put(c.toJson());
         }
-
         return fourthYear;
     }
 

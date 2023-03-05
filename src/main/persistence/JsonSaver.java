@@ -3,7 +3,7 @@ package persistence;
 
 
 
-// This class is documentation of Student, in which its information is
+// This class is saves the data of Student, in which its information is
 // represented as Json Objects
 
 import model.Student;
@@ -23,15 +23,14 @@ public class JsonSaver {
     private PrintWriter writer;
 
 
-    // EFFECTS: constructs the Json writer by setting the file name which will be
-    // the file to write on
+    // EFFECTS: constructs the Json writer by setting the file name
     public JsonSaver(String fileName) {
         this.fileName = fileName;
     }
 
     // MODIFIES: this
-    // EFFECTS: opens writer; throws FileNotFoundException if destination file cannot
-    // be opened for writing
+    // EFFECTS: opens writer; throws FileNotFoundException if the specified file
+    // is unable to be opened for writing
     public void open() throws FileNotFoundException {
         writer = new PrintWriter(new File(fileName));
     }

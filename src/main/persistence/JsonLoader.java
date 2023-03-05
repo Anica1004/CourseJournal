@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-// This class represents a reader that loads the JSON data of students from the specified
+// This class represents a loader that loads the JSON data of students from the specified
 // file
 
 // This class was created based on the source below:
@@ -27,7 +27,7 @@ public class JsonLoader {
     }
 
     // EFFECTS: reads student from file and returns it;
-    // throws IOException if an error occurs reading data from file
+    // if the file is not able to be read properly, a IOException is thrown
     public Student read() throws IOException {
         String jsonData = readFile(fileName);
         JSONObject jsonObject = new JSONObject(jsonData);
@@ -37,7 +37,6 @@ public class JsonLoader {
     // EFFECTS: reads source file as string and returns it
     private String readFile(String source) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
-
         try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {
             stream.forEach(s -> contentBuilder.append(s));
         }
@@ -68,7 +67,7 @@ public class JsonLoader {
     }
 
     // MODIFIES: st
-    // EFFECTS: parses first year courses from JSON object and adds them to student
+    // EFFECTS: parses second year courses from JSON object and adds them to student
     private void addSecondYearCourses(Student st, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("secondYearCourses");
         for (Object json : jsonArray) {
@@ -78,7 +77,7 @@ public class JsonLoader {
     }
 
     // MODIFIES: st
-    // EFFECTS: parses first year courses from JSON object and adds them to student
+    // EFFECTS: parses third year courses from JSON object and adds them to student
     private void addThirdYearCourses(Student st, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("thirdYearCourses");
         for (Object json : jsonArray) {
@@ -88,7 +87,7 @@ public class JsonLoader {
     }
 
     // MODIFIES: st
-    // EFFECTS: parses first year courses from JSON object and adds them to student
+    // EFFECTS: parses fourth year courses from JSON object and adds them to student
     private void addFourthYearCourses(Student st, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("fourthYearCourses");
         for (Object json : jsonArray) {
@@ -98,7 +97,8 @@ public class JsonLoader {
     }
 
     // MODIFIES: st
-    // EFFECTS: parses a first year course from JSON object and adds it to student
+    // EFFECTS: parses a course from JSON object and adds it to student's list of courses
+    // of the specified year (first, second, third, or fourth)
     private void addCourse(Student st, JSONObject jsonObject, int num) {
         String courseName = jsonObject.getString("courseName");
         String professorName = jsonObject.getString("professorName");

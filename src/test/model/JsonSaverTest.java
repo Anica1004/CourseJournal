@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import persistence.JsonLoader;
 import persistence.JsonSaver;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +45,8 @@ public class JsonSaverTest {
             Student testUser = new Student();
             JsonSaver saver = new JsonSaver("./data/TestWith\0illegal:fileName.json");
             saver.open();
-            fail("IOException has to thrown to be valid");
-        } catch (IOException e) {
+            fail("FileNotFoundException has to thrown to be valid");
+        } catch (FileNotFoundException e) {
             // If the Exception was caught, the test is passing
         }
     }
