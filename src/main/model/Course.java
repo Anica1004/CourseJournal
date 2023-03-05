@@ -7,7 +7,10 @@ package model;
 // the final mark that the user has gotten, a short description of the course
 // and the course's overall rating.
 
-public class Course {
+import org.json.JSONObject;
+import persistence.Changer;
+
+public class Course implements Changer {
     private String courseName;
     private String professorName;
     private int credit;
@@ -35,6 +38,20 @@ public class Course {
 
     }
 
+    // EFFECTS: returns course and its information as a JSON object
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("courseName", courseName);
+        json.put("professorName", professorName);
+        json.put("credit", credit);
+        json.put("year", year);
+        json.put("finalMark", finalMark);
+        json.put("term", term);
+        json.put("courseSummary", courseSummary);
+        json.put("rating", rating);
+        return json;
+    }
 
 
     public double getFinalMark() {

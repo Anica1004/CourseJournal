@@ -1,5 +1,9 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Changer;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +12,7 @@ import java.util.List;
 // list of first, second, third, and fourth year courses, and list of all courses
 // that the student has taken in the university
 
-public class Student {
+public class Student implements Changer {
     private List<Course> firstYearCourses;
     private List<Course> secondYearCourses;
     private List<Course> thirdYearCourses;
@@ -154,4 +158,92 @@ public class Student {
     }
 
 
+
+
+    // The method toJson, firstYearCoursesToJson, secondYearCoursesToJson, thirdYearCoursesToJson, and
+    // fourthYearCoursesToJson was originated based on the source below:
+    // Carter, Paul (2021) JsonSerializationDemo
+    //https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("firstYearCourses", firstYearCoursesToJson());
+        json.put("secondYearCourses", secondYearCoursesToJson());
+        json.put("thirdYearCourses", thirdYearCoursesToJson());
+        json.put("fourthYearCourses", fourthYearCoursesToJson());
+        json.put("listOfListOfCourses", listOfListOfCoursesToJson());
+        return json;
+    }
+
+
+
+
+    // EFFECTS: returns the list of first year courses that the student has taken
+    // as a JSON array
+    private JSONArray firstYearCoursesToJson() {
+
+        JSONArray firstYear = new JSONArray();
+
+        for (Course c : firstYearCourses) {
+            firstYear.put(c.toJson());
+        }
+
+        return firstYear;
+    }
+
+    // EFFECTS: returns the list of second year courses that the student has taken
+    // as a JSON array
+    private JSONArray secondYearCoursesToJson() {
+
+        JSONArray secondYear = new JSONArray();
+
+        for (Course c : secondYearCourses) {
+            secondYear.put(c.toJson());
+        }
+
+        return secondYear;
+    }
+
+    // EFFECTS: returns the list of third year courses that the student has taken
+    // as a JSON array
+    private JSONArray thirdYearCoursesToJson() {
+
+        JSONArray thirdYear = new JSONArray();
+
+        for (Course c : thirdYearCourses) {
+            thirdYear.put(c.toJson());
+        }
+
+        return thirdYear;
+    }
+
+    // EFFECTS: returns the list of fourth year courses that the student has taken
+    // as a JSON array
+    private JSONArray fourthYearCoursesToJson() {
+
+        JSONArray fourthYear = new JSONArray();
+
+        for (Course c : thirdYearCourses) {
+            fourthYear.put(c.toJson());
+        }
+
+        return fourthYear;
+    }
+
+    // EFFECTS: returns the list of all the list of courses that the student has taken
+    // as a JSON array
+    private JSONArray listOfListOfCoursesToJson() {
+
+        JSONArray listOfList = new JSONArray();
+        listOfList.put(firstYearCoursesToJson());
+        listOfList.put(secondYearCoursesToJson());
+        listOfList.put(thirdYearCoursesToJson());
+        listOfList.put(fourthYearCoursesToJson());
+
+        return listOfList;
+    }
+
+
 }
+
