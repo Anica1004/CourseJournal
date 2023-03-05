@@ -1,25 +1,35 @@
 package ui;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import model.Course;
 import model.Student;
+import persistence.JsonLoader;
+import persistence.JsonSaver;
 
 // The frontDesk where users interact with the program, and navigate to find their needs,
 // including adding a course, removing a course, viewing courses taken in a particular year,
 //  and the overall grade summary.
 
 public class FrontDesk {
+    private static final String FILENAME = "./data/student.json";
     private Student user;
     private Scanner keys;
+    private JsonSaver jsonSaver;
+    private JsonLoader jsonLoader;
 
     // EFFECTS: starts the program running
     public void startProgram() {
         user = new Student();
         keys = new Scanner(System.in);
+        jsonSaver = new JsonSaver(FILENAME);
+        jsonLoader = new JsonLoader(FILENAME);
         displayOptions();
+
 
     }
 
@@ -33,7 +43,9 @@ public class FrontDesk {
         System.out.println("\t2. Remove Course");
         System.out.println("\t3. View Courses");
         System.out.println("\t4. Grade Summary");
-        System.out.println("\t5. Quit");
+        System.out.println("\t5. Save Course Information");
+        System.out.println("\t6. Load Course Information");
+        System.out.println("\t7. Quit");
         System.out.println("-------------------------------------------------------------------");
         navigateOptions();
     }
@@ -57,9 +69,11 @@ public class FrontDesk {
         } else if (userInput == 4) {
             System.out.println("You have chosen to view your grade summary!");
             gradeSummary();
-
-
         } else if (userInput == 5) {
+            saveWork();
+        } else if (userInput == 6) {
+            loadWork();
+        } else if (userInput == 7) {
             System.out.println("You have chosen to quit.");
             System.out.println("Come back again!");
         } else {
@@ -337,7 +351,6 @@ public class FrontDesk {
     }
 
 
-
     // EFFECTS: asks user for professor name returns input
     public String askProfessorName() {
         System.out.println("Input your professor's name for this course:");
@@ -405,6 +418,32 @@ public class FrontDesk {
         courseSummary = keys.nextLine();
         return courseSummary;
 
+    }
+
+
+    // EFFECTS: saves the student to file
+    private void saveWork() {
+        try {
+            jsonSaver.open();
+            jsonSaver.write(user);
+            jsonSaver.close();
+            System.out.println("We have successfully saved your course data to " + FILENAME);
+            backToLobby();
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to save to file: " + FILENAME);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads student from file
+    private void loadWork() {
+        try {
+            user = jsonLoader.read();
+            System.out.println("We have successfully loaded your course information from " + FILENAME);
+            backToLobby();
+        } catch (IOException e) {
+            System.out.println("We are unable to read from the following file: " + FILENAME);
+        }
     }
 
 

@@ -172,7 +172,6 @@ public class Student implements Changer {
         json.put("secondYearCourses", secondYearCoursesToJson());
         json.put("thirdYearCourses", thirdYearCoursesToJson());
         json.put("fourthYearCourses", fourthYearCoursesToJson());
-        json.put("listOfListOfCourses", listOfListOfCoursesToJson());
         return json;
     }
 
@@ -224,25 +223,13 @@ public class Student implements Changer {
 
         JSONArray fourthYear = new JSONArray();
 
-        for (Course c : thirdYearCourses) {
+        for (Course c : fourthYearCourses) {
             fourthYear.put(c.toJson());
         }
 
         return fourthYear;
     }
 
-    // EFFECTS: returns the list of all the list of courses that the student has taken
-    // as a JSON array
-    private JSONArray listOfListOfCoursesToJson() {
-
-        JSONArray listOfList = new JSONArray();
-        listOfList.put(firstYearCoursesToJson());
-        listOfList.put(secondYearCoursesToJson());
-        listOfList.put(thirdYearCoursesToJson());
-        listOfList.put(fourthYearCoursesToJson());
-
-        return listOfList;
-    }
 
 
 }

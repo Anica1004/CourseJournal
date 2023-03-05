@@ -17,7 +17,6 @@ import java.util.stream.Stream;
 // This class was created based on the source below:
 // Carter, Paul (2021) JsonSerializationDemo
 //https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
-
 public class JsonLoader {
 
     private String fileName;
@@ -27,7 +26,7 @@ public class JsonLoader {
         this.fileName = fileName;
     }
 
-    // EFFECTS: reads workroom from file and returns it;
+    // EFFECTS: reads student from file and returns it;
     // throws IOException if an error occurs reading data from file
     public Student read() throws IOException {
         String jsonData = readFile(fileName);

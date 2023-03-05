@@ -18,7 +18,7 @@ import java.io.PrintWriter;
 //https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 
 public class JsonSaver {
-    private static final int indent = 3;
+    private static final int indent = 4;
     private String fileName;
     private PrintWriter writer;
 
