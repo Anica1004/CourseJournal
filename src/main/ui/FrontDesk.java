@@ -55,7 +55,6 @@ public class FrontDesk {
     //          view grade summary
     // MODIFIES: this
     public void navigateOptions() {
-
         int userInput = keys.nextInt();
         if (userInput == 1) {
             System.out.println("You have chosen to add a course!");
@@ -74,7 +73,6 @@ public class FrontDesk {
         } else if (userInput == 6) {
             loadWork();
         } else if (userInput == 7) {
-            System.out.println("You have chosen to quit.");
             System.out.println("Come back again!");
         } else {
             System.out.println("Please input a number between 1 and 4.");
