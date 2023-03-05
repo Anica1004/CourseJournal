@@ -66,8 +66,8 @@ at UBC.
 - As a user, I want to be able to see a grade summary of the different years
 - As a user, I want to click on a particular year to view all the courses (with course information) 
 I have taken in that particular year.
-- As a user, when I start the program, I want to have the option to load my course information from file.
-- As a user, I want to have an option to save my course information when I select the quit option from the front desk.
+- As a user, I want to have the option to load my course information from file.
+- As a user, I want to have an option to save my course information to file.
 
 
 
