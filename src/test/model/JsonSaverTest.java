@@ -13,6 +13,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+// This Test was created based on the source below:
+// Carter, Paul (2021) JsonSerializationDemo
+//https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
+
 public class JsonSaverTest {
 
 
