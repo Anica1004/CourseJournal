@@ -115,7 +115,7 @@ public class JsonLoader {
             st.addSecondYearCourses(course);
         } else if (num == 3) {
             st.addThirdYearCourses(course);
-        } else if (num == 4) {
+        } else {
             st.addFourthYearCourses(course);
         }
     }
