@@ -2,16 +2,17 @@ package persistence;
 
 
 
-
-// This class is saves the data of Student, in which its information is
-// represented as Json Objects
-
 import model.Student;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+
+
+// This class is saves the data of Student, in which its information is
+// represented as Json Objects
+
 
 // This class was created based on the source below:
 // Carter, Paul (2021) JsonSerializationDemo

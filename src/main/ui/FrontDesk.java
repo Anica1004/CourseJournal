@@ -418,6 +418,11 @@ public class FrontDesk {
 
     }
 
+    // The methods saveWork and loadWork was created based on the source below:
+    // This class was created based on the source below:
+    // Carter, Paul (2021) JsonSerializationDemo
+    //https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
 
     // EFFECTS: saves the student to file
     private void saveWork() {
