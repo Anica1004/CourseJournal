@@ -1,4 +1,4 @@
-package ui;
+package ui.gui;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -9,8 +9,8 @@ public class FrontFrame extends JFrame {
     FrontFrame() {
         Border border = BorderFactory.createDashedBorder(Color.pink);
         JLabel label = new JLabel();
-        label.setText("Hello user, select from below to fulfill your needs!");
-        label.setFont(new Font("Serif", 10, 20));
+        label.setText("\"Hello user, select from below to fulfill your needs!\"");
+        label.setFont(new Font("Serif", Font.ITALIC, 20));
 
 
         label.setIconTextGap(20);

@@ -1,4 +1,4 @@
-package ui;
+package ui.gui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +15,7 @@ public class RemoveCoursePanel extends Panel {
         JButton button = new JButton();
         button.setPreferredSize(new Dimension(300, 90));
         button.setBounds(0, 140, 1000, 90);
+        button.setText("Remove a Course");
         this.add(button);
         button.setVerticalAlignment(JButton.CENTER);
         button.setHorizontalAlignment(JButton.CENTER);

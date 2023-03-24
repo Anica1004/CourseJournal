@@ -1,7 +1,7 @@
 package ui;
 
 
-import javax.swing.*;
+import ui.gui.FrontDeskGui;
 
 public class Main {
     public static void main(String[] args) {

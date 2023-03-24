@@ -1,10 +1,10 @@
-package ui;
+package ui.gui;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class OtherPanel extends Panel {
-    public OtherPanel(){
+    public OtherPanel() {
         this.setBounds(0, 570, 1000, 100);
         this.setBackground(Color.white);
         addButton();
@@ -14,6 +14,9 @@ public class OtherPanel extends Panel {
         JButton button1 = new JButton();
         JButton button2 = new JButton();
         JButton button3 = new JButton();
+        button1.setText("Save File");
+        button2.setText("Load File");
+        button3.setText("Quit");
         button1.setPreferredSize(new Dimension(200, 90));
         button2.setPreferredSize(new Dimension(200, 90));
         button3.setPreferredSize(new Dimension(200, 90));
