@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class RemoveCoursePanel extends Panel {
+    private JButton button;
+
     public RemoveCoursePanel() {
         this.setBounds(0, 240, 1000, 100);
         this.setBackground(Color.white);
@@ -12,7 +14,7 @@ public class RemoveCoursePanel extends Panel {
     }
 
     private void addButton() {
-        JButton button = new JButton();
+        button = new JButton();
         button.setPreferredSize(new Dimension(300, 90));
         button.setBounds(0, 140, 1000, 90);
         button.setText("Remove a Course");
@@ -21,5 +23,8 @@ public class RemoveCoursePanel extends Panel {
         button.setHorizontalAlignment(JButton.CENTER);
     }
 
+    public JButton getButton() {
+        return this.button;
+    }
 
 }

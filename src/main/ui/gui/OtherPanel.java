@@ -4,6 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class OtherPanel extends Panel {
+
+    private JButton saveButton;
+    private JButton loadButton;
+    private JButton quitButton;
+
     public OtherPanel() {
         this.setBounds(0, 570, 1000, 100);
         this.setBackground(Color.white);
@@ -11,22 +16,22 @@ public class OtherPanel extends Panel {
     }
 
     private void addButton() {
-        JButton button1 = new JButton();
-        JButton button2 = new JButton();
-        JButton button3 = new JButton();
-        button1.setText("Save File");
-        button2.setText("Load File");
-        button3.setText("Quit");
-        button1.setPreferredSize(new Dimension(200, 90));
-        button2.setPreferredSize(new Dimension(200, 90));
-        button3.setPreferredSize(new Dimension(200, 90));
+        saveButton = new JButton();
+        loadButton = new JButton();
+        quitButton = new JButton();
+        saveButton.setText("Save File");
+        loadButton.setText("Load File");
+        quitButton.setText("Quit");
+        saveButton.setPreferredSize(new Dimension(200, 90));
+        loadButton.setPreferredSize(new Dimension(200, 90));
+        quitButton.setPreferredSize(new Dimension(200, 90));
 
-        button1.setBounds(0, 140, 200, 90);
-        button2.setBounds(300, 140, 200, 90);
-        button3.setBounds(600, 140, 200, 90);
-        this.add(button1);
-        this.add(button2);
-        this.add(button3);
+        saveButton.setBounds(0, 140, 200, 90);
+        loadButton.setBounds(300, 140, 200, 90);
+        quitButton.setBounds(600, 140, 200, 90);
+        this.add(saveButton);
+        this.add(loadButton);
+        this.add(quitButton);
 
     }
 

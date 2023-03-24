@@ -29,13 +29,13 @@ public class FrontFrame extends JFrame {
         this.setSize(1000, 1000);
         this.setLayout(null);
         this.add(label);
-        addPanels();
+        // addPanels();
         this.setVisible(true);
 
     }
 
 
-    private void addPanels() {
+/*    private void addPanels() {
         AddCoursePanel addCoursePanel = new AddCoursePanel();
         RemoveCoursePanel removeCoursePanel = new RemoveCoursePanel();
         ViewCoursePanel viewCoursePanel = new ViewCoursePanel();
@@ -47,7 +47,7 @@ public class FrontFrame extends JFrame {
         this.add(gradeSummaryPanel);
         this.add(otherPanel);
 
-    }
+    }*/
 
 
 }
