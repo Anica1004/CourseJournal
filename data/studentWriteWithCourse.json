@@ -1,0 +1,42 @@
+{
+    "secondYearCourses": [{
+        "courseName": "cpsc 210",
+        "year": 2,
+        "rating": 10,
+        "professorName": "steven wolfman",
+        "finalMark": 100,
+        "term": 2,
+        "courseSummary": "For Test 2",
+        "credit": 4
+    }],
+    "fourthYearCourses": [{
+        "courseName": "cpsc 410",
+        "year": 4,
+        "rating": 10,
+        "professorName": "anica",
+        "finalMark": 100,
+        "term": 1,
+        "courseSummary": "For Test 4",
+        "credit": 4
+    }],
+    "firstYearCourses": [{
+        "courseName": "cpsc 110",
+        "year": 1,
+        "rating": 10,
+        "professorName": "gregor",
+        "finalMark": 94,
+        "term": 1,
+        "courseSummary": "For Test 1",
+        "credit": 4
+    }],
+    "thirdYearCourses": [{
+        "courseName": "cpsc 310",
+        "year": 3,
+        "rating": 10,
+        "professorName": "amy",
+        "finalMark": 100,
+        "term": 2,
+        "courseSummary": "For Test 3",
+        "credit": 4
+    }]
+}

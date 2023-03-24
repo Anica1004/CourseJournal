@@ -1,0 +1,27 @@
+{
+    "secondYearCourses": [],
+    "fourthYearCourses": [],
+    "firstYearCourses": [
+        {
+            "courseName": "cpsc 110",
+            "year": 1,
+            "rating": 10,
+            "professorName": "gregor",
+            "finalMark": 96,
+            "term": 1,
+            "courseSummary": "it was good",
+            "credit": 4
+        },
+        {
+            "courseName": "english",
+            "year": 1,
+            "rating": 7,
+            "professorName": "anica",
+            "finalMark": 87,
+            "term": 2,
+            "courseSummary": "it was horrible",
+            "credit": 4
+        }
+    ],
+    "thirdYearCourses": []
+}

@@ -1,12 +1,15 @@
 package ui.gui;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.io.File;
 
 public class FrontFrame extends JFrame {
 
     FrontFrame() {
+
         Border border = BorderFactory.createDashedBorder(Color.pink);
         JLabel label = new JLabel();
         label.setText("\"Hello user, select from below to fulfill your needs!\"");
@@ -14,40 +17,27 @@ public class FrontFrame extends JFrame {
 
 
         label.setIconTextGap(20);
-        label.setBackground(Color.pink);
+        label.setBackground(Color.pink.brighter());
 
         label.setOpaque(true);
         label.setBorder(border);
         label.setVerticalAlignment(JLabel.CENTER);
         label.setHorizontalAlignment(JLabel.CENTER);
         label.setBounds(0, 0, 1000, 80);
-
-
+        ImageIcon image = new ImageIcon("src/main/ui/gui/BackgroundImage.jpg");
+        this.setContentPane(new JLabel(image));
         this.setTitle("\"Your University Journey\"");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setSize(1000, 1000);
         this.setLayout(null);
         this.add(label);
-        // addPanels();
         this.setVisible(true);
 
     }
 
 
-/*    private void addPanels() {
-        AddCoursePanel addCoursePanel = new AddCoursePanel();
-        RemoveCoursePanel removeCoursePanel = new RemoveCoursePanel();
-        ViewCoursePanel viewCoursePanel = new ViewCoursePanel();
-        GradeSummaryPanel gradeSummaryPanel = new GradeSummaryPanel();
-        OtherPanel otherPanel = new OtherPanel();
-        this.add(addCoursePanel);
-        this.add(removeCoursePanel);
-        this.add(viewCoursePanel);
-        this.add(gradeSummaryPanel);
-        this.add(otherPanel);
 
-    }*/
 
 
 }
