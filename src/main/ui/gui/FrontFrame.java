@@ -27,10 +27,9 @@ public class FrontFrame extends JFrame {
         this.setContentPane(new JLabel(image));
         this.setTitle("\"Your University Journey\"");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //this.setResizable(false);
+        this.setResizable(false);
         this.setSize(1000, 1000);
-        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
-        this.add(label);
+        this.setLayout(new B);
         this.setVisible(true);
 
     }

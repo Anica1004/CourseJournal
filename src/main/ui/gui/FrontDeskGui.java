@@ -32,6 +32,8 @@ public class FrontDeskGui implements ActionListener {
     private Panel otherPanel;
     private Panel mainPanel;
 
+
+
     private JButton addCourseButton;
     private JButton removeCourseButton;
     private JButton viewCourseButton;
@@ -75,18 +77,14 @@ public class FrontDeskGui implements ActionListener {
         addViewCoursePanel();
         addGradeSummaryPanel();
         addOtherPanel();
-
         mainPanel = new Panel();
-
-
-
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.setLayout(new GridLayout(5, 1));
         mainPanel.add(addCoursePanel);
         mainPanel.add(removeCoursePanel);
         mainPanel.add(viewCoursePanel);
         mainPanel.add(gradeSummaryPanel);
         mainPanel.add(otherPanel);
-        userFrame.add(mainPanel);
+        userFrame.add(mainPanel, BorderLayout.CENTER);
         userFrame.setVisible(true);
 
 
@@ -162,7 +160,7 @@ public class FrontDeskGui implements ActionListener {
         JLabel courseNameLabel = makeInputLabel("Course Name");
         JPanel courseLabelPanel = new JPanel();
         courseLabelPanel.setLayout(new FlowLayout());
-        courseLabelPanel.setSize(960, 40);
+        courseLabelPanel.setPreferredSize(new Dimension(960, 40));
         courseLabelPanel.add(courseNameLabel);
         courseLabelPanel.add(inputCourseName);
         courseLabelPanel.setVisible(true);
@@ -173,7 +171,7 @@ public class FrontDeskGui implements ActionListener {
         JLabel profNameLabel = makeInputLabel("Professor Name");
         JPanel profNameLabelPanel = new JPanel();
         profNameLabelPanel.setLayout(new FlowLayout());
-        profNameLabelPanel.setSize(960, 40);
+        profNameLabelPanel.setPreferredSize(new Dimension(960, 40));
         profNameLabelPanel.add(profNameLabel);
         profNameLabelPanel.add(inputProfessorName);
         profNameLabelPanel.setVisible(true);
@@ -185,7 +183,7 @@ public class FrontDeskGui implements ActionListener {
         JLabel creditLabel = makeInputLabel("Number of Credits");
         JPanel creditLabelPanel = new JPanel();
         creditLabelPanel.setLayout(new FlowLayout());
-        creditLabelPanel.setSize(960, 40);
+        creditLabelPanel.setPreferredSize(new Dimension(960, 40));
         creditLabelPanel.add(creditLabel);
         creditLabelPanel.add(inputCredit);
 
@@ -200,7 +198,7 @@ public class FrontDeskGui implements ActionListener {
         JLabel yearLabel = makeInputLabel("Undergraduate Year (1, 2, 3, or 4)");
         JPanel yearLabelPanel = new JPanel();
         yearLabelPanel.setLayout(new FlowLayout());
-        yearLabelPanel.setSize(960, 40);
+        yearLabelPanel.setPreferredSize(new Dimension(960, 40));
         yearLabelPanel.add(yearLabel);
         yearLabelPanel.add(inputYear);
         yearLabelPanel.setVisible(true);
@@ -212,7 +210,7 @@ public class FrontDeskGui implements ActionListener {
         JLabel markLabel = makeInputLabel("Final Mark");
         JPanel markLabelPanel = new JPanel();
         markLabelPanel.setLayout(new FlowLayout());
-        markLabelPanel.setSize(960, 40);
+        markLabelPanel.setPreferredSize(new Dimension(960, 40));
         markLabelPanel.add(markLabel);
         markLabelPanel.add(inputFinalMark);
         markLabelPanel.setVisible(true);
@@ -225,7 +223,7 @@ public class FrontDeskGui implements ActionListener {
         JLabel termLabel = makeInputLabel("Term (1 or 2)");
         JPanel termLabelPanel = new JPanel();
         termLabelPanel.setLayout(new FlowLayout());
-        termLabelPanel.setSize(960, 40);
+        termLabelPanel.setPreferredSize(new Dimension(960, 40));
         termLabelPanel.add(termLabel);
         termLabelPanel.add(inputTerm);
 
@@ -237,7 +235,7 @@ public class FrontDeskGui implements ActionListener {
         JLabel ratingLabel = makeInputLabel("Rating out of 10");
         JPanel ratingLabelPanel = new JPanel();
         ratingLabelPanel.setLayout(new FlowLayout());
-        ratingLabelPanel.setSize(960, 40);
+        ratingLabelPanel.setPreferredSize(new Dimension(960, 40));
         ratingLabelPanel.add(ratingLabel);
         ratingLabelPanel.add(inputRating);
 
@@ -247,10 +245,10 @@ public class FrontDeskGui implements ActionListener {
     }
 
     public JPanel courseSummaryLabelPanel() {
-        JLabel courseSummaryLabel = makeInputLabel("Description of the Course");
+        JLabel courseSummaryLabel = makeInputLabel("Course Description");
         JPanel courseSummaryLabelPanel = new JPanel();
         courseSummaryLabelPanel.setLayout(new FlowLayout());
-        courseSummaryLabelPanel.setSize(960, 40);
+        courseSummaryLabelPanel.setPreferredSize(new Dimension(960, 40));
         courseSummaryLabelPanel.add(courseSummaryLabel);
         courseSummaryLabelPanel.add(inputCourseSummary);
         courseSummaryLabelPanel.setVisible(true);
@@ -303,7 +301,7 @@ public class FrontDeskGui implements ActionListener {
         addCourseButton.setText("Add a Course");
         addCourseButton.addActionListener(this);
         addCoursePanel.add(addCourseButton);
-        addCourseButton.setVerticalAlignment(JButton.CENTER);
+        //addCourseButton.setVerticalAlignment(JButton.CENTER);
         addCourseButton.setHorizontalAlignment(JButton.CENTER);
     }
 
@@ -315,7 +313,7 @@ public class FrontDeskGui implements ActionListener {
         removeCourseButton.setText("Remove a Course");
         removeCourseButton.addActionListener(this);
         removeCoursePanel.add(removeCourseButton);
-        removeCourseButton.setVerticalAlignment(JButton.CENTER);
+        //removeCourseButton.setVerticalAlignment(JButton.CENTER);
         removeCourseButton.setHorizontalAlignment(JButton.CENTER);
 
     }
@@ -328,7 +326,7 @@ public class FrontDeskGui implements ActionListener {
         viewCourseButton.setText("View Courses");
         viewCourseButton.addActionListener(this);
         viewCoursePanel.add(viewCourseButton);
-        viewCourseButton.setVerticalAlignment(JButton.CENTER);
+        //viewCourseButton.setVerticalAlignment(JButton.CENTER);
         viewCourseButton.setHorizontalAlignment(JButton.CENTER);
     }
 
@@ -342,7 +340,7 @@ public class FrontDeskGui implements ActionListener {
         gradeSummaryButton.setText("View a Grade Summary");
         gradeSummaryButton.addActionListener(this);
         gradeSummaryPanel.add(gradeSummaryButton);
-        gradeSummaryButton.setVerticalAlignment(JButton.CENTER);
+        //gradeSummaryButton.setVerticalAlignment(JButton.CENTER);
         gradeSummaryButton.setHorizontalAlignment(JButton.CENTER);
 
     }
