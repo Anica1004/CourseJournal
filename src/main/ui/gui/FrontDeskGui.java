@@ -44,6 +44,7 @@ public class FrontDeskGui implements ActionListener {
     private JButton quitButton;
 
     private JButton submitButton;
+    private JButton homeButton;
 
 
     private JTextField inputCourseName;
@@ -58,28 +59,37 @@ public class FrontDeskGui implements ActionListener {
     private Panel coursePanel;
 
 
+    public void setHomeButton() {
+        ImageIcon image = new ImageIcon("src/main/ui/gui/HomeImage.png");
+        homeButton = new JButton(image);
+        homeButton.setPreferredSize(new Dimension(50, 50));
+        homeButton.setHorizontalAlignment(JButton.LEFT);
+        homeButton.setVerticalAlignment(JButton.BOTTOM);
+        homeButton.addActionListener(this);
+
+    }
+
+
     public void initializeGui() {
         user = new Student();
         jsonSaver = new JsonSaver(FILENAME);
         jsonLoader = new JsonLoader(FILENAME);
-
-        userFrame = new FrontFrame();
         addCoursePanel = new Panel();
         removeCoursePanel = new Panel();
         viewCoursePanel = new Panel();
         gradeSummaryPanel = new Panel();
         otherPanel = new Panel();
-    }
-
-    // EFFECTS: starts the program running with displaying the homepage
-    // MODIFIES: this
-    public void startProgram() {
-        initializeGui();
         addAddCoursePanel();
         addRemoveCoursePanel();
         addViewCoursePanel();
         addGradeSummaryPanel();
         addOtherPanel();
+        setHomeButton();
+        setSubmitButton();
+    }
+
+    public void setHomePanels() {
+        userFrame = new FrontFrame();
         userFrame.add(addCoursePanel);
         userFrame.add(removeCoursePanel);
         userFrame.add(viewCoursePanel);
@@ -87,6 +97,12 @@ public class FrontDeskGui implements ActionListener {
         userFrame.add(otherPanel);
         userFrame.setVisible(true);
 
+    }
+
+    // EFFECTS: starts the program running with displaying the homepage
+    public void startProgram() {
+        initializeGui();
+        setHomePanels();
 
 
        /* user = new Student();
@@ -121,6 +137,10 @@ public class FrontDeskGui implements ActionListener {
         } else if (userClick == submitButton) {
             createCourse();
         }
+        else if (userClick == homeButton) {
+            userFrame.dispose();
+            setHomePanels();
+        }
 
     }
 
@@ -138,7 +158,14 @@ public class FrontDeskGui implements ActionListener {
         user.sortCourse(newCourse, year);
         JOptionPane.showMessageDialog(null, "You have successfully added " + courseName + "!",
                 "Successful Submission", JOptionPane.INFORMATION_MESSAGE);
-
+        inputCourseName.setText("");
+        inputProfessorName.setText("");
+        inputCredit.setText("");
+        inputYear.setText("");
+        inputFinalMark.setText("");
+        inputTerm.setText("");
+        inputRating.setText("");
+        inputCourseSummary.setText("");
     }
 
     public void addCourseNavigation() {
@@ -170,7 +197,7 @@ public class FrontDeskGui implements ActionListener {
         inputRating.setPreferredSize(new Dimension(180, 40));
 
         inputCourseSummary = new JTextArea();
-        inputCourseSummary.setPreferredSize(new Dimension(230, 150));
+        inputCourseSummary.setPreferredSize(new Dimension(300, 170));
     }
 
 
@@ -268,7 +295,7 @@ public class FrontDeskGui implements ActionListener {
         JLabel courseSummaryLabel = makeInputLabel("Course Description");
         JPanel courseSummaryLabelPanel = new JPanel();
         courseSummaryLabelPanel.setLayout(new FlowLayout());
-        courseSummaryLabelPanel.setPreferredSize(new Dimension(960, 150));
+        courseSummaryLabelPanel.setPreferredSize(new Dimension(960, 200));
         courseSummaryLabelPanel.add(courseSummaryLabel);
         courseSummaryLabelPanel.add(inputCourseSummary);
         courseSummaryLabelPanel.setVisible(true);
@@ -276,15 +303,12 @@ public class FrontDeskGui implements ActionListener {
         return courseSummaryLabelPanel;
     }
 
-    public JButton initializeSubmitButton() {
+    public void setSubmitButton() {
         submitButton = new JButton();
         submitButton.setPreferredSize(new Dimension(200, 50));
         submitButton.setText("Submit");
-        submitButton.setHorizontalAlignment(JButton.CENTER);
-        submitButton.setVerticalAlignment(JButton.CENTER);
         submitButton.addActionListener(this);
 
-        return submitButton;
     }
 
 
@@ -305,8 +329,9 @@ public class FrontDeskGui implements ActionListener {
         coursePanel.add(termLabelPanel());
         coursePanel.add(ratingLabelPanel());
         coursePanel.add(courseSummaryLabelPanel());
-        coursePanel.add(initializeSubmitButton());
+        coursePanel.add(submitButton);
         coursePanel.setVisible(true);
+        userFrame.add(homeButton);
         userFrame.add(coursePanel);
         userFrame.setVisible(true);
 
