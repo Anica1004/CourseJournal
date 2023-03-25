@@ -1,5 +1,6 @@
 package ui.gui;
 
+import model.Course;
 import model.Student;
 import persistence.JsonLoader;
 import persistence.JsonSaver;
@@ -30,7 +31,7 @@ public class FrontDeskGui implements ActionListener {
     private Panel viewCoursePanel;
     private Panel gradeSummaryPanel;
     private Panel otherPanel;
-    private Panel mainPanel;
+
 
 
 
@@ -41,6 +42,8 @@ public class FrontDeskGui implements ActionListener {
     private JButton saveButton;
     private JButton loadButton;
     private JButton quitButton;
+
+    private JButton submitButton;
 
 
     private JTextField inputCourseName;
@@ -68,7 +71,7 @@ public class FrontDeskGui implements ActionListener {
         otherPanel = new Panel();
     }
 
-    // EFFECTS: starts the program running
+    // EFFECTS: starts the program running with displaying the homepage
     // MODIFIES: this
     public void startProgram() {
         initializeGui();
@@ -77,15 +80,13 @@ public class FrontDeskGui implements ActionListener {
         addViewCoursePanel();
         addGradeSummaryPanel();
         addOtherPanel();
-        mainPanel = new Panel();
-        mainPanel.setLayout(new GridLayout(5, 1));
-        mainPanel.add(addCoursePanel);
-        mainPanel.add(removeCoursePanel);
-        mainPanel.add(viewCoursePanel);
-        mainPanel.add(gradeSummaryPanel);
-        mainPanel.add(otherPanel);
-        userFrame.add(mainPanel, BorderLayout.CENTER);
+        userFrame.add(addCoursePanel);
+        userFrame.add(removeCoursePanel);
+        userFrame.add(viewCoursePanel);
+        userFrame.add(gradeSummaryPanel);
+        userFrame.add(otherPanel);
         userFrame.setVisible(true);
+
 
 
        /* user = new Student();
@@ -117,7 +118,26 @@ public class FrontDeskGui implements ActionListener {
 
         } else if (userClick == quitButton) {
 
+        } else if (userClick == submitButton) {
+            createCourse();
         }
+
+    }
+
+    public void createCourse() {
+        String courseName = inputCourseName.getText();
+        String professorName = inputProfessorName.getText();
+        int credit = Integer.parseInt(inputCredit.getText());
+        int year =  Integer.parseInt(inputYear.getText());
+        Double finalMark = Double.parseDouble(inputFinalMark.getText());
+        int term = Integer.parseInt(inputTerm.getText());
+        Double courseRating = Double.parseDouble(inputRating.getText());
+        String courseSummary = inputCourseSummary.getText();
+        Course newCourse = new Course(courseName, professorName, credit, year,
+                finalMark, term, courseRating, courseSummary);
+        user.sortCourse(newCourse, year);
+        JOptionPane.showMessageDialog(null, "You have successfully added " + courseName + "!",
+                "Successful Submission", JOptionPane.INFORMATION_MESSAGE);
 
     }
 
@@ -150,7 +170,7 @@ public class FrontDeskGui implements ActionListener {
         inputRating.setPreferredSize(new Dimension(180, 40));
 
         inputCourseSummary = new JTextArea();
-        inputCourseSummary.setPreferredSize(new Dimension(230, 100));
+        inputCourseSummary.setPreferredSize(new Dimension(230, 150));
     }
 
 
@@ -248,12 +268,23 @@ public class FrontDeskGui implements ActionListener {
         JLabel courseSummaryLabel = makeInputLabel("Course Description");
         JPanel courseSummaryLabelPanel = new JPanel();
         courseSummaryLabelPanel.setLayout(new FlowLayout());
-        courseSummaryLabelPanel.setPreferredSize(new Dimension(960, 40));
+        courseSummaryLabelPanel.setPreferredSize(new Dimension(960, 150));
         courseSummaryLabelPanel.add(courseSummaryLabel);
         courseSummaryLabelPanel.add(inputCourseSummary);
         courseSummaryLabelPanel.setVisible(true);
 
         return courseSummaryLabelPanel;
+    }
+
+    public JButton initializeSubmitButton() {
+        submitButton = new JButton();
+        submitButton.setPreferredSize(new Dimension(200, 50));
+        submitButton.setText("Submit");
+        submitButton.setHorizontalAlignment(JButton.CENTER);
+        submitButton.setVerticalAlignment(JButton.CENTER);
+        submitButton.addActionListener(this);
+
+        return submitButton;
     }
 
 
@@ -274,6 +305,7 @@ public class FrontDeskGui implements ActionListener {
         coursePanel.add(termLabelPanel());
         coursePanel.add(ratingLabelPanel());
         coursePanel.add(courseSummaryLabelPanel());
+        coursePanel.add(initializeSubmitButton());
         coursePanel.setVisible(true);
         userFrame.add(coursePanel);
         userFrame.setVisible(true);
@@ -295,76 +327,81 @@ public class FrontDeskGui implements ActionListener {
 
     private void addAddCoursePanel() {
         addCoursePanel.setBackground(Color.white);
-        addCoursePanel.setSize(1000, 100);
+        addCoursePanel.setBounds(0, 130, 1000, 100);
+
         addCourseButton = new JButton();
         addCourseButton.setPreferredSize(new Dimension(300, 90));
+        addCourseButton.setBounds(0, 140, 1000, 90);
         addCourseButton.setText("Add a Course");
         addCourseButton.addActionListener(this);
         addCoursePanel.add(addCourseButton);
-        //addCourseButton.setVerticalAlignment(JButton.CENTER);
+        addCourseButton.setVerticalAlignment(JButton.CENTER);
         addCourseButton.setHorizontalAlignment(JButton.CENTER);
     }
 
     private void addRemoveCoursePanel() {
+        removeCoursePanel.setBounds(0, 240, 1000, 100);
         removeCoursePanel.setBackground(Color.white);
-        removeCoursePanel.setSize(1000, 100);
+
         removeCourseButton = new JButton();
         removeCourseButton.setPreferredSize(new Dimension(300, 90));
+        removeCourseButton.setBounds(0, 140, 1000, 90);
         removeCourseButton.setText("Remove a Course");
         removeCourseButton.addActionListener(this);
         removeCoursePanel.add(removeCourseButton);
-        //removeCourseButton.setVerticalAlignment(JButton.CENTER);
+        removeCourseButton.setVerticalAlignment(JButton.CENTER);
         removeCourseButton.setHorizontalAlignment(JButton.CENTER);
 
     }
 
     private void addViewCoursePanel() {
+        viewCoursePanel.setBounds(0, 350, 1000, 100);
         viewCoursePanel.setBackground(Color.white);
-        viewCoursePanel.setSize(1000, 100);
+
         viewCourseButton = new JButton();
         viewCourseButton.setPreferredSize(new Dimension(300, 90));
+        viewCourseButton.setBounds(0, 140, 1000, 90);
         viewCourseButton.setText("View Courses");
         viewCourseButton.addActionListener(this);
         viewCoursePanel.add(viewCourseButton);
-        //viewCourseButton.setVerticalAlignment(JButton.CENTER);
+        viewCourseButton.setVerticalAlignment(JButton.CENTER);
         viewCourseButton.setHorizontalAlignment(JButton.CENTER);
     }
 
     private void addGradeSummaryPanel() {
-
+        gradeSummaryPanel.setBounds(0, 460, 1000, 100);
         gradeSummaryPanel.setBackground(Color.white);
-        gradeSummaryPanel.setSize(1000, 100);
-
         gradeSummaryButton = new JButton();
         gradeSummaryButton.setPreferredSize(new Dimension(300, 90));
+        gradeSummaryButton.setBounds(0, 140, 1000, 90);
         gradeSummaryButton.setText("View a Grade Summary");
         gradeSummaryButton.addActionListener(this);
         gradeSummaryPanel.add(gradeSummaryButton);
-        //gradeSummaryButton.setVerticalAlignment(JButton.CENTER);
+        gradeSummaryButton.setVerticalAlignment(JButton.CENTER);
         gradeSummaryButton.setHorizontalAlignment(JButton.CENTER);
 
     }
 
 
     private void addOtherPanel() {
-        otherPanel.setSize(1000, 100);
+        otherPanel.setBounds(0, 570, 1000, 100);
         otherPanel.setBackground(Color.white);
         saveButton = new JButton();
         loadButton = new JButton();
         quitButton = new JButton();
-
         saveButton.setText("Save File");
         loadButton.setText("Load File");
         quitButton.setText("Quit");
-
         saveButton.setPreferredSize(new Dimension(200, 90));
         loadButton.setPreferredSize(new Dimension(200, 90));
         quitButton.setPreferredSize(new Dimension(200, 90));
 
+        saveButton.setBounds(0, 140, 200, 90);
         saveButton.addActionListener(this);
+        loadButton.setBounds(300, 140, 200, 90);
         loadButton.addActionListener(this);
+        quitButton.setBounds(600, 140, 200, 90);
         quitButton.addActionListener(this);
-        otherPanel.setLayout(new FlowLayout());
         otherPanel.add(saveButton);
         otherPanel.add(loadButton);
         otherPanel.add(quitButton);
