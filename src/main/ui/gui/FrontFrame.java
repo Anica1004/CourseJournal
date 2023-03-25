@@ -14,23 +14,22 @@ public class FrontFrame extends JFrame {
         JLabel label = new JLabel();
         label.setText("\"Hello user, select from below to fulfill your needs!\"");
         label.setFont(new Font("Serif", Font.ITALIC, 20));
-
-
         label.setIconTextGap(20);
         label.setBackground(Color.pink.brighter());
-
         label.setOpaque(true);
         label.setBorder(border);
+        label.setSize(1000, 80);
         label.setVerticalAlignment(JLabel.CENTER);
         label.setHorizontalAlignment(JLabel.CENTER);
-        label.setBounds(0, 0, 1000, 80);
+
+
         ImageIcon image = new ImageIcon("src/main/ui/gui/BackgroundImage.jpg");
         this.setContentPane(new JLabel(image));
         this.setTitle("\"Your University Journey\"");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setResizable(false);
+        //this.setResizable(false);
         this.setSize(1000, 1000);
-        this.setLayout(null);
+        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
         this.add(label);
         this.setVisible(true);
 

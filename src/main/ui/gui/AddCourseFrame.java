@@ -19,17 +19,17 @@ public class AddCourseFrame extends JFrame {
         label.setBorder(border);
         label.setVerticalAlignment(JLabel.CENTER);
         label.setHorizontalAlignment(JLabel.CENTER);
-        label.setBounds(0, 0, 1000, 80);
+
         ImageIcon image = new ImageIcon("src/main/ui/gui/BackgroundImage.jpg");
         this.setContentPane(new JLabel(image));
         this.setTitle("\"Add a new Course\"");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // this.setResizable(false);
+        this.setResizable(false);
         this.setSize(1000, 2000);
-        this.setLayout(null);
+        this.setLayout(new FlowLayout());
+        label.setPreferredSize(new Dimension(1000, 80));
         this.add(label);
         this.setVisible(true);
-
     }
 
 
