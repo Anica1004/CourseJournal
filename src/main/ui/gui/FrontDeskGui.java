@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -18,7 +19,6 @@ import java.util.Scanner;
 public class FrontDeskGui implements ActionListener {
     private static final String FILENAME = "./data/student.json";
     private Student user;
-    private Scanner keys;
     private JsonSaver jsonSaver;
     private JsonLoader jsonLoader;
 
@@ -33,8 +33,6 @@ public class FrontDeskGui implements ActionListener {
     private Panel otherPanel;
 
 
-
-
     private JButton addCourseButton;
     private JButton removeCourseButton;
     private JButton viewCourseButton;
@@ -43,9 +41,15 @@ public class FrontDeskGui implements ActionListener {
     private JButton loadButton;
     private JButton quitButton;
 
-    private JButton submitButton;
+    private JButton submitNewCourseButton;
+    private JButton submitRemoveCourseButton;
     private JButton homeButton;
 
+
+    private JButton firstYear;
+    private JButton secondYear;
+    private JButton thirdYear;
+    private JButton fourthYear;
 
     private JTextField inputCourseName;
     private JTextField inputProfessorName;
@@ -69,6 +73,22 @@ public class FrontDeskGui implements ActionListener {
 
     }
 
+    public void setYearButtons() {
+        firstYear = new JButton();
+        firstYear.setText("View First Year Courses");
+        secondYear = new JButton();
+        secondYear.setText("View Second Year Courses");
+        thirdYear = new JButton();
+        thirdYear.setText("View Third Year Courses");
+        fourthYear = new JButton();
+        fourthYear.setText("View Fourth Year Courses");
+        firstYear.setPreferredSize(new Dimension(100, 80));
+        secondYear.setPreferredSize(new Dimension(100, 80));
+        thirdYear.setPreferredSize(new Dimension(100, 80));
+        fourthYear.setPreferredSize(new Dimension(100, 80));
+
+    }
+
 
     public void initializeGui() {
         user = new Student();
@@ -85,7 +105,10 @@ public class FrontDeskGui implements ActionListener {
         addGradeSummaryPanel();
         addOtherPanel();
         setHomeButton();
-        setSubmitButton();
+        setYearButtons();
+        setSubmitNewCourseButton();
+        setSubmitRemoveCourseButton();
+        setInputs();
     }
 
     public void setHomePanels() {
@@ -103,15 +126,6 @@ public class FrontDeskGui implements ActionListener {
     public void startProgram() {
         initializeGui();
         setHomePanels();
-
-
-       /* user = new Student();
-        keys = new Scanner(System.in);
-        jsonSaver = new JsonSaver(FILENAME);
-        jsonLoader = new JsonLoader(FILENAME);
-        displayOptions();
-*/
-
     }
 
 
@@ -120,12 +134,11 @@ public class FrontDeskGui implements ActionListener {
         Object userClick = e.getSource();
         if (userClick == addCourseButton) {
             addCourseNavigation();
-            //userFrame.getContentPane().removeAll();
 
         } else if (userClick == removeCourseButton) {
-
+            removeCourseNavigation();
         } else if (userClick == viewCourseButton) {
-
+            viewCourseNavigaton();
         } else if (userClick == gradeSummaryButton) {
 
         } else if (userClick == saveButton) {
@@ -134,21 +147,59 @@ public class FrontDeskGui implements ActionListener {
 
         } else if (userClick == quitButton) {
 
-        } else if (userClick == submitButton) {
+        } else if (userClick == submitNewCourseButton) {
             createCourse();
-        }
-        else if (userClick == homeButton) {
+        } else if (userClick == homeButton) {
             userFrame.dispose();
             setHomePanels();
+        } else if (userClick == submitRemoveCourseButton) {
+            removeCourse();
         }
 
     }
+
+    public void viewCourseNavigaton() {
+        userFrame.dispose();
+        userFrame = new ViewCourseFrame();
+        viewCourseFrame();
+    }
+
+    public void  viewCourseFrame() {
+        coursePanel = new Panel();
+        coursePanel.setSize(960, 1000);
+        coursePanel.setBackground(Color.white);
+        coursePanel.setLayout(new BoxLayout(coursePanel, BoxLayout.Y_AXIS));
+        userFrame.add(homeButton);
+        coursePanel.add(buttonPanel());
+        coursePanel.setVisible(true);
+        userFrame.add(coursePanel);
+        userFrame.setVisible(true);
+
+    }
+
+    private JPanel buttonPanel() {
+        JPanel buttonPanel = new JPanel();
+        coursePanel.setSize(960, 300);
+        coursePanel.setBackground(Color.white);
+        coursePanel.setLayout(new FlowLayout());
+        coursePanel.add(firstYear);
+        coursePanel.add(secondYear);
+        coursePanel.add(thirdYear);
+        coursePanel.add(fourthYear);
+
+        return buttonPanel;
+
+
+    }
+
+
+
 
     public void createCourse() {
         String courseName = inputCourseName.getText();
         String professorName = inputProfessorName.getText();
         int credit = Integer.parseInt(inputCredit.getText());
-        int year =  Integer.parseInt(inputYear.getText());
+        int year = Integer.parseInt(inputYear.getText());
         Double finalMark = Double.parseDouble(inputFinalMark.getText());
         int term = Integer.parseInt(inputTerm.getText());
         Double courseRating = Double.parseDouble(inputRating.getText());
@@ -156,7 +207,7 @@ public class FrontDeskGui implements ActionListener {
         Course newCourse = new Course(courseName, professorName, credit, year,
                 finalMark, term, courseRating, courseSummary);
         user.sortCourse(newCourse, year);
-        JOptionPane.showMessageDialog(null, "You have successfully added " + courseName + "!",
+        JOptionPane.showMessageDialog(null, "We have successfully added " + courseName + "!",
                 "Successful Submission", JOptionPane.INFORMATION_MESSAGE);
         inputCourseName.setText("");
         inputProfessorName.setText("");
@@ -168,11 +219,101 @@ public class FrontDeskGui implements ActionListener {
         inputCourseSummary.setText("");
     }
 
+
+    // REQUIRES: year must be 1, 2, 3, or 4
+    // MODIFIES: this
+    // EFFECTS: finds the course within the list of courses, navigating to remove it
+    public void findListOfCourse(String courseName, int year) {
+        if (year == 1) {
+            removeCourse(user.findCourse(courseName, user.getFirstYearCourses()), user.getFirstYearCourses(),
+                    courseName);
+
+        } else if (year == 2) {
+            removeCourse(user.findCourse(courseName, user.getSecondYearCourses()), user.getSecondYearCourses(),
+                    courseName);
+
+        } else if (year == 3) {
+            removeCourse(user.findCourse(courseName, user.getThirdYearCourses()), user.getThirdYearCourses(),
+                    courseName);
+        } else {
+            removeCourse(user.findCourse(courseName, user.getFourthYearCourses()), user.getFourthYearCourses(),
+                    courseName);
+
+        }
+    }
+
+
+    public void removeCourse() {
+        String courseName = inputCourseName.getText();
+        int year = Integer.parseInt(inputYear.getText());
+        findListOfCourse(courseName, year);
+        inputCourseName.setText("");
+        inputYear.setText("");
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes the specified course if found and confirmed; otherwise navigate user
+    public void removeCourse(Course course, List<Course> courses, String courseName) {
+        if (course == null) {
+            JOptionPane.showMessageDialog(null, "We were unable to find " + courseName
+                            + ". Be sure to check your spelling and correct year.",
+                    "Failure in Removing Course", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+            ImageIcon image = new ImageIcon("src/main/ui/gui/ConfirmationIcon.png");
+            int result = JOptionPane.showConfirmDialog(coursePanel, "Is the following information correct?: "
+                            + "\n\t Course Name: " + courseName + "\n\t Professor: " + course.getProfessorName()
+                            + "\n\t Year: " + course.getYear() + "\n\t Term: " + course.getTerm() + "\n\t Credit: "
+                            + course.getCredit() + "\n\t Course Rating: " + course.getRating()
+                            + "\n\t Course Description: " + course.getCourseSummary(),
+                    "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, image);
+
+            if (result == JOptionPane.YES_OPTION) {
+                courses.remove(course);
+                JOptionPane.showMessageDialog(null, "We have successfully removed "
+                                + courseName + "!",
+                        "Successfully removed", JOptionPane.INFORMATION_MESSAGE);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Sorry for the inconvenience."
+                                + " We have not removed " + courseName + ".",
+                        "No Change", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        }
+    }
+
+
     public void addCourseNavigation() {
         userFrame.dispose();
         userFrame = new AddCourseFrame();
         addCourseFrame();
     }
+
+    public void removeCourseNavigation() {
+        userFrame.dispose();
+        userFrame = new RemoveCourseFrame();
+        removeCourseFrame();
+
+
+    }
+
+    public void removeCourseFrame() {
+        coursePanel = new Panel();
+        coursePanel.setSize(960, 1000);
+        coursePanel.setBackground(Color.white);
+        coursePanel.setLayout(new BoxLayout(coursePanel, BoxLayout.Y_AXIS));
+        coursePanel.add(courseLabelPanel(60));
+        coursePanel.add(yearLabelPanel(60));
+        coursePanel.add(submitRemoveCourseButton);
+        coursePanel.setVisible(true);
+        userFrame.add(homeButton);
+        userFrame.add(coursePanel);
+        userFrame.setVisible(true);
+
+
+    }
+
 
     public void setInputs() {
         inputCourseName = new JTextField();
@@ -201,13 +342,11 @@ public class FrontDeskGui implements ActionListener {
     }
 
 
-
-
-    public JPanel courseLabelPanel() {
+    public JPanel courseLabelPanel(int height) {
         JLabel courseNameLabel = makeInputLabel("Course Name");
         JPanel courseLabelPanel = new JPanel();
         courseLabelPanel.setLayout(new FlowLayout());
-        courseLabelPanel.setPreferredSize(new Dimension(960, 40));
+        courseLabelPanel.setPreferredSize(new Dimension(960, height));
         courseLabelPanel.add(courseNameLabel);
         courseLabelPanel.add(inputCourseName);
         courseLabelPanel.setVisible(true);
@@ -241,11 +380,11 @@ public class FrontDeskGui implements ActionListener {
 
     }
 
-    public JPanel yearLabelPanel() {
+    public JPanel yearLabelPanel(int height) {
         JLabel yearLabel = makeInputLabel("Undergraduate Year (1, 2, 3, or 4)");
         JPanel yearLabelPanel = new JPanel();
         yearLabelPanel.setLayout(new FlowLayout());
-        yearLabelPanel.setPreferredSize(new Dimension(960, 40));
+        yearLabelPanel.setPreferredSize(new Dimension(960, height));
         yearLabelPanel.add(yearLabel);
         yearLabelPanel.add(inputYear);
         yearLabelPanel.setVisible(true);
@@ -303,33 +442,37 @@ public class FrontDeskGui implements ActionListener {
         return courseSummaryLabelPanel;
     }
 
-    public void setSubmitButton() {
-        submitButton = new JButton();
-        submitButton.setPreferredSize(new Dimension(200, 50));
-        submitButton.setText("Submit");
-        submitButton.addActionListener(this);
+    public void setSubmitNewCourseButton() {
+        submitNewCourseButton = new JButton();
+        submitNewCourseButton.setPreferredSize(new Dimension(200, 50));
+        submitNewCourseButton.setText("Submit");
+        submitNewCourseButton.addActionListener(this);
+
+    }
+
+    public void setSubmitRemoveCourseButton() {
+        submitRemoveCourseButton = new JButton();
+        submitRemoveCourseButton.setPreferredSize(new Dimension(200, 50));
+        submitRemoveCourseButton.setText("Submit");
+        submitRemoveCourseButton.addActionListener(this);
 
     }
 
 
-
-
-
     public void addCourseFrame() {
-        setInputs();
         coursePanel = new Panel();
-        coursePanel.setSize(960, 1500);
+        coursePanel.setSize(960, 1000);
         coursePanel.setBackground(Color.white);
         coursePanel.setLayout(new BoxLayout(coursePanel, BoxLayout.Y_AXIS));
-        coursePanel.add(courseLabelPanel());
+        coursePanel.add(courseLabelPanel(40));
         coursePanel.add(profNameLabelPanel());
         coursePanel.add(creditLabelPanel());
-        coursePanel.add(yearLabelPanel());
+        coursePanel.add(yearLabelPanel(40));
         coursePanel.add(markLabelPanel());
         coursePanel.add(termLabelPanel());
         coursePanel.add(ratingLabelPanel());
         coursePanel.add(courseSummaryLabelPanel());
-        coursePanel.add(submitButton);
+        coursePanel.add(submitNewCourseButton);
         coursePanel.setVisible(true);
         userFrame.add(homeButton);
         userFrame.add(coursePanel);
@@ -337,8 +480,6 @@ public class FrontDeskGui implements ActionListener {
 
 
     }
-
-
 
 
     public JLabel makeInputLabel(String name) {

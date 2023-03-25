@@ -9,10 +9,8 @@ public class ViewCourseFrame extends JFrame {
 
         Border border = BorderFactory.createDashedBorder(Color.pink);
         JLabel label = new JLabel();
-        label.setText("\"\"");
+        label.setText("\"View Courses!\"");
         label.setFont(new Font("Serif", Font.ITALIC, 20));
-
-
         label.setIconTextGap(20);
         label.setBackground(Color.pink.brighter());
 
@@ -20,14 +18,15 @@ public class ViewCourseFrame extends JFrame {
         label.setBorder(border);
         label.setVerticalAlignment(JLabel.CENTER);
         label.setHorizontalAlignment(JLabel.CENTER);
-        label.setBounds(0, 0, 1000, 80);
+
         ImageIcon image = new ImageIcon("src/main/ui/gui/BackgroundImage.jpg");
         this.setContentPane(new JLabel(image));
-        this.setTitle("\"Your University Journey\"");
+        this.setTitle("\"View Courses\"");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setSize(1000, 1000);
-        this.setLayout(null);
+        this.setLayout(new FlowLayout());
+        label.setPreferredSize(new Dimension(1000, 80));
         this.add(label);
         this.setVisible(true);
 

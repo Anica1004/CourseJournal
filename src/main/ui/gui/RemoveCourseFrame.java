@@ -4,16 +4,17 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
-public class AddCourseFrame extends JFrame {
+public class RemoveCourseFrame extends JFrame {
 
-    AddCourseFrame() {
 
-        Border border = BorderFactory.createDashedBorder(Color.pink);
+    public RemoveCourseFrame() {
+
+        Border border = BorderFactory.createDashedBorder(Color.cyan);
         JLabel label = new JLabel();
-        label.setText("\"Add a new course!\"");
-        label.setFont(new Font("Serif", Font.ITALIC, 20));
+        label.setText("\"Remove a Course!\"");
+        label.setFont(new Font("Serif", Font.ITALIC, 18));
         label.setIconTextGap(20);
-        label.setBackground(Color.pink.brighter());
+        label.setBackground(Color.cyan.brighter());
 
         label.setOpaque(true);
         label.setBorder(border);
@@ -33,8 +34,5 @@ public class AddCourseFrame extends JFrame {
     }
 
 
-
-
-
-
 }
+
