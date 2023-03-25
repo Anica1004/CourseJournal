@@ -40,7 +40,23 @@ public class FrontDeskGui implements ActionListener {
     private JButton quitButton;
 
 
+    private JTextField inputCourseName;
+    private JTextField inputProfessorName;
+    private JTextField inputCredit;
+    private JTextField inputYear;
+    private JTextField inputFinalMark;
+    private JTextField inputTerm;
+    private JTextField inputRating;
+    private JTextField inputCourseSummary;
+
+    private Panel coursePanel;
+
+
     public void initializeGui() {
+        user = new Student();
+        jsonSaver = new JsonSaver(FILENAME);
+        jsonLoader = new JsonLoader(FILENAME);
+
         userFrame = new FrontFrame();
         addCoursePanel = new Panel();
         removeCoursePanel = new Panel();
@@ -72,6 +88,200 @@ public class FrontDeskGui implements ActionListener {
         jsonLoader = new JsonLoader(FILENAME);
         displayOptions();
 */
+
+    }
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Object userClick = e.getSource();
+        if (userClick == addCourseButton) {
+            addCourseNavigation();
+            //userFrame.getContentPane().removeAll();
+
+        } else if (userClick == removeCourseButton) {
+
+        } else if (userClick == viewCourseButton) {
+
+        } else if (userClick == gradeSummaryButton) {
+
+        } else if (userClick == saveButton) {
+
+        } else if (userClick == loadButton) {
+
+        } else if (userClick == quitButton) {
+
+        }
+
+    }
+
+    public void addCourseNavigation() {
+        userFrame.dispose();
+        userFrame = new AddCourseFrame();
+        addCourseFrame();
+    }
+
+    public void setInputs() {
+        inputCourseName = new JTextField();
+        inputCourseName.setPreferredSize(new Dimension(180, 40));
+
+        inputProfessorName = new JTextField();
+        inputProfessorName.setPreferredSize(new Dimension(180, 40));
+
+        inputCredit = new JTextField();
+        inputCredit.setPreferredSize(new Dimension(180, 40));
+
+        inputYear = new JTextField();
+        inputYear.setPreferredSize(new Dimension(180, 40));
+
+        inputFinalMark = new JTextField();
+        inputFinalMark.setPreferredSize(new Dimension(180, 40));
+
+        inputTerm = new JTextField();
+        inputTerm.setPreferredSize(new Dimension(180, 40));
+
+        inputRating = new JTextField();
+        inputRating.setPreferredSize(new Dimension(180, 40));
+
+        inputCourseSummary = new JTextField();
+        inputCourseSummary.setPreferredSize(new Dimension(180, 40));
+    }
+
+
+
+
+    public JPanel courseLabelPanel() {
+        JLabel courseNameLabel = makeInputLabel("Course Name");
+        JPanel courseLabelPanel = new JPanel();
+        courseLabelPanel.setLayout(new FlowLayout());
+        //courseLabelPanel.setBounds(20, 130, 960, 100);
+        courseLabelPanel.add(courseNameLabel);
+        courseLabelPanel.add(inputCourseName);
+        courseLabelPanel.setVisible(true);
+        return courseLabelPanel;
+    }
+
+    public JPanel profNameLabelPanel() {
+        JLabel profNameLabel = makeInputLabel("Professor Name");
+        JPanel profNameLabelPanel = new JPanel();
+        profNameLabelPanel.setLayout(new FlowLayout());
+        //profNameLabelPanel.setBounds(20, 230, 960, 100);
+        profNameLabelPanel.add(profNameLabel);
+        profNameLabelPanel.add(inputProfessorName);
+        profNameLabelPanel.setVisible(true);
+        return profNameLabelPanel;
+
+    }
+
+    public JPanel creditLabelPanel() {
+        JLabel creditLabel = makeInputLabel("Number of Credits");
+        JPanel creditLabelPanel = new JPanel();
+        creditLabelPanel.setLayout(new FlowLayout());
+        //creditLabelPanel.setBounds(20, 330, 960, 100);
+        creditLabelPanel.add(creditLabel);
+        creditLabelPanel.add(inputCredit);
+
+        creditLabelPanel.setVisible(true);
+
+        return creditLabelPanel;
+
+
+    }
+
+    public JPanel yearLabelPanel() {
+        JLabel yearLabel = makeInputLabel("Undergraduate Year Course Taken (1, 2, 3, or 4)");
+        JPanel yearLabelPanel = new JPanel();
+        yearLabelPanel.setLayout(new FlowLayout());
+        //yearLabelPanel.setBounds(20, 430, 960, 100);
+        yearLabelPanel.add(yearLabel);
+        yearLabelPanel.add(inputYear);
+        yearLabelPanel.setVisible(true);
+
+        return yearLabelPanel;
+    }
+
+    public JPanel markLabelPanel() {
+        JLabel markLabel = makeInputLabel("Final Mark");
+        JPanel markLabelPanel = new JPanel();
+        markLabelPanel.setLayout(new FlowLayout());
+        //markLabelPanel.setBounds(20, 530, 960, 100);
+        markLabelPanel.add(markLabel);
+        markLabelPanel.add(inputFinalMark);
+        markLabelPanel.setVisible(true);
+
+        return markLabelPanel;
+
+    }
+
+    public JPanel termLabelPanel() {
+        JLabel termLabel = makeInputLabel("Term Course Taken (1 or 2)");
+        JPanel termLabelPanel = new JPanel();
+        termLabelPanel.setLayout(new FlowLayout());
+        //termLabelPanel.setBounds(20, 630, 960, 100);
+        termLabelPanel.add(termLabel);
+        termLabelPanel.add(inputTerm);
+
+        termLabelPanel.setVisible(true);
+        return termLabelPanel;
+    }
+
+    public JPanel ratingLabelPanel() {
+        JLabel ratingLabel = makeInputLabel("Rating out of 10");
+        JPanel ratingLabelPanel = new JPanel();
+        ratingLabelPanel.setLayout(new FlowLayout());
+        //ratingLabelPanel.setBounds(20, 630, 960, 100);
+        ratingLabelPanel.add(ratingLabel);
+        ratingLabelPanel.add(inputRating);
+
+        ratingLabelPanel.setVisible(true);
+
+        return ratingLabelPanel;
+    }
+
+    public JPanel courseSummaryLabelPanel() {
+        JLabel courseSummaryLabel = makeInputLabel("Your Personal Description of the Course");
+        JPanel courseSummaryLabelPanel = new JPanel();
+        courseSummaryLabelPanel.setLayout(new FlowLayout());
+        //courseSummaryLabelPanel.setBounds(20, 630, 960, 100);
+        courseSummaryLabelPanel.add(courseSummaryLabel);
+        courseSummaryLabelPanel.add(inputCourseSummary);
+        courseSummaryLabelPanel.setVisible(true);
+
+        return courseSummaryLabelPanel;
+    }
+
+
+
+
+
+    public void addCourseFrame() {
+        setInputs();
+        coursePanel = new Panel();
+        coursePanel.setBounds(20, 130, 960, 1500);
+        coursePanel.setBackground(Color.white);
+        coursePanel.setLayout(new BoxLayout(coursePanel, BoxLayout.Y_AXIS));
+        coursePanel.add(courseLabelPanel());
+        coursePanel.add(profNameLabelPanel());
+        coursePanel.add(creditLabelPanel());
+        coursePanel.add(yearLabelPanel());
+        coursePanel.add(markLabelPanel());
+        coursePanel.add(termLabelPanel());
+        coursePanel.add(ratingLabelPanel());
+        coursePanel.add(courseSummaryLabelPanel());
+        coursePanel.setVisible(true);
+        userFrame.add(coursePanel);
+        userFrame.setVisible(true);
+    }
+
+
+
+
+    public JLabel makeInputLabel(String name) {
+        JLabel label = new JLabel();
+        label.setText(name + ": ");
+        label.setFont(new Font("Serif", Font.ITALIC, 16));
+        label.setIconTextGap(30);
+        return label;
 
     }
 
@@ -123,6 +333,8 @@ public class FrontDeskGui implements ActionListener {
         gradeSummaryPanel.setBounds(0, 460, 1000, 100);
         gradeSummaryPanel.setBackground(Color.white);
 
+        // define button
+        // for that button -> override method
         gradeSummaryButton = new JButton();
         gradeSummaryButton.setPreferredSize(new Dimension(300, 90));
         gradeSummaryButton.setBounds(0, 140, 1000, 90);
@@ -158,32 +370,6 @@ public class FrontDeskGui implements ActionListener {
         otherPanel.add(loadButton);
         otherPanel.add(quitButton);
     }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        Object userClick = e.getSource();
-        if (userClick == addCourseButton) {
-            userFrame.getContentPane().removeAll();
-
-        } else if (userClick == removeCourseButton) {
-
-
-        } else if (userClick == viewCourseButton) {
-
-        } else if (userClick == gradeSummaryButton) {
-
-        } else if (userClick == saveButton) {
-
-        } else if (userClick == loadButton) {
-
-        } else if (userClick == quitButton) {
-
-        }
-
-    }
-
-
-
 
 
 
