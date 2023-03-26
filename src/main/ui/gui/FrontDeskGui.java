@@ -6,17 +6,20 @@ import persistence.JsonLoader;
 import persistence.JsonSaver;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 
 // The FrontDeskGui where users interact with the program, and navigate to find their needs,
 // including adding a course, removing a course, viewing courses taken in a particular year,
 //  and the overall grade summary, in a graphic user interface
-public class FrontDeskGui implements ActionListener {
+public class FrontDeskGui implements ActionListener, MouseListener {
     private static final String FILENAME = "./data/student.json";
     private Student user;
     private JsonSaver jsonSaver;
@@ -61,7 +64,7 @@ public class FrontDeskGui implements ActionListener {
     private JTextArea inputCourseSummary;
 
     private Panel coursePanel;
-
+    private JTable courseTable;
 
     public void setHomeButton() {
         ImageIcon image = new ImageIcon("src/main/ui/gui/HomeImage.png");
@@ -82,10 +85,14 @@ public class FrontDeskGui implements ActionListener {
         thirdYear.setText("View Third Year Courses");
         fourthYear = new JButton();
         fourthYear.setText("View Fourth Year Courses");
-        firstYear.setPreferredSize(new Dimension(100, 80));
-        secondYear.setPreferredSize(new Dimension(100, 80));
-        thirdYear.setPreferredSize(new Dimension(100, 80));
-        fourthYear.setPreferredSize(new Dimension(100, 80));
+        firstYear.setPreferredSize(new Dimension(200, 80));
+        secondYear.setPreferredSize(new Dimension(200, 80));
+        thirdYear.setPreferredSize(new Dimension(200, 80));
+        fourthYear.setPreferredSize(new Dimension(200, 80));
+        firstYear.addActionListener(this);
+        secondYear.addActionListener(this);
+        thirdYear.addActionListener(this);
+        fourthYear.addActionListener(this);
 
     }
 
@@ -128,18 +135,39 @@ public class FrontDeskGui implements ActionListener {
         setHomePanels();
     }
 
+    public void actionPerformed2(Object userClick) {
+        if (userClick == firstYear) {
+            userFrame = new ViewCourseFrame();
+            viewCourseFrame();
+            displayCourses(user.getFirstYearCourses(), 1);
+        } else if (userClick == secondYear) {
+            userFrame = new ViewCourseFrame();
+            viewCourseFrame();
+            displayCourses(user.getSecondYearCourses(), 2);
+        } else if (userClick == thirdYear) {
+            userFrame = new ViewCourseFrame();
+            viewCourseFrame();
+            displayCourses(user.getThirdYearCourses(), 3);
+        } else if (userClick == fourthYear) {
+            userFrame = new ViewCourseFrame();
+            viewCourseFrame();
+            displayCourses(user.getFourthYearCourses(), 4);
+        }
+
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
         Object userClick = e.getSource();
         if (userClick == addCourseButton) {
             addCourseNavigation();
-
         } else if (userClick == removeCourseButton) {
             removeCourseNavigation();
         } else if (userClick == viewCourseButton) {
             viewCourseNavigaton();
         } else if (userClick == gradeSummaryButton) {
+            gradeSummaryNavigation();
 
         } else if (userClick == saveButton) {
 
@@ -155,8 +183,95 @@ public class FrontDeskGui implements ActionListener {
         } else if (userClick == submitRemoveCourseButton) {
             removeCourse();
         }
+        actionPerformed2(userClick);
+
 
     }
+
+    public void gradeSummaryNavigation() {
+        userFrame.dispose();
+        userFrame = new GradeSummaryFrame();
+        gradeSummaryFrame();
+
+    }
+
+    public void gradeSummaryFrame() {
+        coursePanel = new Panel();
+        coursePanel.setSize(960, 1000);
+        coursePanel.setBackground(Color.white);
+        coursePanel.setLayout(new BoxLayout(coursePanel, BoxLayout.Y_AXIS));
+
+        coursePanel.add(createSummaryPanel(user.getFirstYearCourses(), 1));
+        coursePanel.add(createSummaryPanel(user.getSecondYearCourses(), 2));
+        coursePanel.add(createSummaryPanel(user.getThirdYearCourses(), 3));
+        coursePanel.add(createSummaryPanel(user.getFourthYearCourses(), 4));
+
+        coursePanel.setVisible(true);
+        userFrame.add(homeButton);
+        userFrame.add(coursePanel);
+        userFrame.setVisible(true);
+    }
+
+
+    public JPanel createSummaryPanel(List<Course> courses, int year) {
+
+        List<Course> emptyList = new ArrayList<>();
+
+        if (emptyList.equals(courses)) {
+            return noCourseAvailPanel(year);
+        }
+
+        return courseAvailPanel(courses, year);
+    }
+
+    public JPanel noCourseAvailPanel(int year) {
+        JPanel panel = new JPanel();
+        panel.setSize(950, 200);
+        panel.setBackground(Color.white);
+        panel.setLayout(new BorderLayout());
+        JLabel noCourseAvailable = new JLabel();
+        noCourseAvailable.setText("A summary for Year " + year + " is not yet available."
+                + "\nNot enough courses were added.");
+        Border border = BorderFactory.createDashedBorder(Color.pink);
+        noCourseAvailable.setBorder(border);
+        noCourseAvailable.setPreferredSize(new Dimension(950, 100));
+        noCourseAvailable.setVerticalAlignment(JLabel.CENTER);
+        noCourseAvailable.setHorizontalAlignment(JLabel.CENTER);
+        panel.add(noCourseAvailable);
+
+        return panel;
+    }
+
+    public JPanel courseAvailPanel(List<Course> courses, int year) {
+        JPanel panel = new JPanel();
+        panel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panel.setBackground(Color.white);
+        panel.setPreferredSize(new Dimension(960, 100));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        String average = user.calculateAverage(courses);
+        String letterGrade = user.letterGrade(Double.parseDouble(average));
+        int totalCredit = user.totalCredit(courses);
+        JLabel title = new JLabel();
+        title.setText("Grade Summary of Year " + year + ":");
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setVisible(true);
+        JLabel averagePercentLabel = new JLabel();
+        averagePercentLabel.setText("\t\tYear " + year + " Average Percentage: " + average + " %");
+        averagePercentLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        JLabel letterGradeLabel = new JLabel();
+        letterGradeLabel.setText("\t\tYear " + year + " Average Letter Grade: " + letterGrade);
+        letterGradeLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        JLabel totalCreditLabel = new JLabel();
+        totalCreditLabel.setText("\t\tYear " + year + " Total Credits: " + totalCredit);
+        totalCreditLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panel.add(title);
+        panel.add(averagePercentLabel);
+        panel.add(letterGradeLabel);
+        panel.add(totalCreditLabel);
+
+        return panel;
+    }
+
 
     public void viewCourseNavigaton() {
         userFrame.dispose();
@@ -164,7 +279,52 @@ public class FrontDeskGui implements ActionListener {
         viewCourseFrame();
     }
 
-    public void  viewCourseFrame() {
+    public void displayCourses(List<Course> courses, int year) {
+        ArrayList<Course> emptyList = new ArrayList<>();
+        if (emptyList.equals(courses)) {
+            JOptionPane.showMessageDialog(null, "You have not yet added "
+                            + "any courses in Year " + year,
+                    "Unavailable to View Courses", JOptionPane.WARNING_MESSAGE);
+        } else {
+            setTable(courses);
+            JScrollPane sp = new JScrollPane(courseTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            sp.setPreferredSize(new Dimension(960, 400));
+            userFrame.add(sp);
+            userFrame.setVisible(true);
+
+        }
+    }
+
+    public void setTable(List<Course> courses) {
+        String[] columnNames = {"Course Name", "Professor Name", "Credits", "Year",
+                "Final Mark", "Term", "Rating", "Course Description"};
+        int numOfCourse = courses.size();
+        Object[][] data = new Object[numOfCourse][8];
+
+        int count = 0;
+        for (Course course : courses) {
+            data[count][0] = course.getCourseName();
+            data[count][1] = course.getProfessorName();
+            data[count][2] = course.getCredit();
+            data[count][3] = course.getYear();
+            data[count][4] = course.getFinalMark();
+            data[count][5] = course.getTerm();
+            data[count][6] = course.getRating();
+            data[count][7] = course.getCourseSummary();
+            count++;
+        }
+        courseTable = new JTable(data, columnNames);
+        courseTable.getColumnModel().getColumn(7).setPreferredWidth(200);
+        courseTable.setPreferredSize(new Dimension(960, 400));
+        courseTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        courseTable.addMouseListener(this);
+
+
+    }
+
+
+    public void viewCourseFrame() {
         coursePanel = new Panel();
         coursePanel.setSize(960, 1000);
         coursePanel.setBackground(Color.white);
@@ -179,20 +339,18 @@ public class FrontDeskGui implements ActionListener {
 
     private JPanel buttonPanel() {
         JPanel buttonPanel = new JPanel();
-        coursePanel.setSize(960, 300);
-        coursePanel.setBackground(Color.white);
-        coursePanel.setLayout(new FlowLayout());
-        coursePanel.add(firstYear);
-        coursePanel.add(secondYear);
-        coursePanel.add(thirdYear);
-        coursePanel.add(fourthYear);
+        buttonPanel.setSize(960, 200);
+        buttonPanel.setBackground(Color.white);
+        buttonPanel.setLayout(new FlowLayout());
+        buttonPanel.add(firstYear);
+        buttonPanel.add(secondYear);
+        buttonPanel.add(thirdYear);
+        buttonPanel.add(fourthYear);
 
         return buttonPanel;
 
 
     }
-
-
 
 
     public void createCourse() {
@@ -571,6 +729,47 @@ public class FrontDeskGui implements ActionListener {
         otherPanel.add(saveButton);
         otherPanel.add(loadButton);
         otherPanel.add(quitButton);
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        // not used
+    }
+
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        int row = courseTable.rowAtPoint(e.getPoint());
+        int column = courseTable.columnAtPoint(e.getPoint());
+        JOptionPane.showMessageDialog(null, "\n\t Course Name: "
+                        + courseTable.getValueAt(row, 0) + "\n\t Professor: "
+                        + courseTable.getValueAt(row, 1) + "\n\t Credit: "
+                        + courseTable.getValueAt(row, 2)
+                        + "\n\t Year: " + courseTable.getValueAt(row, 3)
+                        + "\n\t Final Mark: "
+                        + courseTable.getValueAt(row, 4) + "\n\t Term: "
+                        + courseTable.getValueAt(row, 5)
+                        + "\n\t Course Rating: " + courseTable.getValueAt(row, 6)
+                        + "\n\t Course Summary: " + courseTable.getValueAt(row, 7),
+                "Larger View", JOptionPane.PLAIN_MESSAGE);
+
+
+    }
+
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        // not used
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        // not used
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        // not used
     }
 
 
