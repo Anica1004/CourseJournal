@@ -72,11 +72,17 @@ I have taken in that particular year.
 
 # Instructions for Grader
 
-- You can generate the first required action related to adding Xs to a Y by...
-- You can generate the second required action related to adding Xs to a Y by...
-- You can locate my visual component by...
-- You can save the state of my application by...
-- You can reload the state of my application by...
+- You can generate the first required action related to adding Xs to a Y by 
+pressing the add a course button and type out the course information and submit it. Then the
+course will be successfully added to the list of courses of the student/user
+- You can generate the second required action related to adding Xs to a Y by pressing the 
+remove course button and type out the course name and undergraduate year you have taken the course.
+If the course is found in the user's list of courses with the given course information, then
+the course will be removed upon the user's confirmation 
+- You can locate my visual component by seeing the background image being added in the user frame 
+of my gui 
+- You can save the state of my application by pressing on the save button in the home frame
+- You can reload the state of my application by pressing the load button in the home frame
 
 
 

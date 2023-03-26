@@ -27,8 +27,7 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     private JsonSaver jsonSaver;
     private JsonLoader jsonLoader;
 
-
-    // below are fields related to gui:
+    // below are fields specifically related to gui:
     private JFrame userFrame;
 
     private Panel addCoursePanel;
@@ -68,37 +67,9 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     private Panel coursePanel;
     private JTable courseTable;
 
-    public void setHomeButton() {
-        ImageIcon image = new ImageIcon("src/main/ui/gui/HomeImage.png");
-        homeButton = new JButton(image);
-        homeButton.setPreferredSize(new Dimension(50, 50));
-        homeButton.setHorizontalAlignment(JButton.LEFT);
-        homeButton.setVerticalAlignment(JButton.BOTTOM);
-        homeButton.addActionListener(this);
 
-    }
-
-    public void setYearButtons() {
-        firstYear = new JButton();
-        firstYear.setText("View First Year Courses");
-        secondYear = new JButton();
-        secondYear.setText("View Second Year Courses");
-        thirdYear = new JButton();
-        thirdYear.setText("View Third Year Courses");
-        fourthYear = new JButton();
-        fourthYear.setText("View Fourth Year Courses");
-        firstYear.setPreferredSize(new Dimension(200, 80));
-        secondYear.setPreferredSize(new Dimension(200, 80));
-        thirdYear.setPreferredSize(new Dimension(200, 80));
-        fourthYear.setPreferredSize(new Dimension(200, 80));
-        firstYear.addActionListener(this);
-        secondYear.addActionListener(this);
-        thirdYear.addActionListener(this);
-        fourthYear.addActionListener(this);
-
-    }
-
-
+    // MODIFIES: this
+    // EFFECTS: initializes the user, jsonSaver, jsonLoader, panels, buttons, and labels
     public void initializeGui() {
         user = new Student();
         jsonSaver = new JsonSaver(FILENAME);
@@ -120,87 +91,16 @@ public class FrontDeskGui implements ActionListener, MouseListener {
         setInputs();
     }
 
-    public void setHomePanels() {
-        userFrame = new FrontFrame();
-        userFrame.add(addCoursePanel);
-        userFrame.add(removeCoursePanel);
-        userFrame.add(viewCoursePanel);
-        userFrame.add(gradeSummaryPanel);
-        userFrame.add(otherPanel);
-        userFrame.setVisible(true);
 
-    }
-
-    // EFFECTS: starts the program running with displaying the homepage
+    // EFFECTS: starts the program running by displaying the homepage
     public void startProgram() {
         initializeGui();
         setHomePanels();
     }
 
-    public void actionPerformed2(Object userClick) {
-        if (userClick == firstYear) {
-            userFrame.dispose();
-            userFrame = new ViewCourseFrame();
-            viewCourseFrame();
-            displayCourses(user.getFirstYearCourses(), 1);
-        } else if (userClick == secondYear) {
-            userFrame.dispose();
-            userFrame = new ViewCourseFrame();
-            viewCourseFrame();
-            displayCourses(user.getSecondYearCourses(), 2);
-        } else if (userClick == thirdYear) {
-            userFrame.dispose();
-            userFrame = new ViewCourseFrame();
-            viewCourseFrame();
-            displayCourses(user.getThirdYearCourses(), 3);
-        } else if (userClick == fourthYear) {
-            userFrame.dispose();
-            userFrame = new ViewCourseFrame();
-            viewCourseFrame();
-            displayCourses(user.getFourthYearCourses(), 4);
-        }
-
-    }
-
-    public void actionPerformed3(Object userClick) {
-        if (userClick == saveButton) {
-            saveWork();
-            JOptionPane.showMessageDialog(null, "We have successfully saved your file!",
-                    "Successfully Saved File", JOptionPane.INFORMATION_MESSAGE);
-        } else if (userClick == loadButton) {
-            loadWork();
-            JOptionPane.showMessageDialog(null, "We have successfully loaded your file!",
-                    "Successfully Loaded File", JOptionPane.INFORMATION_MESSAGE);
-        } else if (userClick == quitButton) {
-            userFrame.dispose();
-        } else if (userClick == submitNewCourseButton) {
-            createCourse();
-        } else if (userClick == homeButton) {
-            userFrame.dispose();
-            setHomePanels();
-        } else if (userClick == submitRemoveCourseButton) {
-            removeCourse();
-        }
-
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        Object userClick = e.getSource();
-        if (userClick == addCourseButton) {
-            addCourseNavigation();
-        } else if (userClick == removeCourseButton) {
-            removeCourseNavigation();
-        } else if (userClick == viewCourseButton) {
-            viewCourseNavigaton();
-        } else if (userClick == gradeSummaryButton) {
-            gradeSummaryNavigation();
-
-        }
-        actionPerformed2(userClick);
-        actionPerformed3(userClick);
-    }
-
+    // MODIFIES: this
+    // EFFECTS: disposes previous frame, and navigates user to a new frame that corresponds to
+    // a grade summary frame
     public void gradeSummaryNavigation() {
         userFrame.dispose();
         userFrame = new GradeSummaryFrame();
@@ -208,32 +108,37 @@ public class FrontDeskGui implements ActionListener, MouseListener {
 
     }
 
-    // EFFECTS: saves the student to file
-    private void saveWork() {
-        try {
-            jsonSaver.open();
-            jsonSaver.write(user);
-            jsonSaver.close();
-            System.out.println("We have successfully saved your course data to " + FILENAME);
-        } catch (FileNotFoundException e) {
-            System.out.println("Unable to save to file: " + FILENAME);
-        }
+    // MODIFIES: this
+    // EFFECTS: disposes previous frame, and navigates user to a new frame that corresponds to
+    // a view courses frame
+    public void viewCourseNavigation() {
+        userFrame.dispose();
+        userFrame = new ViewCourseFrame();
+        viewCourseFrame();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: disposes previous frame, and navigates user to a new frame that corresponds to
+    // an add course frame
+    public void addCourseNavigation() {
+        userFrame.dispose();
+        userFrame = new AddCourseFrame();
+        addCourseFrame();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: disposes previous frame, and navigates user to a new frame that corresponds to
+    // a remove course frame
+    public void removeCourseNavigation() {
+        userFrame.dispose();
+        userFrame = new RemoveCourseFrame();
+        removeCourseFrame();
     }
 
 
     // MODIFIES: this
-    // EFFECTS: loads student from file
-    private void loadWork() {
-        try {
-            user = jsonLoader.read();
-            System.out.println("We have successfully loaded your course information from " + FILENAME);
-        } catch (IOException e) {
-            System.out.println("We are unable to read from the following file: " + FILENAME);
-        }
-    }
-
-
-
+    // EFFECTS: creates a course panel for the grade summary frame that displays the grade summary
+    // for first, second, third, and fourth year
     public void gradeSummaryFrame() {
         coursePanel = new Panel();
         coursePanel.setSize(960, 1000);
@@ -252,17 +157,19 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     }
 
 
+    // EFFECTS: creates a summary panel that either displays that the user does not have enough
+    // courses for a summary or a grade summary of the specified year and returns it
     public JPanel createSummaryPanel(List<Course> courses, int year) {
-
         List<Course> emptyList = new ArrayList<>();
-
         if (emptyList.equals(courses)) {
             return noCourseAvailPanel(year);
         }
-
         return courseAvailPanel(courses, year);
     }
 
+    // REQUIRES: the year must be 1, 2, 3, or 4
+    // Creates and returns a panel that notifies that the user does not have enough courses for
+    // a grade summary
     public JPanel noCourseAvailPanel(int year) {
         JPanel panel = new JPanel();
         panel.setSize(950, 200);
@@ -281,6 +188,8 @@ public class FrontDeskGui implements ActionListener, MouseListener {
         return panel;
     }
 
+    // REQUIRES: the year must be 1, 2, 3, or 4 and the courses should not be empty
+    // Creates and returns a panel that displays a grade summary of the particular, specified year
     public JPanel courseAvailPanel(List<Course> courses, int year) {
         JPanel panel = new JPanel();
         panel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -312,6 +221,9 @@ public class FrontDeskGui implements ActionListener, MouseListener {
         return panel;
     }
 
+
+    // EFFECTS: creates and returns a label that
+    // specifies the year of the grade summary
     public JLabel getTitleLabel(int year) {
         JLabel title = new JLabel();
         title.setText("Grade Summary of Year " + year + ":");
@@ -319,15 +231,12 @@ public class FrontDeskGui implements ActionListener, MouseListener {
         title.setFont(new Font("Serif", Font.BOLD, 16));
 
         return title;
-
     }
 
-    public void viewCourseNavigaton() {
-        userFrame.dispose();
-        userFrame = new ViewCourseFrame();
-        viewCourseFrame();
-    }
 
+    // MODIFIES: this
+    // EFFECTS: If available, display all the courses by adding a table in the panel; otherwise notify user that
+    // there is not enough courses to provide a view courses panel
     public void displayCourses(List<Course> courses, int year) {
         ArrayList<Course> emptyList = new ArrayList<>();
         if (emptyList.equals(courses)) {
@@ -345,34 +254,9 @@ public class FrontDeskGui implements ActionListener, MouseListener {
         }
     }
 
-    public void setTable(List<Course> courses) {
-        String[] columnNames = {"Course Name", "Professor Name", "Credits", "Year",
-                "Final Mark", "Term", "Rating", "Course Description"};
-        int numOfCourse = courses.size();
-        Object[][] data = new Object[numOfCourse][8];
 
-        int count = 0;
-        for (Course course : courses) {
-            data[count][0] = course.getCourseName();
-            data[count][1] = course.getProfessorName();
-            data[count][2] = course.getCredit();
-            data[count][3] = course.getYear();
-            data[count][4] = course.getFinalMark();
-            data[count][5] = course.getTerm();
-            data[count][6] = course.getRating();
-            data[count][7] = course.getCourseSummary();
-            count++;
-        }
-        courseTable = new JTable(data, columnNames);
-        courseTable.getColumnModel().getColumn(7).setPreferredWidth(200);
-        courseTable.setPreferredSize(new Dimension(960, 400));
-        courseTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        courseTable.addMouseListener(this);
-
-
-    }
-
-
+       // MODIFIES: this
+       // EFFECTS: creates a course panel for the view Course Frame
     public void viewCourseFrame() {
         coursePanel = new Panel();
         coursePanel.setSize(960, 1000);
@@ -386,6 +270,10 @@ public class FrontDeskGui implements ActionListener, MouseListener {
 
     }
 
+    // EFFECTS: creates and returns a button panel that has
+    // the four buttons, "view first year courses" button,
+    // "view second year courses" button, "view third year courses" button,
+    // and "view fourth year courses" button
     private JPanel buttonPanel() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setSize(960, 200);
@@ -401,6 +289,8 @@ public class FrontDeskGui implements ActionListener, MouseListener {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a course based on the input, and adds it to the users' list of courses
 
     public void createCourse() {
         String courseName = inputCourseName.getText();
@@ -416,6 +306,13 @@ public class FrontDeskGui implements ActionListener, MouseListener {
         user.sortCourse(newCourse, year);
         JOptionPane.showMessageDialog(null, "We have successfully added " + courseName + "!",
                 "Successful Submission", JOptionPane.INFORMATION_MESSAGE);
+        setTextFieldEmpty();
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the text fields empty
+    public void setTextFieldEmpty() {
         inputCourseName.setText("");
         inputProfessorName.setText("");
         inputCredit.setText("");
@@ -425,6 +322,10 @@ public class FrontDeskGui implements ActionListener, MouseListener {
         inputRating.setText("");
         inputCourseSummary.setText("");
     }
+
+
+
+
 
 
     // REQUIRES: year must be 1, 2, 3, or 4
@@ -450,6 +351,10 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     }
 
 
+    // REQUIRES: year must be 1, 2, 3, or 4
+    // MODIFIES: this
+    // EFFECTS:  removes the specified course from the users' list of courses
+    // of the particular year
     public void removeCourse() {
         String courseName = inputCourseName.getText();
         int year = Integer.parseInt(inputYear.getText());
@@ -459,7 +364,8 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: removes the specified course if found and confirmed; otherwise navigate user
+    // EFFECTS: removes the specified course if found and confirmed; otherwise display dialog that
+    // the course was unable to be found or not removed
     public void removeCourse(Course course, List<Course> courses, String courseName) {
         if (course == null) {
             JOptionPane.showMessageDialog(null, "We were unable to find " + courseName
@@ -491,20 +397,10 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     }
 
 
-    public void addCourseNavigation() {
-        userFrame.dispose();
-        userFrame = new AddCourseFrame();
-        addCourseFrame();
-    }
 
-    public void removeCourseNavigation() {
-        userFrame.dispose();
-        userFrame = new RemoveCourseFrame();
-        removeCourseFrame();
-
-
-    }
-
+    // MODIFIES: this
+    // EFFECTS: creates a course panel for the remove course frame, adding buttons and
+    // panels to it
     public void removeCourseFrame() {
         coursePanel = new Panel();
         coursePanel.setSize(960, 1000);
@@ -522,6 +418,321 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     }
 
 
+
+    // MODIFIES: this
+    // EFFECTS: creates course panel for the add course frame, adding labels, submit, and home button
+    // to it
+    public void addCourseFrame() {
+        coursePanel = new Panel();
+        coursePanel.setSize(960, 1000);
+        coursePanel.setBackground(Color.white);
+        coursePanel.setLayout(new BoxLayout(coursePanel, BoxLayout.Y_AXIS));
+        coursePanel.add(courseLabelPanel(40));
+        coursePanel.add(profNameLabelPanel());
+        coursePanel.add(creditLabelPanel());
+        coursePanel.add(yearLabelPanel(40));
+        coursePanel.add(markLabelPanel());
+        coursePanel.add(termLabelPanel());
+        coursePanel.add(ratingLabelPanel());
+        coursePanel.add(courseSummaryLabelPanel());
+        coursePanel.add(submitNewCourseButton);
+        coursePanel.setVisible(true);
+        userFrame.add(homeButton);
+        userFrame.add(coursePanel);
+        userFrame.setVisible(true);
+    }
+
+    // EFFECTS: creates a panel that stores the input course name text field
+    public JPanel courseLabelPanel(int height) {
+        JLabel courseNameLabel = makeInputLabel("Course Name");
+        JPanel courseLabelPanel = new JPanel();
+        courseLabelPanel.setLayout(new FlowLayout());
+        courseLabelPanel.setPreferredSize(new Dimension(960, height));
+        courseLabelPanel.add(courseNameLabel);
+        courseLabelPanel.add(inputCourseName);
+        courseLabelPanel.setVisible(true);
+        return courseLabelPanel;
+    }
+
+
+    // EFFECTS: creates a panel that stores the input professor name text field
+    public JPanel profNameLabelPanel() {
+        JLabel profNameLabel = makeInputLabel("Professor Name");
+        JPanel profNameLabelPanel = new JPanel();
+        profNameLabelPanel.setLayout(new FlowLayout());
+        profNameLabelPanel.setPreferredSize(new Dimension(960, 40));
+        profNameLabelPanel.add(profNameLabel);
+        profNameLabelPanel.add(inputProfessorName);
+        profNameLabelPanel.setVisible(true);
+        return profNameLabelPanel;
+
+    }
+
+    // EFFECTS: creates a panel that stores the input credits text field
+    public JPanel creditLabelPanel() {
+        JLabel creditLabel = makeInputLabel("Number of Credits");
+        JPanel creditLabelPanel = new JPanel();
+        creditLabelPanel.setLayout(new FlowLayout());
+        creditLabelPanel.setPreferredSize(new Dimension(960, 40));
+        creditLabelPanel.add(creditLabel);
+        creditLabelPanel.add(inputCredit);
+
+        creditLabelPanel.setVisible(true);
+
+        return creditLabelPanel;
+
+
+    }
+
+    // EFFECTS: creates a panel that stores the input year text field
+    public JPanel yearLabelPanel(int height) {
+        JLabel yearLabel = makeInputLabel("Undergraduate Year (1, 2, 3, or 4)");
+        JPanel yearLabelPanel = new JPanel();
+        yearLabelPanel.setLayout(new FlowLayout());
+        yearLabelPanel.setPreferredSize(new Dimension(960, height));
+        yearLabelPanel.add(yearLabel);
+        yearLabelPanel.add(inputYear);
+        yearLabelPanel.setVisible(true);
+
+        return yearLabelPanel;
+    }
+
+    // EFFECTS: creates a panel that stores the input final mark text field
+    public JPanel markLabelPanel() {
+        JLabel markLabel = makeInputLabel("Final Mark");
+        JPanel markLabelPanel = new JPanel();
+        markLabelPanel.setLayout(new FlowLayout());
+        markLabelPanel.setPreferredSize(new Dimension(960, 40));
+        markLabelPanel.add(markLabel);
+        markLabelPanel.add(inputFinalMark);
+        markLabelPanel.setVisible(true);
+
+        return markLabelPanel;
+
+    }
+
+    // EFFECTS: creates a panel that stores the input term text field
+    public JPanel termLabelPanel() {
+        JLabel termLabel = makeInputLabel("Term (1 or 2)");
+        JPanel termLabelPanel = new JPanel();
+        termLabelPanel.setLayout(new FlowLayout());
+        termLabelPanel.setPreferredSize(new Dimension(960, 40));
+        termLabelPanel.add(termLabel);
+        termLabelPanel.add(inputTerm);
+
+        termLabelPanel.setVisible(true);
+        return termLabelPanel;
+    }
+
+    // EFFECTS: creates a panel that stores the input rating text field
+    public JPanel ratingLabelPanel() {
+        JLabel ratingLabel = makeInputLabel("Rating out of 10");
+        JPanel ratingLabelPanel = new JPanel();
+        ratingLabelPanel.setLayout(new FlowLayout());
+        ratingLabelPanel.setPreferredSize(new Dimension(960, 40));
+        ratingLabelPanel.add(ratingLabel);
+        ratingLabelPanel.add(inputRating);
+
+        ratingLabelPanel.setVisible(true);
+
+        return ratingLabelPanel;
+    }
+
+    // EFFECTS: creates a panel that stores the input course summary text field
+    public JPanel courseSummaryLabelPanel() {
+        JLabel courseSummaryLabel = makeInputLabel("Course Description");
+        JPanel courseSummaryLabelPanel = new JPanel();
+        courseSummaryLabelPanel.setLayout(new FlowLayout());
+        courseSummaryLabelPanel.setPreferredSize(new Dimension(960, 200));
+        courseSummaryLabelPanel.add(courseSummaryLabel);
+        courseSummaryLabelPanel.add(inputCourseSummary);
+        courseSummaryLabelPanel.setVisible(true);
+
+        return courseSummaryLabelPanel;
+    }
+
+    // EFFECTS: creates a label with the specified name, and returns it
+    public JLabel makeInputLabel(String name) {
+        JLabel label = new JLabel();
+        label.setText(name + ": ");
+        label.setFont(new Font("Serif", Font.ITALIC, 16));
+        return label;
+
+    }
+
+
+    // MODIFIES: this
+    // EFFECTS: initializes the add course button, and stores it within the add course panel
+    private void addAddCoursePanel() {
+        addCoursePanel.setBackground(Color.white);
+        addCoursePanel.setBounds(0, 130, 1000, 100);
+
+        addCourseButton = new JButton();
+        addCourseButton.setPreferredSize(new Dimension(300, 90));
+        addCourseButton.setBounds(0, 140, 1000, 90);
+        addCourseButton.setText("Add a Course");
+        addCourseButton.addActionListener(this);
+        addCoursePanel.add(addCourseButton);
+        addCourseButton.setVerticalAlignment(JButton.CENTER);
+        addCourseButton.setHorizontalAlignment(JButton.CENTER);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: initializes the remove course button, and stores it within the remove course panel
+    private void addRemoveCoursePanel() {
+        removeCoursePanel.setBounds(0, 240, 1000, 100);
+        removeCoursePanel.setBackground(Color.white);
+
+        removeCourseButton = new JButton();
+        removeCourseButton.setPreferredSize(new Dimension(300, 90));
+        removeCourseButton.setBounds(0, 140, 1000, 90);
+        removeCourseButton.setText("Remove a Course");
+        removeCourseButton.addActionListener(this);
+        removeCoursePanel.add(removeCourseButton);
+        removeCourseButton.setVerticalAlignment(JButton.CENTER);
+        removeCourseButton.setHorizontalAlignment(JButton.CENTER);
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS: initializes the view course button, and stores it within the view course panel
+    private void addViewCoursePanel() {
+        viewCoursePanel.setBounds(0, 350, 1000, 100);
+        viewCoursePanel.setBackground(Color.white);
+
+        viewCourseButton = new JButton();
+        viewCourseButton.setPreferredSize(new Dimension(300, 90));
+        viewCourseButton.setBounds(0, 140, 1000, 90);
+        viewCourseButton.setText("View Courses");
+        viewCourseButton.addActionListener(this);
+        viewCoursePanel.add(viewCourseButton);
+        viewCourseButton.setVerticalAlignment(JButton.CENTER);
+        viewCourseButton.setHorizontalAlignment(JButton.CENTER);
+    }
+
+
+    // MODIFIES: this
+    // EFFECTS: initializes the grade summary button, and stores it within the grade summary panel
+    private void addGradeSummaryPanel() {
+        gradeSummaryPanel.setBounds(0, 460, 1000, 100);
+        gradeSummaryPanel.setBackground(Color.white);
+        gradeSummaryButton = new JButton();
+        gradeSummaryButton.setPreferredSize(new Dimension(300, 90));
+        gradeSummaryButton.setBounds(0, 140, 1000, 90);
+        gradeSummaryButton.setText("View a Grade Summary");
+        gradeSummaryButton.addActionListener(this);
+        gradeSummaryPanel.add(gradeSummaryButton);
+        gradeSummaryButton.setVerticalAlignment(JButton.CENTER);
+        gradeSummaryButton.setHorizontalAlignment(JButton.CENTER);
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS: initializes the quit, save, and load button, and stores them within the other panel
+    private void addOtherPanel() {
+        otherPanel.setBounds(0, 570, 1000, 100);
+        otherPanel.setBackground(Color.white);
+        saveButton = new JButton();
+        loadButton = new JButton();
+        quitButton = new JButton();
+        saveButton.setText("Save File");
+        loadButton.setText("Load File");
+        quitButton.setText("Quit");
+        saveButton.setPreferredSize(new Dimension(200, 90));
+        loadButton.setPreferredSize(new Dimension(200, 90));
+        quitButton.setPreferredSize(new Dimension(200, 90));
+
+        saveButton.setBounds(0, 140, 200, 90);
+        saveButton.addActionListener(this);
+        loadButton.setBounds(300, 140, 200, 90);
+        loadButton.addActionListener(this);
+        quitButton.setBounds(600, 140, 200, 90);
+        quitButton.addActionListener(this);
+        otherPanel.add(saveButton);
+        otherPanel.add(loadButton);
+        otherPanel.add(quitButton);
+    }
+
+
+    // MODIFIES: this
+    // EFFECTS: adds the add course, remove course, view course, grade summary, and other panel
+    // to the user frame to set the home userframe
+    public void setHomePanels() {
+        userFrame = new FrontFrame();
+        userFrame.add(addCoursePanel);
+        userFrame.add(removeCoursePanel);
+        userFrame.add(viewCoursePanel);
+        userFrame.add(gradeSummaryPanel);
+        userFrame.add(otherPanel);
+        userFrame.setVisible(true);
+
+    }
+
+     // MODIFIES: this
+     // EFFECTS: initializes the home button
+    public void setHomeButton() {
+        ImageIcon image = new ImageIcon("src/main/ui/gui/HomeImage.png");
+        homeButton = new JButton(image);
+        homeButton.setPreferredSize(new Dimension(50, 50));
+        homeButton.setHorizontalAlignment(JButton.LEFT);
+        homeButton.setVerticalAlignment(JButton.BOTTOM);
+        homeButton.addActionListener(this);
+
+    }
+
+    // MODIFIES: this
+    // initializes the buttons for "view first year courses" button, "view second year courses" button,
+    // "view third year courses" button, and "view fourth year courses" button
+    public void setYearButtons() {
+        firstYear = new JButton();
+        firstYear.setText("View First Year Courses");
+        secondYear = new JButton();
+        secondYear.setText("View Second Year Courses");
+        thirdYear = new JButton();
+        thirdYear.setText("View Third Year Courses");
+        fourthYear = new JButton();
+        fourthYear.setText("View Fourth Year Courses");
+        firstYear.setPreferredSize(new Dimension(200, 80));
+        secondYear.setPreferredSize(new Dimension(200, 80));
+        thirdYear.setPreferredSize(new Dimension(200, 80));
+        fourthYear.setPreferredSize(new Dimension(200, 80));
+        firstYear.addActionListener(this);
+        secondYear.addActionListener(this);
+        thirdYear.addActionListener(this);
+        fourthYear.addActionListener(this);
+    }
+
+    // MODIFIES: this
+    // initializes the table that displays the list of courses with information such as the course name,
+    // professor name, number of credits, year, final mark, term, rating, and the course summary
+    public void setTable(List<Course> courses) {
+        String[] columnNames = {"Course Name", "Professor Name", "Credits", "Year",
+                "Final Mark", "Term", "Rating", "Course Description"};
+        int numOfCourse = courses.size();
+        Object[][] data = new Object[numOfCourse][8];
+
+        int count = 0;
+        for (Course course : courses) {
+            data[count][0] = course.getCourseName();
+            data[count][1] = course.getProfessorName();
+            data[count][2] = course.getCredit();
+            data[count][3] = course.getYear();
+            data[count][4] = course.getFinalMark();
+            data[count][5] = course.getTerm();
+            data[count][6] = course.getRating();
+            data[count][7] = course.getCourseSummary();
+            count++;
+        }
+        courseTable = new JTable(data, columnNames);
+        courseTable.getColumnModel().getColumn(7).setPreferredWidth(200);
+        courseTable.setPreferredSize(new Dimension(960, 400));
+        courseTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        courseTable.addMouseListener(this);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: initializes the input fields including the inputCourseName, inputProfessorName, inputCredit,
+    // inputYear, inputFinalMark, inputTerm, inputRating, inputCourseSummary
     public void setInputs() {
         inputCourseName = new JTextField();
         inputCourseName.setPreferredSize(new Dimension(180, 40));
@@ -548,107 +759,8 @@ public class FrontDeskGui implements ActionListener, MouseListener {
         inputCourseSummary.setPreferredSize(new Dimension(300, 170));
     }
 
-
-    public JPanel courseLabelPanel(int height) {
-        JLabel courseNameLabel = makeInputLabel("Course Name");
-        JPanel courseLabelPanel = new JPanel();
-        courseLabelPanel.setLayout(new FlowLayout());
-        courseLabelPanel.setPreferredSize(new Dimension(960, height));
-        courseLabelPanel.add(courseNameLabel);
-        courseLabelPanel.add(inputCourseName);
-        courseLabelPanel.setVisible(true);
-        return courseLabelPanel;
-    }
-
-    public JPanel profNameLabelPanel() {
-        JLabel profNameLabel = makeInputLabel("Professor Name");
-        JPanel profNameLabelPanel = new JPanel();
-        profNameLabelPanel.setLayout(new FlowLayout());
-        profNameLabelPanel.setPreferredSize(new Dimension(960, 40));
-        profNameLabelPanel.add(profNameLabel);
-        profNameLabelPanel.add(inputProfessorName);
-        profNameLabelPanel.setVisible(true);
-        return profNameLabelPanel;
-
-    }
-
-    public JPanel creditLabelPanel() {
-        JLabel creditLabel = makeInputLabel("Number of Credits");
-        JPanel creditLabelPanel = new JPanel();
-        creditLabelPanel.setLayout(new FlowLayout());
-        creditLabelPanel.setPreferredSize(new Dimension(960, 40));
-        creditLabelPanel.add(creditLabel);
-        creditLabelPanel.add(inputCredit);
-
-        creditLabelPanel.setVisible(true);
-
-        return creditLabelPanel;
-
-
-    }
-
-    public JPanel yearLabelPanel(int height) {
-        JLabel yearLabel = makeInputLabel("Undergraduate Year (1, 2, 3, or 4)");
-        JPanel yearLabelPanel = new JPanel();
-        yearLabelPanel.setLayout(new FlowLayout());
-        yearLabelPanel.setPreferredSize(new Dimension(960, height));
-        yearLabelPanel.add(yearLabel);
-        yearLabelPanel.add(inputYear);
-        yearLabelPanel.setVisible(true);
-
-        return yearLabelPanel;
-    }
-
-    public JPanel markLabelPanel() {
-        JLabel markLabel = makeInputLabel("Final Mark");
-        JPanel markLabelPanel = new JPanel();
-        markLabelPanel.setLayout(new FlowLayout());
-        markLabelPanel.setPreferredSize(new Dimension(960, 40));
-        markLabelPanel.add(markLabel);
-        markLabelPanel.add(inputFinalMark);
-        markLabelPanel.setVisible(true);
-
-        return markLabelPanel;
-
-    }
-
-    public JPanel termLabelPanel() {
-        JLabel termLabel = makeInputLabel("Term (1 or 2)");
-        JPanel termLabelPanel = new JPanel();
-        termLabelPanel.setLayout(new FlowLayout());
-        termLabelPanel.setPreferredSize(new Dimension(960, 40));
-        termLabelPanel.add(termLabel);
-        termLabelPanel.add(inputTerm);
-
-        termLabelPanel.setVisible(true);
-        return termLabelPanel;
-    }
-
-    public JPanel ratingLabelPanel() {
-        JLabel ratingLabel = makeInputLabel("Rating out of 10");
-        JPanel ratingLabelPanel = new JPanel();
-        ratingLabelPanel.setLayout(new FlowLayout());
-        ratingLabelPanel.setPreferredSize(new Dimension(960, 40));
-        ratingLabelPanel.add(ratingLabel);
-        ratingLabelPanel.add(inputRating);
-
-        ratingLabelPanel.setVisible(true);
-
-        return ratingLabelPanel;
-    }
-
-    public JPanel courseSummaryLabelPanel() {
-        JLabel courseSummaryLabel = makeInputLabel("Course Description");
-        JPanel courseSummaryLabelPanel = new JPanel();
-        courseSummaryLabelPanel.setLayout(new FlowLayout());
-        courseSummaryLabelPanel.setPreferredSize(new Dimension(960, 200));
-        courseSummaryLabelPanel.add(courseSummaryLabel);
-        courseSummaryLabelPanel.add(inputCourseSummary);
-        courseSummaryLabelPanel.setVisible(true);
-
-        return courseSummaryLabelPanel;
-    }
-
+    // MODIFIES: this
+    // EFFECTS: initializes the submit button
     public void setSubmitNewCourseButton() {
         submitNewCourseButton = new JButton();
         submitNewCourseButton.setPreferredSize(new Dimension(200, 50));
@@ -657,6 +769,8 @@ public class FrontDeskGui implements ActionListener, MouseListener {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the submit remove course button
     public void setSubmitRemoveCourseButton() {
         submitRemoveCourseButton = new JButton();
         submitRemoveCourseButton.setPreferredSize(new Dimension(200, 50));
@@ -666,129 +780,8 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     }
 
 
-    public void addCourseFrame() {
-        coursePanel = new Panel();
-        coursePanel.setSize(960, 1000);
-        coursePanel.setBackground(Color.white);
-        coursePanel.setLayout(new BoxLayout(coursePanel, BoxLayout.Y_AXIS));
-        coursePanel.add(courseLabelPanel(40));
-        coursePanel.add(profNameLabelPanel());
-        coursePanel.add(creditLabelPanel());
-        coursePanel.add(yearLabelPanel(40));
-        coursePanel.add(markLabelPanel());
-        coursePanel.add(termLabelPanel());
-        coursePanel.add(ratingLabelPanel());
-        coursePanel.add(courseSummaryLabelPanel());
-        coursePanel.add(submitNewCourseButton);
-        coursePanel.setVisible(true);
-        userFrame.add(homeButton);
-        userFrame.add(coursePanel);
-        userFrame.setVisible(true);
-
-
-    }
-
-
-    public JLabel makeInputLabel(String name) {
-        JLabel label = new JLabel();
-        label.setText(name + ": ");
-        label.setFont(new Font("Serif", Font.ITALIC, 16));
-        return label;
-
-    }
-
-
-    private void addAddCoursePanel() {
-        addCoursePanel.setBackground(Color.white);
-        addCoursePanel.setBounds(0, 130, 1000, 100);
-
-        addCourseButton = new JButton();
-        addCourseButton.setPreferredSize(new Dimension(300, 90));
-        addCourseButton.setBounds(0, 140, 1000, 90);
-        addCourseButton.setText("Add a Course");
-        addCourseButton.addActionListener(this);
-        addCoursePanel.add(addCourseButton);
-        addCourseButton.setVerticalAlignment(JButton.CENTER);
-        addCourseButton.setHorizontalAlignment(JButton.CENTER);
-    }
-
-    private void addRemoveCoursePanel() {
-        removeCoursePanel.setBounds(0, 240, 1000, 100);
-        removeCoursePanel.setBackground(Color.white);
-
-        removeCourseButton = new JButton();
-        removeCourseButton.setPreferredSize(new Dimension(300, 90));
-        removeCourseButton.setBounds(0, 140, 1000, 90);
-        removeCourseButton.setText("Remove a Course");
-        removeCourseButton.addActionListener(this);
-        removeCoursePanel.add(removeCourseButton);
-        removeCourseButton.setVerticalAlignment(JButton.CENTER);
-        removeCourseButton.setHorizontalAlignment(JButton.CENTER);
-
-    }
-
-    private void addViewCoursePanel() {
-        viewCoursePanel.setBounds(0, 350, 1000, 100);
-        viewCoursePanel.setBackground(Color.white);
-
-        viewCourseButton = new JButton();
-        viewCourseButton.setPreferredSize(new Dimension(300, 90));
-        viewCourseButton.setBounds(0, 140, 1000, 90);
-        viewCourseButton.setText("View Courses");
-        viewCourseButton.addActionListener(this);
-        viewCoursePanel.add(viewCourseButton);
-        viewCourseButton.setVerticalAlignment(JButton.CENTER);
-        viewCourseButton.setHorizontalAlignment(JButton.CENTER);
-    }
-
-    private void addGradeSummaryPanel() {
-        gradeSummaryPanel.setBounds(0, 460, 1000, 100);
-        gradeSummaryPanel.setBackground(Color.white);
-        gradeSummaryButton = new JButton();
-        gradeSummaryButton.setPreferredSize(new Dimension(300, 90));
-        gradeSummaryButton.setBounds(0, 140, 1000, 90);
-        gradeSummaryButton.setText("View a Grade Summary");
-        gradeSummaryButton.addActionListener(this);
-        gradeSummaryPanel.add(gradeSummaryButton);
-        gradeSummaryButton.setVerticalAlignment(JButton.CENTER);
-        gradeSummaryButton.setHorizontalAlignment(JButton.CENTER);
-
-    }
-
-
-    private void addOtherPanel() {
-        otherPanel.setBounds(0, 570, 1000, 100);
-        otherPanel.setBackground(Color.white);
-        saveButton = new JButton();
-        loadButton = new JButton();
-        quitButton = new JButton();
-        saveButton.setText("Save File");
-        loadButton.setText("Load File");
-        quitButton.setText("Quit");
-        saveButton.setPreferredSize(new Dimension(200, 90));
-        loadButton.setPreferredSize(new Dimension(200, 90));
-        quitButton.setPreferredSize(new Dimension(200, 90));
-
-        saveButton.setBounds(0, 140, 200, 90);
-        saveButton.addActionListener(this);
-        loadButton.setBounds(300, 140, 200, 90);
-        loadButton.addActionListener(this);
-        quitButton.setBounds(600, 140, 200, 90);
-        quitButton.addActionListener(this);
-        otherPanel.add(saveButton);
-        otherPanel.add(loadButton);
-        otherPanel.add(quitButton);
-    }
-
-
-
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        // not used
-    }
-
-
+    // EFFECTS: when the mouse is pressed on a specific part of the data,
+    // enlarge and display the row of the data
     @Override
     public void mousePressed(MouseEvent e) {
         int row = courseTable.rowAtPoint(e.getPoint());
@@ -804,418 +797,83 @@ public class FrontDeskGui implements ActionListener, MouseListener {
                         + "\n\t Course Rating: " + courseTable.getValueAt(row, 6)
                         + "\n\t Course Summary: " + courseTable.getValueAt(row, 7),
                 "Larger View", JOptionPane.PLAIN_MESSAGE);
-
-
     }
 
 
+    // EFFECTS: handles cases when the buttons are pressed
     @Override
-    public void mouseReleased(MouseEvent e) {
-        // not used
+    public void actionPerformed(ActionEvent e) {
+        Object userClick = e.getSource();
+        if (userClick == addCourseButton) {
+            addCourseNavigation();
+        } else if (userClick == removeCourseButton) {
+            removeCourseNavigation();
+        } else if (userClick == viewCourseButton) {
+            viewCourseNavigation();
+        } else if (userClick == gradeSummaryButton) {
+            gradeSummaryNavigation();
+
+        }
+        actionPerformed2(userClick);
+        actionPerformed3(userClick);
     }
 
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        // not used
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        // not used
-    }
-
-
-
-    /*// EFFECTS: displays the program options,
-    // including adding a course, removing a course, viewing courses,
-    // viewing grade summary, and quitting
-    public void displayOptions() {
-        System.out.println("\n-------------------------------------------------------------------");
-        System.out.println("Hello user, \nselect a number from below to fulfill your needs!:");
-        System.out.println("\t1. Add Course");
-        System.out.println("\t2. Remove Course");
-        System.out.println("\t3. View Courses");
-        System.out.println("\t4. Grade Summary");
-        System.out.println("\t5. Save Course Information");
-        System.out.println("\t6. Load Course Information");
-        System.out.println("\t7. Quit");
-        System.out.println("-------------------------------------------------------------------");
-        navigateOptions();
-    }
-
-    // EFFECTS: Navigates user to the different program options
-    //          depending on user's decision, which may add, remove, view courses, or
-    //          view grade summary
     // MODIFIES: this
-    public void navigateOptions() {
-        int userInput = keys.nextInt();
-        if (userInput == 1) {
-            System.out.println("You have chosen to add a course!");
-            addCourse();
-        } else if (userInput == 2) {
-            System.out.println("You have chosen to remove a course!");
-            removeCourseWelcoming();
-        } else if (userInput == 3) {
-            System.out.println("You have chosen to view courses!");
-            viewCourse();
-        } else if (userInput == 4) {
-            System.out.println("You have chosen to view your grade summary!");
-            gradeSummary();
-        } else if (userInput == 5) {
+    // EFFECTS: handles cases when the buttons are pressed, related to view courses
+    private void actionPerformed2(Object userClick) {
+        if (userClick == firstYear) {
+            userFrame.dispose();
+            userFrame = new ViewCourseFrame();
+            viewCourseFrame();
+            displayCourses(user.getFirstYearCourses(), 1);
+        } else if (userClick == secondYear) {
+            userFrame.dispose();
+            userFrame = new ViewCourseFrame();
+            viewCourseFrame();
+            displayCourses(user.getSecondYearCourses(), 2);
+        } else if (userClick == thirdYear) {
+            userFrame.dispose();
+            userFrame = new ViewCourseFrame();
+            viewCourseFrame();
+            displayCourses(user.getThirdYearCourses(), 3);
+        } else if (userClick == fourthYear) {
+            userFrame.dispose();
+            userFrame = new ViewCourseFrame();
+            viewCourseFrame();
+            displayCourses(user.getFourthYearCourses(), 4);
+        }
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS: handles cases when the buttons are pressed
+    public void actionPerformed3(Object userClick) {
+        if (userClick == saveButton) {
             saveWork();
-        } else if (userInput == 6) {
+            JOptionPane.showMessageDialog(null, "We have successfully saved your file!",
+                    "Successfully Saved File", JOptionPane.INFORMATION_MESSAGE);
+        } else if (userClick == loadButton) {
             loadWork();
-        } else if (userInput == 7) {
-            System.out.println("Come back again!");
-        } else {
-            System.out.println("Please input a number between 1 and 4.");
-            displayOptions();
-        }
-    }
-
-    // EFFECTS: displays all the courses that the user has taken in a particular year
-    public void viewCourse() {
-        optionsViewCourse();
-        int year = keys.nextInt();
-        if (year == 1) {
-            viewCourses(year, user.getFirstYearCourses());
-
-        } else if (year == 2) {
-            viewCourses(year, user.getSecondYearCourses());
-
-        } else if (year == 3) {
-            viewCourses(year, user.getThirdYearCourses());
-
-        } else if (year == 4) {
-            viewCourses(year, user.getFourthYearCourses());
-
-        } else {
-            System.out.println("Please select a number 1, 2, 3, or 4");
-            viewCourse();
+            JOptionPane.showMessageDialog(null, "We have successfully loaded your file!",
+                    "Successfully Loaded File", JOptionPane.INFORMATION_MESSAGE);
+        } else if (userClick == quitButton) {
+            userFrame.dispose();
+        } else if (userClick == submitNewCourseButton) {
+            createCourse();
+        } else if (userClick == homeButton) {
+            userFrame.dispose();
+            setHomePanels();
+        } else if (userClick == submitRemoveCourseButton) {
+            removeCourse();
         }
 
     }
 
-    // EFFECTS: displays the options of course information based on undergraduate year
-    public void optionsViewCourse() {
-        System.out.println("Choose one of the options below: ");
-        System.out.println("\t1. Course Information of Year 1: ");
-        System.out.println("\t2. Course Information of Year 2: ");
-        System.out.println("\t3. Course Information of Year 3: ");
-        System.out.println("\t4. Course Information of Year 4: ");
-    }
-
-
-    // EFFECTS: displays the grade summary of each year (1, 2, 3, and 4)
-    public void gradeSummary() {
-
-        int year = 1;
-        List<Course> emptyList = new ArrayList<>();
-        for (List<Course> courses : user.getListOfListOfCourses()) {
-            if (emptyList.equals(courses)) {
-                System.out.println("\n======================================================================");
-                System.out.println("A summary for Year " + year + " is not yet available.");
-                System.out.println("Not enough courses were added.");
-                System.out.println("Hopefully you add more courses in the near future for Year " + year + "!");
-                System.out.println("======================================================================");
-
-            } else {
-                String average = user.calculateAverage(courses);
-                String letterGrade = user.letterGrade(Double.parseDouble(average));
-                System.out.println("\n======================================================================");
-                System.out.println("Grade Summary of Year " + year + ":");
-                System.out.println("\tYear " + year + " Average Percentage: " + average + " %");
-                System.out.println("\tYear " + year + " Average Letter Grade: " + letterGrade);
-                System.out.println("\tYear " + year + " Total Credit: " + user.totalCredit(courses));
-                System.out.println("======================================================================");
-            }
-            year++;
-
-        }
-        backToLobby();
-
-    }
-
-    // EFFECTS: displays the courses taken in the specified year
-    public void viewCourses(int year, List<Course> courses) {
-        ArrayList<Course> emptyList = new ArrayList<>();
-        if (emptyList.equals(courses)) {
-            System.out.println("\nYou have not yet added any courses in Year " + year + ".");
-            System.out.println("Hopefully you add courses in the near future!");
-            backToLobby();
-
-        } else {
-            System.out.println("\nThe below are courses you have taken in Year " + year + ":");
-            displayListOfCourse(courses);
-            System.out.println("That must have been a fantastic year!");
-            backToLobby();
-        }
-    }
-
-    // EFFECTS: asks user to go back to the lobby; otherwise quit program
-    public void backToLobby() {
-        System.out.println("Would you like to go back to the front desk?");
-        System.out.println("Input 'Y' for yes and 'N' for no");
-        String userInput = keys.next();
-        if (userInput.equalsIgnoreCase("Y")) {
-            System.out.println("I will escort you to the front desk!");
-            displayOptions();
-        } else {
-            System.out.println("See you again!");
-        }
-    }
-
-    // EFFECTS: displays all the list of courses taken in the particular year,
-    // ordered from term 1 to term 2
-    public void displayListOfCourse(List<Course> courses) {
-        for (Course course : courses) {
-            if (course.getTerm() == 1) {
-                System.out.println("\n---------------------------------------------------------------------");
-                courseInformation(course.getCourseName(), course.getProfessorName(), course.getCredit(),
-                        course.getYear(), course.getFinalMark(), course.getTerm(), course.getRating(),
-                        course.getCourseSummary());
-                System.out.println("---------------------------------------------------------------------");
-            }
-        }
-        for (Course course : courses) {
-            if (course.getTerm() == 2) {
-                System.out.println("\n---------------------------------------------------------------------");
-                courseInformation(course.getCourseName(), course.getProfessorName(), course.getCredit(),
-                        course.getYear(), course.getFinalMark(), course.getTerm(),
-                        course.getRating(), course.getCourseSummary());
-                System.out.println("---------------------------------------------------------------------");
-            }
-        }
-
-
-    }
-
-    // EFFECTS: welcomes the user to remove a course, and asks for input values, specifying which
-    // course to remove
-    public void removeCourseWelcoming() {
-        System.out.println("Be sure to input the exact information without any spelling errors or extra space.");
-        askCourseName();
-        String courseName = keys.nextLine();
-        int year = askYear();
-        findListOfCourse(courseName, year);
-
-
-    }
-
-    // MODIFIES: this
-    // EFFECTS: removes the specified course if found and confirmed; otherwise navigate user
-    public void removeCourse(Course course, List<Course> courses) {
-        if (course == null) {
-            System.out.println("We were unable to find the course");
-            System.out.println("Sorry about that. Be sure to check your spelling and correct year next time.");
-            backToLobby();
-        } else {
-            if (courseConfirmation(course.getCourseName(), course.getProfessorName(),
-                    course.getCredit(), course.getYear(),
-                    course.getFinalMark(), course.getTerm(), course.getRating(),
-                    course.getCourseSummary())) {
-
-                courses.remove(course);
-                System.out.println("The course " + course.getCourseName() + " was successfully removed!");
-                backToLobby();
-            } else {
-                System.out.println("Sorry about the inconvenience.");
-                System.out.println("We will will find and reconfirm the course again.");
-                removeCourseWelcoming();
-            }
-
-        }
-    }
-
-    // REQUIRES: year must be 1, 2, 3, or 4
-    // MODIFIES: this
-    // EFFECTS: finds the course within the list of courses, navigating to remove it
-    public void findListOfCourse(String courseName, int year) {
-        if (year == 1) {
-            removeCourse(user.findCourse(courseName, user.getFirstYearCourses()), user.getFirstYearCourses());
-
-        } else if (year == 2) {
-            removeCourse(user.findCourse(courseName, user.getSecondYearCourses()), user.getSecondYearCourses());
-
-        } else if (year == 3) {
-            removeCourse(user.findCourse(courseName, user.getThirdYearCourses()), user.getThirdYearCourses());
-        } else {
-            removeCourse(user.findCourse(courseName, user.getFourthYearCourses()), user.getFourthYearCourses());
-
-        }
-    }
-
-
-    // MODIFIES: this
-    // EFFECTS: adds a course to the user's list of courses
-    public void addCourse() {
-        askCourseName();
-        String courseName = keys.nextLine();
-        String professorName = askProfessorName();
-        int year = askYear();
-        int term = askTerm();
-        double finalMark = askFinalMark();
-        int credit = askCredit();
-        double courseRating = askCourseRating();
-        askCourseSummary();
-        String courseSummary = keys.nextLine();
-
-        if (courseConfirmation(courseName,
-                professorName, credit, year,
-                finalMark, term, courseRating, courseSummary)) {
-            Course newCourse = new Course(courseName, professorName, credit, year,
-                    finalMark, term, courseRating, courseSummary);
-            user.sortCourse(newCourse, year);
-            System.out.println("We have successfully added your course.");
-            backToLobby();
-
-        } else {
-            System.out.println("Sorry for the inconvenience, we will reconfirm the course information");
-            addCourse();
-        }
-
-    }
-
-    // REQUIRES: year must be 1, 2, 3, or 4,  credit > 0, final mark > 0, term must be 1 or 2,
-    //            snd 0<= course rating <= 10
-    // EFFECTS: displays a course's information including course name, the professor that taught
-    //// the course, course credit, the undergraduate year (1, 2, 3, or 4) and term (1 or 2)
-    //// that the user has taken the course
-    public void courseInformation(String courseName, String professorName, int credit, int year,
-                                  double finalMark, int term, double courseRating, String courseSummary) {
-
-        System.out.println("\tCourse Name: " + courseName);
-        System.out.println("\tProfessor Name: " + professorName);
-        System.out.println("\tYear: Year " + year);
-        System.out.println("\tTerm: Term " + term);
-        System.out.println("\tFinal Mark: " + finalMark + " %");
-        System.out.println("\tCredit : " + credit + " credits");
-        System.out.println("\tCourse Rating: " + courseRating + " out of 10");
-        System.out.println("\tCourse Description: " + courseSummary);
-
-    }
-
-    // REQUIRES: year must be 1, 2, 3, or 4,  credit > 0, final mark > 0, term must be 1 or 2,
-    //           and  0<= course rating <= 10
-    // EFFECTS: confirms with user if the course information is correct
-    //          returns true if it is; otherwise false
-    public boolean courseConfirmation(String courseName, String professorName, int credit, int year,
-                                      double finalMark, int term, double courseRating, String courseSummary) {
-        System.out.println("Is the following information correct?");
-        courseInformation(courseName, professorName, credit, year,
-                finalMark, term, courseRating, courseSummary);
-        System.out.println("Input 'confirm' if it is correct");
-        System.out.println("Input 'resubmit' if it is incorrect");
-        String userConfirmation;
-        userConfirmation = keys.next();
-        if (userConfirmation.equalsIgnoreCase("confirm")) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
-
-    // EFFECTS: ask user for course name and returns input
-    public String askCourseName() {
-        System.out.println("Input the name of the course:");
-        String courseName;
-        courseName = keys.nextLine();
-        return courseName;
-    }
-
-    // EFFECTS: ask user for course rating out of 10 and returns input
-    public double askCourseRating() {
-        double courseRating = -10;
-        boolean state = true;
-        while (state) {
-            System.out.println("Rate the overall quality of the course out of 10:");
-            courseRating = keys.nextDouble();
-            if (courseRating >= 0 && courseRating <= 10) {
-                state = false;
-            } else {
-                System.out.println("Please input a rating that is in between 1 to 10");
-            }
-        }
-        return courseRating;
-    }
-
-
-    // EFFECTS: asks user for professor name returns input
-    public String askProfessorName() {
-        System.out.println("Input your professor's name for this course:");
-        String professorName;
-        professorName = keys.nextLine();
-        return professorName;
-    }
-
-    // EFFECTS: asks user for number of credits and returns input
-    public int askCredit() {
-        System.out.println("Input the number of credits of the course:");
-        int creditNum;
-        creditNum = keys.nextInt();
-        return creditNum;
-    }
-
-
-    // EFFECTS: asks user for year taken the course and returns input
-    public int askYear() {
-        int year = 0;
-        boolean exactYear = true;
-        while (exactYear) {
-            System.out.println("Input the undergraduate year you have taken the course (1, 2, 3, or 4):");
-            year = keys.nextInt();
-            if (year == 1 || year == 2 || year == 3 || year == 4) {
-                exactYear = false;
-            } else {
-                System.out.println("Please input a year that is either 1, 2, 3, or 4");
-            }
-        }
-        return year;
-    }
-
-
-    // EFFECTS: asks user for the final mark achieved in the course and returns input
-    public double askFinalMark() {
-        System.out.println("Input your final mark for this course in percentage:");
-        double userMark;
-        userMark = keys.nextDouble();
-        return userMark;
-    }
-
-
-    // EFFECTS: asks user for term number the course was taken and returns input
-    public int askTerm() {
-        int term = 0;
-        boolean state = true;
-        while (state) {
-            System.out.println("Input the term you have take the course (1 or 2):");
-            term = keys.nextInt();
-            if (term == 1 || term == 2) {
-                state = false;
-            } else {
-                System.out.println("Please input a value that is either 1 or 2");
-
-            }
-        }
-        return term;
-    }
-
-    // EFFECTS: ask user for a course description and returns input
-    public String askCourseSummary() {
-        System.out.println("Please describe the course based on your personal experience:");
-        String courseSummary;
-        courseSummary = keys.nextLine();
-        return courseSummary;
-
-    }
 
     // The methods saveWork and loadWork was created based on the source below:
     // This class was created based on the source below:
     // Carter, Paul (2021) JsonSerializationDemo
     //https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
-
 
     // EFFECTS: saves the student to file
     private void saveWork() {
@@ -1224,11 +882,11 @@ public class FrontDeskGui implements ActionListener, MouseListener {
             jsonSaver.write(user);
             jsonSaver.close();
             System.out.println("We have successfully saved your course data to " + FILENAME);
-            backToLobby();
         } catch (FileNotFoundException e) {
             System.out.println("Unable to save to file: " + FILENAME);
         }
     }
+
 
     // MODIFIES: this
     // EFFECTS: loads student from file
@@ -1236,12 +894,38 @@ public class FrontDeskGui implements ActionListener, MouseListener {
         try {
             user = jsonLoader.read();
             System.out.println("We have successfully loaded your course information from " + FILENAME);
-            backToLobby();
         } catch (IOException e) {
             System.out.println("We are unable to read from the following file: " + FILENAME);
         }
     }
 
-*/
+
+    // EFFECTS: not used, but overridden for implementation
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        // not used
+    }
+
+
+    // EFFECTS: not used, but overridden for implementation
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        // not used
+    }
+
+    // EFFECTS: not used, but overridden for implementation
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        // not used
+    }
+
+    // EFFECTS: not used, but overridden for implementation
+    @Override
+    public void mouseExited(MouseEvent e) {
+        // not used
+    }
+
+
+
 }
 

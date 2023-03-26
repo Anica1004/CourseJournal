@@ -1,24 +1,140 @@
 {
-    "secondYearCourses": [],
-    "fourthYearCourses": [],
-    "firstYearCourses": [{
-        "courseName": "CPSC 410",
-        "year": 1,
-        "rating": 1,
-        "professorName": "sdfsf",
-        "finalMark": 1,
-        "term": 1,
-        "courseSummary": "sdfsdf",
-        "credit": 1
-    }],
-    "thirdYearCourses": [{
-        "courseName": "CPSC 310",
-        "year": 3,
-        "rating": 10,
-        "professorName": "dsklfjs",
-        "finalMark": 100,
-        "term": 1,
-        "courseSummary": "sdfsdf",
-        "credit": 4
-    }]
+    "secondYearCourses": [
+        {
+            "courseName": "CPSC 210",
+            "year": 2,
+            "rating": 4,
+            "professorName": "Steven",
+            "finalMark": 100,
+            "term": 2,
+            "courseSummary": "sdffd",
+            "credit": 4
+        },
+        {
+            "courseName": "CPSC 220",
+            "year": 2,
+            "rating": 1,
+            "professorName": "dsfd",
+            "finalMark": 50,
+            "term": 1,
+            "courseSummary": "sdfsdf",
+            "credit": 1
+        }
+    ],
+    "fourthYearCourses": [
+        {
+            "courseName": "CPSC 410",
+            "year": 4,
+            "rating": 1,
+            "professorName": "dsfsd",
+            "finalMark": 100,
+            "term": 1,
+            "courseSummary": "sdfsdf",
+            "credit": 1
+        },
+        {
+            "courseName": "CPSC 420",
+            "year": 4,
+            "rating": 1,
+            "professorName": "sdfs",
+            "finalMark": 50,
+            "term": 1,
+            "courseSummary": "sdfsd",
+            "credit": 1
+        }
+    ],
+    "firstYearCourses": [
+        {
+            "courseName": "CPSC 110",
+            "year": 1,
+            "rating": 9.7,
+            "professorName": "Gregor",
+            "finalMark": 100,
+            "term": 1,
+            "courseSummary": "It was fun",
+            "credit": 4
+        },
+        {
+            "courseName": "CSPC 150",
+            "year": 1,
+            "rating": 1,
+            "professorName": "dsfs",
+            "finalMark": 50,
+            "term": 1,
+            "courseSummary": "sdfsdf",
+            "credit": 1
+        },
+        {
+            "courseName": "CPSC 220",
+            "year": 1,
+            "rating": 10,
+            "professorName": "sdfs",
+            "finalMark": 50,
+            "term": 1,
+            "courseSummary": "sdfsdf",
+            "credit": 1
+        },
+        {
+            "courseName": "CPSC 310",
+            "year": 1,
+            "rating": 132,
+            "professorName": "sdfsdf",
+            "finalMark": 100,
+            "term": 1,
+            "courseSummary": "sdfsdfsdf",
+            "credit": 1
+        },
+        {
+            "courseName": "CPSC 320",
+            "year": 1,
+            "rating": 1,
+            "professorName": "dsf",
+            "finalMark": 50,
+            "term": 1,
+            "courseSummary": "sdfsdfsdf",
+            "credit": 1
+        },
+        {
+            "courseName": "CPSC 410",
+            "year": 1,
+            "rating": 1,
+            "professorName": "dfsdf",
+            "finalMark": 100,
+            "term": 1,
+            "courseSummary": "cdvdsd",
+            "credit": 1
+        },
+        {
+            "courseName": "CPSC 420",
+            "year": 1,
+            "rating": 1,
+            "professorName": "sdfds",
+            "finalMark": 50,
+            "term": 1,
+            "courseSummary": "sdfsfd",
+            "credit": 1
+        }
+    ],
+    "thirdYearCourses": [
+        {
+            "courseName": "CPSC 310",
+            "year": 3,
+            "rating": 1,
+            "professorName": "sdfs",
+            "finalMark": 100,
+            "term": 1,
+            "courseSummary": "sdfsd",
+            "credit": 1
+        },
+        {
+            "courseName": "CPSC 320",
+            "year": 3,
+            "rating": 1,
+            "professorName": "dsfs",
+            "finalMark": 50,
+            "term": 1,
+            "courseSummary": "sdfsdf",
+            "credit": 1
+        }
+    ]
 }
