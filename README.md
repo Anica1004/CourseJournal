@@ -80,9 +80,9 @@ remove course button and type out the course name and undergraduate year you hav
 If the course is found in the user's list of courses with the given course information, then
 the course will be removed upon the user's confirmation 
 - You can locate my visual component by seeing the background image being added in the user frame 
-of my gui 
-- You can save the state of my application by pressing on the save button in the home frame
-- You can reload the state of my application by pressing the load button in the home frame
+of my GUI, or image in the home button, image in the confirmation dialog 
+- You can save the state of my application by pressing on the save button that lives in the home frame
+- You can reload the state of my application by pressing the load button that lives in the home frame
 
 
 

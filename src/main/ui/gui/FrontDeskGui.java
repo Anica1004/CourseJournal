@@ -168,7 +168,7 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     }
 
     // REQUIRES: the year must be 1, 2, 3, or 4
-    // Creates and returns a panel that notifies that the user does not have enough courses for
+    // EFFECTS: Creates and returns a panel that notifies that the user does not have enough courses for
     // a grade summary
     public JPanel noCourseAvailPanel(int year) {
         JPanel panel = new JPanel();
@@ -189,7 +189,8 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     }
 
     // REQUIRES: the year must be 1, 2, 3, or 4 and the courses should not be empty
-    // Creates and returns a panel that displays a grade summary of the particular, specified year
+    // EFFECTS: Creates and returns a panel that displays a grade summary of the particular, specified year
+    // where the grade summary includes an average percentage, letter grade, and total credits
     public JPanel courseAvailPanel(List<Course> courses, int year) {
         JPanel panel = new JPanel();
         panel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -235,7 +236,9 @@ public class FrontDeskGui implements ActionListener, MouseListener {
 
 
     // MODIFIES: this
-    // EFFECTS: If available, display all the courses by adding a table in the panel; otherwise notify user that
+    // EFFECTS: If the list of courses is not empty, display all the courses by adding a
+    // table with course information in the panel;
+    // otherwise notify user that
     // there is not enough courses to provide a view courses panel
     public void displayCourses(List<Course> courses, int year) {
         ArrayList<Course> emptyList = new ArrayList<>();
@@ -326,11 +329,10 @@ public class FrontDeskGui implements ActionListener, MouseListener {
 
 
 
-
-
     // REQUIRES: year must be 1, 2, 3, or 4
     // MODIFIES: this
-    // EFFECTS: finds the course within the list of courses, navigating to remove it
+    // EFFECTS: finds the course within the list of courses of the particular year,
+    // navigating to remove it
     public void findListOfCourse(String courseName, int year) {
         if (year == 1) {
             removeCourse(user.findCourse(courseName, user.getFirstYearCourses()), user.getFirstYearCourses(),
@@ -420,7 +422,7 @@ public class FrontDeskGui implements ActionListener, MouseListener {
 
 
     // MODIFIES: this
-    // EFFECTS: creates course panel for the add course frame, adding labels, submit, and home button
+    // EFFECTS: creates course panel for the add course frame, adding labels, submit button, and home button
     // to it
     public void addCourseFrame() {
         coursePanel = new Panel();
@@ -443,6 +445,7 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     }
 
     // EFFECTS: creates a panel that stores the input course name text field
+    // and label
     public JPanel courseLabelPanel(int height) {
         JLabel courseNameLabel = makeInputLabel("Course Name");
         JPanel courseLabelPanel = new JPanel();
@@ -456,6 +459,7 @@ public class FrontDeskGui implements ActionListener, MouseListener {
 
 
     // EFFECTS: creates a panel that stores the input professor name text field
+    // and label
     public JPanel profNameLabelPanel() {
         JLabel profNameLabel = makeInputLabel("Professor Name");
         JPanel profNameLabelPanel = new JPanel();
@@ -469,6 +473,7 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     }
 
     // EFFECTS: creates a panel that stores the input credits text field
+    // and label
     public JPanel creditLabelPanel() {
         JLabel creditLabel = makeInputLabel("Number of Credits");
         JPanel creditLabelPanel = new JPanel();
@@ -485,6 +490,7 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     }
 
     // EFFECTS: creates a panel that stores the input year text field
+    // and label
     public JPanel yearLabelPanel(int height) {
         JLabel yearLabel = makeInputLabel("Undergraduate Year (1, 2, 3, or 4)");
         JPanel yearLabelPanel = new JPanel();
@@ -498,6 +504,7 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     }
 
     // EFFECTS: creates a panel that stores the input final mark text field
+    // and label
     public JPanel markLabelPanel() {
         JLabel markLabel = makeInputLabel("Final Mark");
         JPanel markLabelPanel = new JPanel();
@@ -512,6 +519,7 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     }
 
     // EFFECTS: creates a panel that stores the input term text field
+    // and label
     public JPanel termLabelPanel() {
         JLabel termLabel = makeInputLabel("Term (1 or 2)");
         JPanel termLabelPanel = new JPanel();
@@ -525,6 +533,7 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     }
 
     // EFFECTS: creates a panel that stores the input rating text field
+    // and label
     public JPanel ratingLabelPanel() {
         JLabel ratingLabel = makeInputLabel("Rating out of 10");
         JPanel ratingLabelPanel = new JPanel();
@@ -539,6 +548,7 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     }
 
     // EFFECTS: creates a panel that stores the input course summary text field
+    // and label
     public JPanel courseSummaryLabelPanel() {
         JLabel courseSummaryLabel = makeInputLabel("Course Description");
         JPanel courseSummaryLabelPanel = new JPanel();
@@ -781,26 +791,29 @@ public class FrontDeskGui implements ActionListener, MouseListener {
 
 
     // EFFECTS: when the mouse is pressed on a specific part of the data,
-    // enlarge and display the row of the data
+    // enlarge and display the row of the data in the view course
     @Override
     public void mousePressed(MouseEvent e) {
         int row = courseTable.rowAtPoint(e.getPoint());
         int column = courseTable.columnAtPoint(e.getPoint());
         JOptionPane.showMessageDialog(null, "\n\t Course Name: "
                         + courseTable.getValueAt(row, 0) + "\n\t Professor: "
-                        + courseTable.getValueAt(row, 1) + "\n\t Credit: "
-                        + courseTable.getValueAt(row, 2)
+                        + courseTable.getValueAt(row, 1)
                         + "\n\t Year: " + courseTable.getValueAt(row, 3)
-                        + "\n\t Final Mark: "
-                        + courseTable.getValueAt(row, 4) + "\n\t Term: "
+                        + "\t Term: "
                         + courseTable.getValueAt(row, 5)
+                        + "\t Credit: "
+                        + courseTable.getValueAt(row, 2)
+                        + "\n\t Final Mark: "
+                        + courseTable.getValueAt(row, 4) + "%"
                         + "\n\t Course Rating: " + courseTable.getValueAt(row, 6)
+                        + "/10.0"
                         + "\n\t Course Summary: " + courseTable.getValueAt(row, 7),
                 "Larger View", JOptionPane.PLAIN_MESSAGE);
     }
 
 
-    // EFFECTS: handles cases when the buttons are pressed
+    // EFFECTS: handles cases when the buttons are pressed, navigating accordingly
     @Override
     public void actionPerformed(ActionEvent e) {
         Object userClick = e.getSource();
@@ -846,7 +859,8 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: handles cases when the buttons are pressed
+    // EFFECTS: handles cases when the buttons are pressed, disposing the userframe
+    // when necessary
     public void actionPerformed3(Object userClick) {
         if (userClick == saveButton) {
             saveWork();
