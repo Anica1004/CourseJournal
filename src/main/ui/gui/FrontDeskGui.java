@@ -12,6 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -137,18 +139,22 @@ public class FrontDeskGui implements ActionListener, MouseListener {
 
     public void actionPerformed2(Object userClick) {
         if (userClick == firstYear) {
+            userFrame.dispose();
             userFrame = new ViewCourseFrame();
             viewCourseFrame();
             displayCourses(user.getFirstYearCourses(), 1);
         } else if (userClick == secondYear) {
+            userFrame.dispose();
             userFrame = new ViewCourseFrame();
             viewCourseFrame();
             displayCourses(user.getSecondYearCourses(), 2);
         } else if (userClick == thirdYear) {
+            userFrame.dispose();
             userFrame = new ViewCourseFrame();
             viewCourseFrame();
             displayCourses(user.getThirdYearCourses(), 3);
         } else if (userClick == fourthYear) {
+            userFrame.dispose();
             userFrame = new ViewCourseFrame();
             viewCourseFrame();
             displayCourses(user.getFourthYearCourses(), 4);
@@ -156,6 +162,27 @@ public class FrontDeskGui implements ActionListener, MouseListener {
 
     }
 
+    public void actionPerformed3(Object userClick) {
+        if (userClick == saveButton) {
+            saveWork();
+            JOptionPane.showMessageDialog(null, "We have successfully saved your file!",
+                    "Successfully Saved File", JOptionPane.INFORMATION_MESSAGE);
+        } else if (userClick == loadButton) {
+            loadWork();
+            JOptionPane.showMessageDialog(null, "We have successfully loaded your file!",
+                    "Successfully Loaded File", JOptionPane.INFORMATION_MESSAGE);
+        } else if (userClick == quitButton) {
+            userFrame.dispose();
+        } else if (userClick == submitNewCourseButton) {
+            createCourse();
+        } else if (userClick == homeButton) {
+            userFrame.dispose();
+            setHomePanels();
+        } else if (userClick == submitRemoveCourseButton) {
+            removeCourse();
+        }
+
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -169,23 +196,9 @@ public class FrontDeskGui implements ActionListener, MouseListener {
         } else if (userClick == gradeSummaryButton) {
             gradeSummaryNavigation();
 
-        } else if (userClick == saveButton) {
-
-        } else if (userClick == loadButton) {
-
-        } else if (userClick == quitButton) {
-
-        } else if (userClick == submitNewCourseButton) {
-            createCourse();
-        } else if (userClick == homeButton) {
-            userFrame.dispose();
-            setHomePanels();
-        } else if (userClick == submitRemoveCourseButton) {
-            removeCourse();
         }
         actionPerformed2(userClick);
-
-
+        actionPerformed3(userClick);
     }
 
     public void gradeSummaryNavigation() {
@@ -194,6 +207,32 @@ public class FrontDeskGui implements ActionListener, MouseListener {
         gradeSummaryFrame();
 
     }
+
+    // EFFECTS: saves the student to file
+    private void saveWork() {
+        try {
+            jsonSaver.open();
+            jsonSaver.write(user);
+            jsonSaver.close();
+            System.out.println("We have successfully saved your course data to " + FILENAME);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to save to file: " + FILENAME);
+        }
+    }
+
+
+    // MODIFIES: this
+    // EFFECTS: loads student from file
+    private void loadWork() {
+        try {
+            user = jsonLoader.read();
+            System.out.println("We have successfully loaded your course information from " + FILENAME);
+        } catch (IOException e) {
+            System.out.println("We are unable to read from the following file: " + FILENAME);
+        }
+    }
+
+
 
     public void gradeSummaryFrame() {
         coursePanel = new Panel();
@@ -248,30 +287,40 @@ public class FrontDeskGui implements ActionListener, MouseListener {
         panel.setBackground(Color.white);
         panel.setPreferredSize(new Dimension(960, 100));
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
         String average = user.calculateAverage(courses);
         String letterGrade = user.letterGrade(Double.parseDouble(average));
         int totalCredit = user.totalCredit(courses);
-        JLabel title = new JLabel();
-        title.setText("Grade Summary of Year " + year + ":");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        title.setVisible(true);
+
+
         JLabel averagePercentLabel = new JLabel();
         averagePercentLabel.setText("\t\tYear " + year + " Average Percentage: " + average + " %");
         averagePercentLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
         JLabel letterGradeLabel = new JLabel();
         letterGradeLabel.setText("\t\tYear " + year + " Average Letter Grade: " + letterGrade);
         letterGradeLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
         JLabel totalCreditLabel = new JLabel();
         totalCreditLabel.setText("\t\tYear " + year + " Total Credits: " + totalCredit);
         totalCreditLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        panel.add(title);
+
+        panel.add(getTitleLabel(year));
         panel.add(averagePercentLabel);
         panel.add(letterGradeLabel);
         panel.add(totalCreditLabel);
-
         return panel;
     }
 
+    public JLabel getTitleLabel(int year) {
+        JLabel title = new JLabel();
+        title.setText("Grade Summary of Year " + year + ":");
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setFont(new Font("Serif", Font.BOLD, 16));
+
+        return title;
+
+    }
 
     public void viewCourseNavigaton() {
         userFrame.dispose();
@@ -730,6 +779,9 @@ public class FrontDeskGui implements ActionListener, MouseListener {
         otherPanel.add(loadButton);
         otherPanel.add(quitButton);
     }
+
+
+
 
     @Override
     public void mouseClicked(MouseEvent e) {

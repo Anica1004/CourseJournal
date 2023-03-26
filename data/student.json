@@ -1,27 +1,24 @@
 {
     "secondYearCourses": [],
     "fourthYearCourses": [],
-    "firstYearCourses": [
-        {
-            "courseName": "cpsc 110",
-            "year": 1,
-            "rating": 10,
-            "professorName": "gregor",
-            "finalMark": 96,
-            "term": 1,
-            "courseSummary": "it was good",
-            "credit": 4
-        },
-        {
-            "courseName": "english",
-            "year": 1,
-            "rating": 7,
-            "professorName": "anica",
-            "finalMark": 87,
-            "term": 2,
-            "courseSummary": "it was horrible",
-            "credit": 4
-        }
-    ],
-    "thirdYearCourses": []
+    "firstYearCourses": [{
+        "courseName": "CPSC 410",
+        "year": 1,
+        "rating": 1,
+        "professorName": "sdfsf",
+        "finalMark": 1,
+        "term": 1,
+        "courseSummary": "sdfsdf",
+        "credit": 1
+    }],
+    "thirdYearCourses": [{
+        "courseName": "CPSC 310",
+        "year": 3,
+        "rating": 10,
+        "professorName": "dsklfjs",
+        "finalMark": 100,
+        "term": 1,
+        "courseSummary": "sdfsdf",
+        "credit": 4
+    }]
 }
