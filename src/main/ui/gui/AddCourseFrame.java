@@ -4,8 +4,12 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
+// This class represents the frame of addCourse
+// which essentially is a page where the user can add a course
 public class AddCourseFrame extends JFrame {
 
+    // EFFECTS: initializes a label that informs the user to add a course, and
+    // background
     AddCourseFrame() {
 
         Border border = BorderFactory.createDashedBorder(Color.pink);

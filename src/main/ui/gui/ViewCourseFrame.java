@@ -4,7 +4,13 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
+
+// This class represents the frame of ViewCourse
+// which essentially is a page where the user can view courses
 public class ViewCourseFrame extends JFrame {
+
+    // EFFECTS: initializes a label that informs the user to view a course, and
+    // set background
     ViewCourseFrame() {
 
         Border border = BorderFactory.createDashedBorder(Color.pink);

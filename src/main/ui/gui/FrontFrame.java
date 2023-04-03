@@ -6,8 +6,14 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.io.File;
 
+// This class represents the frame of the Front
+// which essentially is a home page where the user can navigate to other
+// frames
 public class FrontFrame extends JFrame {
 
+
+    // EFFECTS: initializes a label that informs the user to choose different options to
+    // navigate, and initializes background
     FrontFrame() {
 
         Border border = BorderFactory.createDashedBorder(Color.pink);

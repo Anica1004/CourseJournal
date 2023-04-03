@@ -4,7 +4,12 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
+// This class represents the frame of GradeSummary
+// which essentially is a page where the user can see a grade summary
 public class GradeSummaryFrame extends JFrame {
+
+    // EFFECTS: initializes a label that informs the user to see the grade summary, and
+    // background
     public GradeSummaryFrame() {
 
         Border border = BorderFactory.createDashedBorder(Color.pink);

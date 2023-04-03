@@ -4,9 +4,12 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
+// This class represents the frame of RemoveCourse
+// which essentially is a page where the user can remove a course
 public class RemoveCourseFrame extends JFrame {
 
-
+    // EFFECTS: initializes a label that informs the user to remove a course, and
+    // set background
     public RemoveCourseFrame() {
 
         Border border = BorderFactory.createDashedBorder(Color.cyan);

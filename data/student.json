@@ -1,57 +1,15 @@
 {
     "secondYearCourses": [],
     "fourthYearCourses": [],
-    "firstYearCourses": [
-        {
-            "courseName": "CPSC 110",
-            "year": 1,
-            "rating": 10,
-            "professorName": "Gregor",
-            "finalMark": 94,
-            "term": 1,
-            "courseSummary": "The course was so good",
-            "credit": 4
-        },
-        {
-            "courseName": "MATH 100",
-            "year": 1,
-            "rating": 9.8,
-            "professorName": "Brian",
-            "finalMark": 90,
-            "term": 1,
-            "courseSummary": "The professor was so bad at explaining tbh",
-            "credit": 3
-        },
-        {
-            "courseName": "WRDS 150B",
-            "year": 1,
-            "rating": 3,
-            "professorName": "Theime",
-            "finalMark": 83,
-            "term": 1,
-            "courseSummary": "The grading was very strict",
-            "credit": 3
-        },
-        {
-            "courseName": "PHYS 119",
-            "year": 1,
-            "rating": 8,
-            "professorName": "I dont remember",
-            "finalMark": 93,
-            "term": 1,
-            "courseSummary": "The labs were kind of hard",
-            "credit": 1
-        },
-        {
-            "courseName": "DSCI 100",
-            "year": 1,
-            "rating": 9,
-            "professorName": "I forgot his name..",
-            "finalMark": 88,
-            "term": 1,
-            "courseSummary": "Easy course",
-            "credit": 3
-        }
-    ],
+    "firstYearCourses": [{
+        "courseName": "CPSC 110",
+        "year": 1,
+        "rating": 9.8,
+        "professorName": "gregor",
+        "finalMark": 96,
+        "term": 1,
+        "courseSummary": "i ;erkfhsdkfhhsd but it h\\was good",
+        "credit": 4
+    }],
     "thirdYearCourses": []
 }

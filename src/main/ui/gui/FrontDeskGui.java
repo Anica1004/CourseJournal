@@ -766,6 +766,8 @@ public class FrontDeskGui implements ActionListener, MouseListener {
         inputRating.setPreferredSize(new Dimension(180, 40));
 
         inputCourseSummary = new JTextArea();
+        inputCourseSummary.setLineWrap(true);
+        inputCourseSummary.setWrapStyleWord(false);
         inputCourseSummary.setPreferredSize(new Dimension(300, 170));
     }
 
