@@ -110,3 +110,12 @@ Mon Apr 10 13:32:56 PDT 2023
 \
 Removed CPSC 210 from second year courses.
 
+# Phase 4: Task 3
+- After making the UML diagram, I have realized that my program can be further improved 
+by refactoring the classes. One of the refactoring I want to make is to make an abstract class
+ named "courseFrame" which extends JFrame which has basic labels and borders. 
+Then we can extend that courseFrame in FrontFrame, GradeSummaryFrame, ViewCourseFrame, AddCourseFrame, 
+RemoveCourseFrame which would allow the following frames to get the basic labels and borders for free since they
+are subtypes. Then, the specific styles (layout, border, etc) can be specified in its own class. 
+This will allow less repetitive codes in FrontFrame, GradeSummaryFrame, ViewCourseFrame, AddCourseFrame,
+and RemoveCourseFrame, improving my program. 
