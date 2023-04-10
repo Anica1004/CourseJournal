@@ -84,5 +84,29 @@ of my GUI, or image in the home button, image in the confirmation dialog
 - You can save the state of my application by pressing on the save button that lives in the home frame
 - You can reload the state of my application by pressing the load button that lives in the home frame
 
+# Phase 4: Task 2
+- Sample is written below for the log events which happens when the user adds CPSC 110 and CPSC 210
+to their list of courses, and removes it:
 
+
+Event Logs:
+\
+Mon Apr 10 13:32:28 PDT 2023
+\
+Added CPSC 110 to first year courses.
+
+
+Mon Apr 10 13:32:43 PDT 2023
+\
+Added CPSC 210 to second year courses.
+
+
+Mon Apr 10 13:32:49 PDT 2023
+\
+Removed CPSC 110 from first year courses.
+
+
+Mon Apr 10 13:32:56 PDT 2023
+\
+Removed CPSC 210 from second year courses.
 

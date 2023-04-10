@@ -932,6 +932,17 @@ public class FrontDeskGui implements ActionListener, MouseListener, WindowListen
         }
     }
 
+    // EFFECTS: prints all the event logs to the console
+    @Override
+    public void windowClosing(WindowEvent e) {
+        System.out.println("\n\n");
+        System.out.println("Event Logs: ");
+        for (Event event : EventLog.getInstance()) {
+            System.out.println(event.toString() + "\n");
+        }
+    }
+
+
 
     // EFFECTS: not used, but overridden for implementation
     @Override
@@ -971,15 +982,6 @@ public class FrontDeskGui implements ActionListener, MouseListener, WindowListen
 
     }
 
-    // EFFECTS: not used, but overridden for implementation
-    @Override
-    public void windowClosing(WindowEvent e) {
-        System.out.println("\n\n");
-        System.out.println("Event Logs: ");
-        for (Event event : EventLog.getInstance()) {
-            System.out.println(event.toString() + "\n");
-        }
-    }
 
     // EFFECTS: not used, but overridden for implementation
     @Override
