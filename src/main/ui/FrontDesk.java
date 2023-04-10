@@ -210,8 +210,22 @@ public class FrontDesk {
     }
 
     // MODIFIES: this
+    // EFFECTS: navigates to removing the course depending on the year of the course
+    public void navigateToRemove(Course course, int year) {
+        if (year == 1) {
+            user.removeFirstYearCourses(course);
+        } else if (year == 2) {
+            user.removeSecondYearCourses(course);
+        } else if (year == 3) {
+            user.removeThirdYearCourses(course);
+        } else {
+            user.removeFourthYearCourses(course);
+        }
+    }
+
+    // MODIFIES: this
     // EFFECTS: removes the specified course if found and confirmed; otherwise navigate user
-    public void removeCourse(Course course, List<Course> courses) {
+    public void removeCourse(Course course, int year) {
         if (course == null) {
             System.out.println("We were unable to find the course");
             System.out.println("Sorry about that. Be sure to check your spelling and correct year next time.");
@@ -222,7 +236,7 @@ public class FrontDesk {
                     course.getFinalMark(), course.getTerm(), course.getRating(),
                     course.getCourseSummary())) {
 
-                courses.remove(course);
+                navigateToRemove(course, year);
                 System.out.println("The course " + course.getCourseName() + " was successfully removed!");
                 backToLobby();
             } else {
@@ -239,15 +253,15 @@ public class FrontDesk {
     // EFFECTS: finds the course within the list of courses, navigating to remove it
     public void findListOfCourse(String courseName, int year) {
         if (year == 1) {
-            removeCourse(user.findCourse(courseName, user.getFirstYearCourses()), user.getFirstYearCourses());
+            removeCourse(user.findCourse(courseName, user.getFirstYearCourses()), 1);
 
         } else if (year == 2) {
-            removeCourse(user.findCourse(courseName, user.getSecondYearCourses()), user.getSecondYearCourses());
+            removeCourse(user.findCourse(courseName, user.getSecondYearCourses()), 2);
 
         } else if (year == 3) {
-            removeCourse(user.findCourse(courseName, user.getThirdYearCourses()), user.getThirdYearCourses());
+            removeCourse(user.findCourse(courseName, user.getThirdYearCourses()), 3);
         } else {
-            removeCourse(user.findCourse(courseName, user.getFourthYearCourses()), user.getFourthYearCourses());
+            removeCourse(user.findCourse(courseName, user.getFourthYearCourses()), 4);
 
         }
     }

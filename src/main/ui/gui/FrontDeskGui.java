@@ -1,6 +1,8 @@
 package ui.gui;
 
 import model.Course;
+import model.Event;
+import model.EventLog;
 import model.Student;
 import persistence.JsonLoader;
 import persistence.JsonSaver;
@@ -8,20 +10,19 @@ import persistence.JsonSaver;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
+
 
 // The FrontDeskGui where users interact with the program, and navigate to find their needs,
 // including adding a course, removing a course, viewing courses taken in a particular year,
 //  and the overall grade summary, in a graphic user interface
-public class FrontDeskGui implements ActionListener, MouseListener {
+public class FrontDeskGui implements ActionListener, MouseListener, WindowListener {
     private static final String FILENAME = "./data/student.json";
     private Student user;
     private JsonSaver jsonSaver;
@@ -104,6 +105,7 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     public void gradeSummaryNavigation() {
         userFrame.dispose();
         userFrame = new GradeSummaryFrame();
+        userFrame.addWindowListener(this);
         gradeSummaryFrame();
 
     }
@@ -114,6 +116,7 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     public void viewCourseNavigation() {
         userFrame.dispose();
         userFrame = new ViewCourseFrame();
+        userFrame.addWindowListener(this);
         viewCourseFrame();
     }
 
@@ -123,6 +126,7 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     public void addCourseNavigation() {
         userFrame.dispose();
         userFrame = new AddCourseFrame();
+        userFrame.addWindowListener(this);
         addCourseFrame();
     }
 
@@ -132,6 +136,7 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     public void removeCourseNavigation() {
         userFrame.dispose();
         userFrame = new RemoveCourseFrame();
+        userFrame.addWindowListener(this);
         removeCourseFrame();
     }
 
@@ -258,8 +263,8 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     }
 
 
-       // MODIFIES: this
-       // EFFECTS: creates a course panel for the view Course Frame
+    // MODIFIES: this
+    // EFFECTS: creates a course panel for the view Course Frame
     public void viewCourseFrame() {
         coursePanel = new Panel();
         coursePanel.setSize(960, 1000);
@@ -327,26 +332,24 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     }
 
 
-
-
     // REQUIRES: year must be 1, 2, 3, or 4
     // MODIFIES: this
     // EFFECTS: finds the course within the list of courses of the particular year,
     // navigating to remove it
     public void findListOfCourse(String courseName, int year) {
         if (year == 1) {
-            removeCourse(user.findCourse(courseName, user.getFirstYearCourses()), user.getFirstYearCourses(),
+            removeCourse(user.findCourse(courseName, user.getFirstYearCourses()), 1,
                     courseName);
 
         } else if (year == 2) {
-            removeCourse(user.findCourse(courseName, user.getSecondYearCourses()), user.getSecondYearCourses(),
+            removeCourse(user.findCourse(courseName, user.getSecondYearCourses()), 2,
                     courseName);
 
         } else if (year == 3) {
-            removeCourse(user.findCourse(courseName, user.getThirdYearCourses()), user.getThirdYearCourses(),
+            removeCourse(user.findCourse(courseName, user.getThirdYearCourses()), 3,
                     courseName);
         } else {
-            removeCourse(user.findCourse(courseName, user.getFourthYearCourses()), user.getFourthYearCourses(),
+            removeCourse(user.findCourse(courseName, user.getFourthYearCourses()), 4,
                     courseName);
 
         }
@@ -368,7 +371,7 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     // MODIFIES: this
     // EFFECTS: removes the specified course if found and confirmed; otherwise display dialog that
     // the course was unable to be found or not removed
-    public void removeCourse(Course course, List<Course> courses, String courseName) {
+    public void removeCourse(Course course, int year, String courseName) {
         if (course == null) {
             JOptionPane.showMessageDialog(null, "We were unable to find " + courseName
                             + ". Be sure to check your spelling and correct year.",
@@ -384,7 +387,7 @@ public class FrontDeskGui implements ActionListener, MouseListener {
                     "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, image);
 
             if (result == JOptionPane.YES_OPTION) {
-                courses.remove(course);
+                navigateToRemove(course, year);
                 JOptionPane.showMessageDialog(null, "We have successfully removed "
                                 + courseName + "!",
                         "Successfully removed", JOptionPane.INFORMATION_MESSAGE);
@@ -398,7 +401,19 @@ public class FrontDeskGui implements ActionListener, MouseListener {
         }
     }
 
-
+    // MODIFIES: this
+    // EFFECTS: navigates to removing the course depending on the year of the course
+    public void navigateToRemove(Course course, int year) {
+        if (year == 1) {
+            user.removeFirstYearCourses(course);
+        } else if (year == 2) {
+            user.removeSecondYearCourses(course);
+        } else if (year == 3) {
+            user.removeThirdYearCourses(course);
+        } else {
+            user.removeFourthYearCourses(course);
+        }
+    }
 
     // MODIFIES: this
     // EFFECTS: creates a course panel for the remove course frame, adding buttons and
@@ -418,7 +433,6 @@ public class FrontDeskGui implements ActionListener, MouseListener {
 
 
     }
-
 
 
     // MODIFIES: this
@@ -675,11 +689,12 @@ public class FrontDeskGui implements ActionListener, MouseListener {
         userFrame.add(gradeSummaryPanel);
         userFrame.add(otherPanel);
         userFrame.setVisible(true);
+        userFrame.addWindowListener(this);
 
     }
 
-     // MODIFIES: this
-     // EFFECTS: initializes the home button
+    // MODIFIES: this
+    // EFFECTS: initializes the home button
     public void setHomeButton() {
         ImageIcon image = new ImageIcon("src/main/ui/gui/HomeImage.png");
         homeButton = new JButton(image);
@@ -857,7 +872,7 @@ public class FrontDeskGui implements ActionListener, MouseListener {
             viewCourseFrame();
             displayCourses(user.getFourthYearCourses(), 4);
         }
-
+        userFrame.addWindowListener(this);
     }
 
     // MODIFIES: this
@@ -874,10 +889,12 @@ public class FrontDeskGui implements ActionListener, MouseListener {
                     "Successfully Loaded File", JOptionPane.INFORMATION_MESSAGE);
         } else if (userClick == quitButton) {
             userFrame.dispose();
+            userFrame.addWindowListener(this);
         } else if (userClick == submitNewCourseButton) {
             createCourse();
         } else if (userClick == homeButton) {
             userFrame.dispose();
+            userFrame.addWindowListener(this);
             setHomePanels();
         } else if (userClick == submitRemoveCourseButton) {
             removeCourse();
@@ -939,6 +956,57 @@ public class FrontDeskGui implements ActionListener, MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
         // not used
+    }
+
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    // EFFECTS: not used, but overridden for implementation
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+
+    }
+
+    // EFFECTS: not used, but overridden for implementation
+    @Override
+    public void windowClosing(WindowEvent e) {
+        System.out.println("\n\n");
+        System.out.println("Event Logs: ");
+        for (Event event : EventLog.getInstance()) {
+            System.out.println(event.toString() + "\n");
+        }
+    }
+
+    // EFFECTS: not used, but overridden for implementation
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+
+    }
+
+    // EFFECTS: not used, but overridden for implementation
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+
+    }
+
+    // EFFECTS: not used, but overridden for implementation
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+
+    }
+
+    // EFFECTS: not used, but overridden for implementation
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
+
     }
 
 

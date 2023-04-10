@@ -119,22 +119,61 @@ public class Student implements Changer {
     }
 
 
+    // MODIFIES: this
+    // EFFECTS: removes the course from the first year courses
+    public void removeFirstYearCourses(Course course) {
+        firstYearCourses.remove(course);
+        String courseName = course.getCourseName();
+        EventLog.getInstance().logEvent(new Event("Removed " + courseName + " from first year courses."));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes the course from the second year courses
+    public void removeSecondYearCourses(Course course) {
+        secondYearCourses.remove(course);
+        String courseName = course.getCourseName();
+        EventLog.getInstance().logEvent(new Event("Removed " + courseName + " from second year courses."));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes the course from the third year courses
+    public void removeThirdYearCourses(Course course) {
+        thirdYearCourses.remove(course);
+        String courseName = course.getCourseName();
+        EventLog.getInstance().logEvent(new Event("Removed " + courseName + " from third year courses."));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes the course from the fourth year courses
+    public void removeFourthYearCourses(Course course) {
+        fourthYearCourses.remove(course);
+        String courseName = course.getCourseName();
+        EventLog.getInstance().logEvent(new Event("Removed " + courseName + " from fourth year courses."));
+    }
 
 
     public void addFirstYearCourses(Course course) {
         firstYearCourses.add(course);
+        String courseName = course.getCourseName();
+        EventLog.getInstance().logEvent(new Event("Added " + courseName + " to first year courses."));
     }
 
     public void addSecondYearCourses(Course course) {
         secondYearCourses.add(course);
+        String courseName = course.getCourseName();
+        EventLog.getInstance().logEvent(new Event("Added " + courseName + " to second year courses."));
     }
 
     public void addThirdYearCourses(Course course) {
         thirdYearCourses.add(course);
+        String courseName = course.getCourseName();
+        EventLog.getInstance().logEvent(new Event("Added " + courseName + " to third year courses."));
     }
 
     public void addFourthYearCourses(Course course) {
         fourthYearCourses.add(course);
+        String courseName = course.getCourseName();
+        EventLog.getInstance().logEvent(new Event("Added " + courseName + " to fourth year courses."));
     }
 
     public List<Course> getFirstYearCourses() {
