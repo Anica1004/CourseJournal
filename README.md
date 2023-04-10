@@ -116,7 +116,7 @@ by refactoring the classes. One of the refactoring I want to make is to make an 
  named "courseFrame" which extends JFrame which has basic labels and borders. 
 Then we can extend that courseFrame in FrontFrame, GradeSummaryFrame, ViewCourseFrame, AddCourseFrame, 
 RemoveCourseFrame which would allow the following frames to get the basic layout and background for free since they
-are subtypes. Then, the specific styles (label, border, etc) can be specified in its own class. 
+are subtypes. Then, the specific styles (label, border, etc.) can be specified in its own class. 
 This will allow less repetitive codes in FrontFrame, GradeSummaryFrame, ViewCourseFrame, AddCourseFrame,
 and RemoveCourseFrame. The reason for refactoring these classes is because all theFrontFrame,
 GradeSummaryFrame, ViewCourseFrame, AddCourseFrame, and RemoveCourseFrame have the same background, style of
