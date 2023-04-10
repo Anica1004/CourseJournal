@@ -115,7 +115,10 @@ Removed CPSC 210 from second year courses.
 by refactoring the classes. One of the refactoring I want to make is to make an abstract class
  named "courseFrame" which extends JFrame which has basic labels and borders. 
 Then we can extend that courseFrame in FrontFrame, GradeSummaryFrame, ViewCourseFrame, AddCourseFrame, 
-RemoveCourseFrame which would allow the following frames to get the basic labels and borders for free since they
-are subtypes. Then, the specific styles (layout, border, etc) can be specified in its own class. 
+RemoveCourseFrame which would allow the following frames to get the basic layout and background for free since they
+are subtypes. Then, the specific styles (label, border, etc) can be specified in its own class. 
 This will allow less repetitive codes in FrontFrame, GradeSummaryFrame, ViewCourseFrame, AddCourseFrame,
-and RemoveCourseFrame, improving my program. 
+and RemoveCourseFrame. The reason for refactoring these classes is because all theFrontFrame,
+GradeSummaryFrame, ViewCourseFrame, AddCourseFrame, and RemoveCourseFrame have the same background, style of
+labeling, borders, and width and height of the frame. This made it highly repetitive, and I figured that
+the code can be greatly reduced if we refactored it. 
