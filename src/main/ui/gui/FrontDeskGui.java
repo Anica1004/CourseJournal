@@ -103,6 +103,7 @@ public class FrontDeskGui implements ActionListener, MouseListener, WindowListen
     // EFFECTS: disposes previous frame, and navigates user to a new frame that corresponds to
     // a grade summary frame
     public void gradeSummaryNavigation() {
+        userFrame.removeWindowListener(this);
         userFrame.dispose();
         userFrame = new GradeSummaryFrame();
         userFrame.addWindowListener(this);
@@ -114,6 +115,7 @@ public class FrontDeskGui implements ActionListener, MouseListener, WindowListen
     // EFFECTS: disposes previous frame, and navigates user to a new frame that corresponds to
     // a view courses frame
     public void viewCourseNavigation() {
+        userFrame.removeWindowListener(this);
         userFrame.dispose();
         userFrame = new ViewCourseFrame();
         userFrame.addWindowListener(this);
@@ -124,6 +126,7 @@ public class FrontDeskGui implements ActionListener, MouseListener, WindowListen
     // EFFECTS: disposes previous frame, and navigates user to a new frame that corresponds to
     // an add course frame
     public void addCourseNavigation() {
+        userFrame.removeWindowListener(this);
         userFrame.dispose();
         userFrame = new AddCourseFrame();
         userFrame.addWindowListener(this);
@@ -134,6 +137,7 @@ public class FrontDeskGui implements ActionListener, MouseListener, WindowListen
     // EFFECTS: disposes previous frame, and navigates user to a new frame that corresponds to
     // a remove course frame
     public void removeCourseNavigation() {
+        userFrame.removeWindowListener(this);
         userFrame.dispose();
         userFrame = new RemoveCourseFrame();
         userFrame.addWindowListener(this);
@@ -851,6 +855,7 @@ public class FrontDeskGui implements ActionListener, MouseListener, WindowListen
     // MODIFIES: this
     // EFFECTS: handles cases when the buttons are pressed, related to view courses
     private void actionPerformed2(Object userClick) {
+        userFrame.removeWindowListener(this);
         if (userClick == firstYear) {
             userFrame.dispose();
             userFrame = new ViewCourseFrame();
@@ -888,11 +893,13 @@ public class FrontDeskGui implements ActionListener, MouseListener, WindowListen
             JOptionPane.showMessageDialog(null, "We have successfully loaded your file!",
                     "Successfully Loaded File", JOptionPane.INFORMATION_MESSAGE);
         } else if (userClick == quitButton) {
+            userFrame.removeWindowListener(this);
             userFrame.dispose();
             userFrame.addWindowListener(this);
         } else if (userClick == submitNewCourseButton) {
             createCourse();
         } else if (userClick == homeButton) {
+            userFrame.removeWindowListener(this);
             userFrame.dispose();
             userFrame.addWindowListener(this);
             setHomePanels();
