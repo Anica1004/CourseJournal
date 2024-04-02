@@ -56,9 +56,6 @@ public class StudentTest {
         student.addFourthYearCourses(course3);
         student.addFourthYearCourses(course4);
         student.addFourthYearCourses(course5);
-
-
-
     }
 
 

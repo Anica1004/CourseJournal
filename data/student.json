@@ -1,15 +1,6 @@
 {
     "secondYearCourses": [],
     "fourthYearCourses": [],
-    "firstYearCourses": [{
-        "courseName": "CPSC 110",
-        "year": 1,
-        "rating": 9.8,
-        "professorName": "gregor",
-        "finalMark": 96,
-        "term": 1,
-        "courseSummary": "i ;erkfhsdkfhhsd but it h\\was good",
-        "credit": 4
-    }],
+    "firstYearCourses": [],
     "thirdYearCourses": []
 }
